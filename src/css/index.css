@@ -17,4 +17,6 @@
 @import "./components/dialogs.css";
 @import "./components/headings.css";
 @import "./components/metadata.css";
+@import "./pages/home.css";
+@import "./integrations/media-bar-enhanced.css";
 @import "./accessibility.css";

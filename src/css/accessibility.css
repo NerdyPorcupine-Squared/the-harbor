@@ -9,7 +9,11 @@
   .emby-select,
   .emby-checkbox,
   .actionSheetMenuItem,
-  .dialog button
+  .dialog button,
+  #slides-container .arrow,
+  #slides-container .pause,
+  #slides-container .mute,
+  #slides-container .dot
 ):focus-visible {
   outline: 0.125rem solid var(--harbor-focus);
   outline-offset: 0.125rem;
@@ -55,7 +59,11 @@
     .emby-select,
     .emby-checkbox,
     .actionSheetMenuItem,
-    .dialog button
+    .dialog button,
+    #slides-container .arrow,
+    #slides-container .pause,
+    #slides-container .mute,
+    #slides-container .dot
   ):focus-visible {
     outline-color: Highlight;
   }
@@ -72,12 +80,19 @@
     .button-submit,
     .emby-input,
     .emby-select,
-    .actionSheetMenuItem
+    .actionSheetMenuItem,
+    #slides-container .loading
   ) {
     transition: none;
   }
 
-  :where(.backgroundContainer, .mainDrawer, .drawerContent, .harbor-parchment-surface) {
+  :where(
+    .backgroundContainer,
+    .mainDrawer,
+    .drawerContent,
+    .harbor-parchment-surface,
+    #slides-container .slide
+  ) {
     animation: none;
   }
 

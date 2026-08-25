@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Harbor home with Media Bar fixture</title>
+    <link rel="stylesheet" href="../../../theme.css">
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      .fixture-header {
+        min-height: 4.5rem;
+        padding: 0.75rem 1rem;
+      }
+
+      .fixture-header h1 {
+        margin: 0;
+      }
+
+      #slides-container .fixture-hero-art {
+        background:
+          radial-gradient(circle at 74% 28%, #d8bd82 0 6%, transparent 6.5%),
+          linear-gradient(170deg, transparent 0 48%, rgb(7 19 28 / 74%) 49%),
+          linear-gradient(155deg, #416b7c 0 52%, #193d50 53% 65%, #07131c 66%);
+      }
+
+      .fixture-card-art {
+        background:
+          radial-gradient(circle at 68% 28%, #d3b873 0 8%, transparent 9%),
+          linear-gradient(155deg, #355c70 0 44%, #173647 45% 60%, #07131c 61%);
+      }
+    </style>
+  </head>
+  <body class="skinBody">
+    <div class="backgroundContainer"></div>
+    <header class="skinHeader fixture-header">
+      <h1>The Harbor</h1>
+    </header>
+    <main class="mainAnimatedPage">
+      <section id="slides-container" aria-label="Featured voyages">
+        <article class="slide">
+          <div class="backdrop fixture-hero-art" aria-hidden="true"></div>
+          <div class="video" aria-hidden="true"></div>
+          <div class="harbor-metadata-panel">
+            <div class="itemMiscInfo">
+              <span class="mediaInfoItem">1874</span>
+              <span class="mediaInfoItem">2 h 14 m</span>
+              <span class="mediaInfoItem">Adventure</span>
+            </div>
+            <h2 class="slideTitle">Beyond Beacon Shoal</h2>
+            <p class="slidePlot">
+              A cartographer follows a lantern beyond the known channel and finds
+              a harbor absent from every chart.
+            </p>
+            <div class="slideActions">
+              <button class="button-submit" type="button" data-hero-primary>▶ Play</button>
+              <button class="button-flat" type="button">More details</button>
+            </div>
+          </div>
+        </article>
+        <div class="loading" hidden aria-label="Loading feature"></div>
+        <div class="progress" aria-hidden="true"><span></span></div>
+        <button class="arrow previous" type="button" aria-label="Previous feature">‹</button>
+        <button class="arrow next" type="button" aria-label="Next feature">›</button>
+        <div class="slideControls" aria-label="Feature controls">
+          <button class="pause" type="button" aria-label="Pause feature">Ⅱ</button>
+          <button class="mute" type="button" aria-label="Mute feature">◖</button>
+          <button class="dot active" type="button" aria-label="Feature one"></button>
+          <button class="dot" type="button" aria-label="Feature two"></button>
+        </div>
+      </section>
+
+      <div class="homeSectionsContainer">
+        <section class="homeSection" aria-labelledby="featured-row-heading">
+          <h2 class="sectionTitle" id="featured-row-heading">Continue the Voyage</h2>
+          <div class="itemsContainer">
+            <article class="card">
+              <div class="cardBox">
+                <div class="cardImageContainer fixture-card-art">
+                  <div class="cardOverlayContainer">
+                    <button class="cardOverlayButton" type="button" aria-label="Play Lanterns at Low Tide">▶</button>
+                  </div>
+                </div>
+                <div class="itemProgressBar"><div class="itemProgressBarForeground" style="width: 42%"></div></div>
+                <div class="cardText">Lanterns at Low Tide</div>
+                <div class="cardText cardText-secondary">Continue</div>
+              </div>
+            </article>
+          </div>
+        </section>
+      </div>
+    </main>
+  </body>
+</html>

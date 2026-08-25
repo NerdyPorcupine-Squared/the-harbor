@@ -1,0 +1,49 @@
+.homeSectionsContainer {
+  position: relative;
+  z-index: 1;
+  min-width: 0;
+  padding:
+    var(--harbor-space-6)
+    max(var(--harbor-space-4), env(safe-area-inset-right))
+    max(var(--harbor-space-8), env(safe-area-inset-bottom))
+    max(var(--harbor-space-4), env(safe-area-inset-left));
+}
+
+.homeSection {
+  min-width: 0;
+  margin-block-end: var(--harbor-space-8);
+}
+
+.homeSection .sectionTitle {
+  margin-inline-start: 0;
+}
+
+.homeSection .itemsContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(10rem, 100%), 15rem));
+  gap: var(--harbor-space-4);
+  min-width: 0;
+}
+
+@media (width >= 600px) {
+  .homeSectionsContainer {
+    padding-inline:
+      max(var(--harbor-space-6), env(safe-area-inset-left))
+      max(var(--harbor-space-6), env(safe-area-inset-right));
+  }
+}
+
+@media (width >= 1024px) {
+  .homeSectionsContainer {
+    padding-inline:
+      max(var(--harbor-space-8), env(safe-area-inset-left))
+      max(var(--harbor-space-8), env(safe-area-inset-right));
+  }
+}
+
+@media (width >= 1600px) {
+  .homeSectionsContainer {
+    width: min(100%, 104rem);
+    margin-inline: auto;
+  }
+}
