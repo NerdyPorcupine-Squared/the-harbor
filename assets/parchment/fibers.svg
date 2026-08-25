@@ -1,4 +1,4 @@
-<svg viewBox="0 0 240 240" role="img" aria-labelledby="title">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" role="img" aria-labelledby="title">
   <title id="title">Subtle parchment fiber texture</title>
   <g fill="none" stroke="currentColor" stroke-linecap="round" opacity=".32">
     <path d="M-12 28C34 12 59 50 108 31s74-5 144-22" stroke-width="1"/>

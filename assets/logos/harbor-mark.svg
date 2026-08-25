@@ -1,4 +1,4 @@
-<svg viewBox="0 0 128 180" role="img" aria-labelledby="title">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 180" role="img" aria-labelledby="title">
   <title id="title">The Harbor lighthouse and anchor mark</title>
   <path fill="currentColor" d="M51 18h26l5 15H46l5-15Zm-8 22h42v12H43V40Zm8 19h26v50h13v11H38v-11h13V59Zm7 10v40h12V69H58Zm-35 55h82v10H23v-10Zm25 18h32v7H48v-7Zm16 7c-17 0-31 14-31 31h12c0-10 8-19 19-19s19 9 19 19h12c0-17-14-31-31-31Zm-3 4h6l-3 16-3-16Z"/>
 </svg>

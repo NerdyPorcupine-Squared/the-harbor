@@ -1,4 +1,4 @@
-<svg viewBox="0 0 600 900" role="img" aria-labelledby="title">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 900" role="img" aria-labelledby="title">
   <title id="title">Invented quiet anchorage poster artwork</title>
   <rect width="600" height="900" fill="#0c1d29"/>
   <circle cx="430" cy="225" r="105" fill="#d8bd82" opacity=".8"/>

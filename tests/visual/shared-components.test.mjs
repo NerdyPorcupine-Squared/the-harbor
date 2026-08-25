@@ -117,17 +117,67 @@ async function assertSharedComponents(viewport, snapshotName) {
       `header focus must contrast with parchment: ${headerFocus.outlineColor} on ${headerFocus.backgroundColor}`,
     );
 
-    const artworkObjectFit = await page
+    const artworkState = await page
       .locator(".cardImageContainer img")
       .evaluateAll((artwork) =>
-        artwork.map((element) => getComputedStyle(element).objectFit),
+        artwork.map((element) => ({
+          complete: element.complete,
+          naturalHeight: element.naturalHeight,
+          naturalWidth: element.naturalWidth,
+          objectFit: getComputedStyle(element).objectFit,
+        })),
       );
-    assert.ok(artworkObjectFit.length > 0);
-    assert.deepEqual(
-      artworkObjectFit,
-      artworkObjectFit.map(() => "cover"),
-      "poster artwork must retain object-fit: cover",
+    assert.ok(artworkState.length > 0);
+    for (const artwork of artworkState) {
+      assert.equal(artwork.complete, true, "poster artwork must finish loading");
+      assert.ok(
+        artwork.naturalWidth > 0 && artwork.naturalHeight > 0,
+        `poster artwork must decode, received ${artwork.naturalWidth}x${artwork.naturalHeight}`,
+      );
+      assert.equal(artwork.objectFit, "cover");
+    }
+
+    const backgroundArtwork = await page
+      .locator(".headerLogo.pageTitleWithLogo, .skinHeader")
+      .evaluateAll(async (elements) => {
+        const urls = elements.flatMap((element) =>
+          Array.from(
+            getComputedStyle(element).backgroundImage.matchAll(
+              /url\(["']?([^"')]+)["']?\)/gu,
+            ),
+            (match) => match[1],
+          ),
+        );
+
+        return Promise.all(
+          urls.map(
+            (url) =>
+              new Promise((resolve) => {
+                const image = new Image();
+                const finish = () => {
+                  resolve({
+                    naturalHeight: image.naturalHeight,
+                    naturalWidth: image.naturalWidth,
+                    url,
+                  });
+                };
+                image.addEventListener("load", finish, { once: true });
+                image.addEventListener("error", finish, { once: true });
+                image.src = url;
+              }),
+          ),
+        );
+      });
+    assert.ok(
+      backgroundArtwork.length >= 2,
+      "Harbor mark and parchment texture must be external background artwork",
     );
+    for (const artwork of backgroundArtwork) {
+      assert.ok(
+        artwork.naturalWidth > 0 && artwork.naturalHeight > 0,
+        `background artwork must decode: ${artwork.url}`,
+      );
+    }
 
     const overlaySelectors = [
       ".favoriteIndicator",

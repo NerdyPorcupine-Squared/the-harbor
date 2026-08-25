@@ -11,12 +11,41 @@ const expectedAssets = [
   "assets/icons/compass-rose.svg",
 ];
 
+test("public SVG assets declare the standalone SVG namespace", async () => {
+  const manifest = JSON.parse(
+    await readFile(join(repositoryRoot, "publication-manifest.json"), "utf8"),
+  );
+  const publicSvgAssets = manifest.publicFiles.filter((path) =>
+    path.endsWith(".svg"),
+  );
+
+  assert.ok(publicSvgAssets.length > 0);
+  for (const relativePath of publicSvgAssets) {
+    const source = await readFile(join(repositoryRoot, relativePath), "utf8");
+    const root = source.match(/^<svg\b[^>]*>/u)?.[0];
+
+    assert.ok(root, `${relativePath} must begin with an SVG root`);
+    assert.match(
+      root,
+      /\bxmlns="http:\/\/www\.w3\.org\/2000\/svg"/u,
+      `${relativePath} must declare the standalone SVG namespace`,
+    );
+  }
+});
+
 test("Harbor Core assets are original, local, and resolvable", async () => {
   for (const relativePath of expectedAssets) {
     const source = await readFile(join(repositoryRoot, relativePath), "utf8");
+    const sourceWithoutNamespace = source.replace(
+      'xmlns="http://www.w3.org/2000/svg"',
+      "",
+    );
 
     assert.match(source, /^<svg\b/u);
-    assert.doesNotMatch(source, /<script\b|https?:|javascript:/iu);
+    assert.doesNotMatch(
+      sourceWithoutNamespace,
+      /<script\b|https?:|javascript:/iu,
+    );
     assert.match(source, /<title\b/u);
   }
 
