@@ -1,0 +1,10 @@
+<svg viewBox="0 0 128 128" role="img" aria-labelledby="title">
+  <title id="title">Decorative brass compass rose</title>
+  <g fill="none" stroke="currentColor" stroke-linejoin="round">
+    <circle cx="64" cy="64" r="54" stroke-width="2"/>
+    <circle cx="64" cy="64" r="38" stroke-width="1" opacity=".7"/>
+    <path d="m64 14 9 41-9 59-9-59 9-41Zm50 50-41 9-59-9 59-9 41 9Z" fill="currentColor" opacity=".25"/>
+    <path d="m64 24 10 40-10 40-10-40 10-40Zm40 40-40 10-40-10 40-10 40 10Z" stroke-width="2"/>
+    <path d="m64 35 6 29-6 29-6-29 6-29Zm29 29-29 6-29-6 29-6 29 6Z" fill="currentColor"/>
+  </g>
+</svg>

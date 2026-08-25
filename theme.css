@@ -25,3 +25,90 @@
   --harbor-font-display: Georgia, "Times New Roman", serif;
   --harbor-font-body: Inter, ui-sans-serif, system-ui, sans-serif;
 }
+:root {
+  --harbor-motion-fast: 140ms;
+  --harbor-motion-standard: 220ms;
+}
+:root {
+  --harbor-shadow-dark: 0 1rem 3rem rgb(0 0 0 / 45%);
+  --harbor-shadow-parchment: 0 0.5rem 1.5rem rgb(20 12 7 / 28%);
+}
+html {
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+body {
+  margin: 0;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-inline-size: 100%;
+}
+
+img,
+picture,
+video,
+canvas {
+  block-size: auto;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+html,
+body {
+  min-block-size: 100%;
+  background-color: var(--harbor-navy-950);
+}
+
+body {
+  color: var(--harbor-parchment-100);
+  font-family: var(--harbor-font-body);
+}
+
+.backgroundContainer,
+.mainAnimatedPage,
+.page {
+  min-block-size: 100%;
+  background-color: var(--harbor-navy-950);
+}
+
+.backgroundContainer {
+  background-image: linear-gradient(
+    160deg,
+    var(--harbor-navy-900),
+    var(--harbor-navy-950) 62%
+  );
+}
+
+.skinHeader,
+.drawer,
+.mainDrawer,
+.drawer-content {
+  color: var(--harbor-parchment-100);
+  background-color: var(--harbor-timber-900);
+  box-shadow: var(--harbor-shadow-dark);
+}
+:root {
+  --harbor-texture-opacity: 0.12;
+}
+
+.harbor-parchment-surface {
+  color: var(--harbor-ink-900);
+  background-color: var(--harbor-parchment-100);
+  background-image: url("assets/parchment/fibers.svg");
+}

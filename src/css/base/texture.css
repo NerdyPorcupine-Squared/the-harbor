@@ -1,0 +1,9 @@
+:root {
+  --harbor-texture-opacity: 0.12;
+}
+
+.harbor-parchment-surface {
+  color: var(--harbor-ink-900);
+  background-color: var(--harbor-parchment-100);
+  background-image: url("assets/parchment/fibers.svg");
+}

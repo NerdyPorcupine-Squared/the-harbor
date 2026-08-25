@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Harbor shared component fixture</title>
+    <link rel="stylesheet" href="../../theme.css">
+    <link rel="stylesheet" href="fixture.css">
+  </head>
+  <body>
+    <header class="skinHeader headerTop">
+      <button class="headerButton" type="button" aria-label="Open navigation">☰</button>
+      <div class="harbor-brand">The Harbor</div>
+      <nav class="headerTabs" aria-label="Main sections">
+        <button class="emby-tab-button" type="button" aria-selected="true">Home</button>
+        <button class="emby-tab-button" type="button" aria-selected="false">Voyages</button>
+      </nav>
+      <button class="headerButton" type="button" aria-label="Search">⌕</button>
+    </header>
+    <main class="mainAnimatedPage component-stage">
+      <section class="horizontalSection" aria-labelledby="component-title">
+        <div class="section-header">
+          <h1 class="section-title" id="component-title">Shared Components</h1>
+          <button class="paper-icon-button-light" type="button" aria-label="Next row">→</button>
+        </div>
+        <div class="itemsContainer">
+          <article class="card">
+            <div class="cardBox">
+              <div class="cardScalable">
+                <div class="cardImageContainer" role="img" aria-label="Abstract quiet anchorage artwork"></div>
+                <span class="playedIndicator" aria-label="Watched">✓</span>
+                <div class="itemProgressBar" aria-label="62 percent watched">
+                  <div class="itemProgressBarForeground"></div>
+                </div>
+              </div>
+              <h2 class="cardText">Quiet Anchorage</h2>
+              <div class="card-actions">
+                <button type="button">Play</button>
+                <button class="fixture-focus" type="button" autofocus>Details</button>
+              </div>
+            </div>
+          </article>
+          <article class="card landscape">
+            <div class="cardBox">
+              <div class="cardScalable">
+                <div class="cardImageContainer" role="img" aria-label="Abstract deep current artwork"></div>
+              </div>
+              <h2 class="cardText">Deep Current</h2>
+              <div class="card-actions">
+                <button type="button">Play</button>
+                <button type="button">Details</button>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

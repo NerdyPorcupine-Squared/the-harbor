@@ -1,0 +1,12 @@
+<svg viewBox="0 0 240 240" role="img" aria-labelledby="title">
+  <title id="title">Subtle parchment fiber texture</title>
+  <g fill="none" stroke="currentColor" stroke-linecap="round" opacity=".32">
+    <path d="M-12 28C34 12 59 50 108 31s74-5 144-22" stroke-width="1"/>
+    <path d="M-18 79c46 18 76-23 126-5s83 4 150 22" stroke-width=".7"/>
+    <path d="M-5 132c38-19 71 14 107-1s80-36 144-16" stroke-width="1.1"/>
+    <path d="M-12 188c55-8 74 27 124 8s80 10 139 27" stroke-width=".8"/>
+    <path d="M29-5c-15 47 18 72 0 112s-3 79-19 137" stroke-width=".6"/>
+    <path d="M143-8c16 47-18 78 2 119s-5 70 8 137" stroke-width=".9"/>
+    <path d="M205-12c-11 45 18 85 0 121s5 83-8 137" stroke-width=".6"/>
+  </g>
+</svg>

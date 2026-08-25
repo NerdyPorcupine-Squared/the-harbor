@@ -1,0 +1,4 @@
+:root {
+  --harbor-motion-fast: 140ms;
+  --harbor-motion-standard: 220ms;
+}
