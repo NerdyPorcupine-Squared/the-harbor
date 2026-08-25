@@ -1,0 +1,38 @@
+---
+description: Non-negotiable architecture, safety, and completion rules for The Harbor Jellyfin theme
+alwaysApply: true
+---
+
+# The Harbor rules
+
+- Read `CURSOR_HANDOFF.md` before editing.
+- Treat Harbor as an original design. NetFin is a distribution reference only;
+  do not copy its code, assets, wording, fonts, or visual identity.
+- Develop modular CSS under `src/css/`, then run `npm run build:css`.
+- Never hand-edit root `theme.css`. It is the complete generated stylesheet that
+  Jellyfin imports through jsDelivr.
+- The final stable URL is
+  `https://cdn.jsdelivr.net/gh/NerdyPorcupine-Squared/the-harbor@main/theme.css`.
+  Use an immutable commit SHA instead of `main` for release-candidate testing.
+- Keep Core CSS-only. Put future JavaScript in a separate optional JS Injector
+  package; never make Core depend on JavaScript or Media Bar Enhanced.
+- Keep the home page trailer-led when Media Bar exists and naturally compact
+  when it does not.
+- Preserve Jellyfin behavior and semantics. Never change playback state,
+  network requests, result order, lazy loading, or essential-control behavior.
+- Use parchment on controlled accents and metadata surfaces; keep artwork,
+  video, content grids, and the application frame dark.
+- Use test-driven development. Observe a meaningful RED failure before feature
+  implementation, then run focused tests, `npm run verify:core`, and affected
+  Playwright specs.
+- Do not weaken tests, hide controls, or suppress overflow to manufacture a
+  pass. Fix the underlying UI.
+- Maintain keyboard focus, 40x40 mobile hit targets, 200% zoom, reduced motion,
+  forced colors, and coarse-pointer support.
+- Use sanitized fixtures with invented nautical labels and generated art only.
+- Never commit personal information, real server data, private media, secrets,
+  machine paths, screenshots, logs, `docs/superpowers/**`, or `.superpowers/**`
+  to a public candidate.
+- Do not tag `v1.0.0` or state that Harbor is real-server validated until the
+  owner's manual Jellyfin test matrix passes.
+

@@ -1,0 +1,95 @@
+.card {
+  min-width: 0;
+  color: var(--harbor-parchment-100);
+}
+
+.cardBox {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgb(234 217 174 / 10%);
+  border-radius: var(--harbor-radius-md);
+  background-color: rgb(7 19 28 / 72%);
+  box-shadow: 0 0.35rem 1rem rgb(0 0 0 / 24%);
+  transition:
+    border-color var(--harbor-motion-duration-fast) var(--harbor-motion-easing-standard),
+    box-shadow var(--harbor-motion-duration-fast) var(--harbor-motion-easing-standard),
+    transform var(--harbor-motion-duration-fast) var(--harbor-motion-easing-standard);
+}
+
+:where(.card:focus-within, .card.selected) .cardBox {
+  border-color: rgb(184 148 75 / 78%);
+  box-shadow: 0 0 0 1px rgb(184 148 75 / 18%), 0 0.6rem 1.25rem rgb(0 0 0 / 34%);
+}
+
+.card:hover .cardBox {
+  box-shadow: 0 0.6rem 1.25rem rgb(0 0 0 / 34%);
+  transform: translateY(-0.125rem);
+}
+
+.cardImageContainer {
+  position: relative;
+  aspect-ratio: 2 / 3;
+  overflow: hidden;
+  background-color: var(--harbor-navy-900);
+  background-position: center;
+  background-size: cover;
+}
+
+.cardImageContainer-landscape {
+  aspect-ratio: 16 / 9;
+}
+
+.cardOverlayContainer {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  gap: var(--harbor-space-2);
+  padding: var(--harbor-space-2);
+  background: linear-gradient(180deg, transparent 48%, rgb(7 19 28 / 78%));
+  opacity: 0.84;
+  transition: opacity var(--harbor-motion-duration-fast) var(--harbor-motion-easing-standard);
+}
+
+:where(.card:hover, .card:focus-within) .cardOverlayContainer {
+  opacity: 1;
+}
+
+.cardOverlayButton {
+  min-width: 2.5rem;
+  min-height: 2.5rem;
+  border: 1px solid rgb(234 217 174 / 42%);
+  border-radius: 50%;
+  background-color: rgb(7 19 28 / 84%);
+  color: var(--harbor-parchment-100);
+}
+
+.playedIndicator {
+  position: absolute;
+  inset-block-start: var(--harbor-space-2);
+  inset-inline-end: var(--harbor-space-2);
+  display: grid;
+  width: 1.75rem;
+  height: 1.75rem;
+  place-items: center;
+  border: 1px solid var(--harbor-brass-300);
+  border-radius: 50%;
+  background-color: rgb(7 19 28 / 88%);
+  color: var(--harbor-focus);
+}
+
+.cardText {
+  padding: var(--harbor-space-3) var(--harbor-space-3) 0;
+  overflow: hidden;
+  font-family: var(--harbor-font-display);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cardText-secondary {
+  padding-block: var(--harbor-space-1) var(--harbor-space-3);
+  color: var(--harbor-parchment-200);
+  font-family: var(--harbor-font-body);
+  font-size: 0.875rem;
+}

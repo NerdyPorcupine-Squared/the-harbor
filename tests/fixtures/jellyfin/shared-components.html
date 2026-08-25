@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Harbor shared component fixture</title>
+    <link rel="stylesheet" href="../../../theme.css">
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      .fixture-body {
+        min-height: 100vh;
+      }
+
+      .fixture-header {
+        position: static;
+      }
+
+      .fixture-brand {
+        margin: 0;
+        padding: 1rem 1rem 0;
+      }
+
+      .fixture-layout {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: stretch;
+      }
+
+      .fixture-drawer {
+        position: static;
+        flex: 1 1 14rem;
+        max-width: 100%;
+        transform: none;
+      }
+
+      .fixture-main {
+        min-width: 0;
+        flex: 999 1 40rem;
+        padding: 1rem;
+      }
+
+      .fixture-section {
+        margin-block-end: 2rem;
+      }
+
+      .fixture-card-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(min(9.5rem, 100%), 1fr));
+        gap: 1rem;
+      }
+
+      .fixture-landscape {
+        grid-column: span 2;
+      }
+
+      .fixture-poster-one {
+        background-image:
+          linear-gradient(150deg, transparent 46%, rgb(234 217 174 / 48%) 47% 50%, transparent 51%),
+          radial-gradient(circle at 68% 30%, #d3b873 0 9%, transparent 10%),
+          linear-gradient(160deg, #24475a, #07131c);
+      }
+
+      .fixture-poster-two {
+        background-image:
+          linear-gradient(35deg, transparent 40%, rgb(184 148 75 / 60%) 41% 46%, transparent 47%),
+          radial-gradient(circle at 28% 24%, #ead9ae 0 7%, transparent 8%),
+          linear-gradient(145deg, #3e635e, #0c1d29);
+      }
+
+      .fixture-landscape-art {
+        background-image:
+          linear-gradient(180deg, transparent 56%, rgb(7 19 28 / 78%) 57%),
+          radial-gradient(ellipse at 70% 42%, #d8bd82 0 7%, transparent 8%),
+          linear-gradient(165deg, #31546b 0 48%, #173647 49% 62%, #07131c 63%);
+      }
+
+      .fixture-controls,
+      .fixture-surfaces {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        align-items: flex-start;
+      }
+
+      .fixture-form {
+        display: grid;
+        width: min(100%, 26rem);
+        gap: 0.75rem;
+      }
+
+      .fixture-label {
+        display: grid;
+        gap: 0.35rem;
+      }
+    </style>
+  </head>
+  <body class="skinBody fixture-body">
+    <div class="backgroundContainer"></div>
+    <header class="skinHeader fixture-header">
+      <h1 class="fixture-brand">The Harbor</h1>
+      <nav class="headerTabs" aria-label="Library sections">
+        <button class="emby-tab-button emby-tab-button-active" type="button" data-harbor-control>
+          Harbor Home
+        </button>
+        <button class="emby-tab-button" type="button" data-harbor-control>
+          Chart Room
+        </button>
+        <button class="emby-tab-button" type="button" data-harbor-control>
+          Ship's Log
+        </button>
+      </nav>
+    </header>
+
+    <div class="fixture-layout">
+      <aside class="mainDrawer fixture-drawer" aria-label="Main navigation">
+        <nav class="drawerContent">
+          <button class="navMenuOption navMenuOption-selected" type="button" data-harbor-control>
+            Beacon Library
+          </button>
+          <button class="navMenuOption" type="button" data-harbor-control>
+            Lantern Watchlist
+          </button>
+          <button class="navMenuOption" type="button" data-harbor-control>
+            Tide Collections
+          </button>
+        </nav>
+      </aside>
+
+      <main class="mainAnimatedPage fixture-main">
+        <section class="fixture-section" aria-labelledby="fixture-cards-title">
+          <h2 id="fixture-cards-title">Recent Voyages</h2>
+          <div class="fixture-card-grid">
+            <article class="card">
+              <div class="cardBox">
+                <div class="cardImageContainer fixture-poster-one">
+                  <div class="cardOverlayContainer">
+                    <span class="playedIndicator" aria-label="Watched">✓</span>
+                    <button class="cardOverlayButton" type="button" aria-label="Play Voyage to Beacon Shoal" data-harbor-control>▶</button>
+                  </div>
+                </div>
+                <div class="cardText">Voyage to Beacon Shoal</div>
+                <div class="cardText cardText-secondary">Watched</div>
+              </div>
+            </article>
+
+            <article class="card">
+              <div class="cardBox">
+                <div class="cardImageContainer fixture-poster-two">
+                  <div class="cardOverlayContainer">
+                    <button class="cardOverlayButton" type="button" aria-label="Play Lanterns at Low Tide" data-harbor-control>▶</button>
+                  </div>
+                </div>
+                <div class="itemProgressBar" aria-label="42 percent watched">
+                  <div class="itemProgressBarForeground" style="width: 42%"></div>
+                </div>
+                <div class="cardText">Lanterns at Low Tide</div>
+                <div class="cardText cardText-secondary">Unwatched</div>
+              </div>
+            </article>
+
+            <article class="card fixture-landscape">
+              <div class="cardBox cardBox-landscape">
+                <div class="cardImageContainer cardImageContainer-landscape fixture-landscape-art">
+                  <div class="cardOverlayContainer">
+                    <button class="cardOverlayButton" type="button" aria-label="Play The Cartographer's Wake" data-harbor-control>▶</button>
+                  </div>
+                </div>
+                <div class="cardText">The Cartographer's Wake</div>
+                <div class="cardText cardText-secondary">Three chapters remaining</div>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section class="fixture-section" aria-labelledby="fixture-controls-title">
+          <h2 id="fixture-controls-title">Controls</h2>
+          <div class="fixture-controls">
+            <button class="button-submit" type="button" autofocus data-harbor-control data-harbor-focused>
+              Set Sail
+            </button>
+            <button class="button-flat" type="button" data-harbor-control>View Manifest</button>
+            <button class="button-submit" type="button" disabled data-harbor-control>Moored</button>
+          </div>
+
+          <form class="fixture-form" aria-label="Voyage filters">
+            <label class="fixture-label">
+              Search the manifest
+              <input class="emby-input" type="text" value="Beacon" data-harbor-control>
+            </label>
+            <label class="fixture-label">
+              Harbor
+              <select class="emby-select" data-harbor-control>
+                <option>North Breakwater</option>
+                <option>Gull Cove</option>
+              </select>
+            </label>
+            <label class="checkboxLabel">
+              <input class="emby-checkbox" type="checkbox" checked data-harbor-control>
+              Include completed voyages
+            </label>
+          </form>
+        </section>
+
+        <section class="fixture-section" aria-labelledby="fixture-surfaces-title">
+          <h2 id="fixture-surfaces-title">Menus and Messages</h2>
+          <div class="fixture-surfaces">
+            <aside class="actionSheet" aria-label="Voyage actions">
+              <h3 class="actionSheetTitle">Voyage Actions</h3>
+              <button class="actionSheetMenuItem" type="button" data-harbor-control data-harbor-parchment-control>
+                Add to Captain's List
+              </button>
+              <button class="actionSheetMenuItem" type="button" data-harbor-control data-harbor-parchment-control>
+                Mark as Watched
+              </button>
+            </aside>
+
+            <section class="dialog" role="dialog" aria-labelledby="fixture-dialog-title">
+              <h3 id="fixture-dialog-title">Rename Voyage</h3>
+              <label class="fixture-label">
+                New title
+                <input class="emby-input" type="text" value="Beacon Shoal Revisited" data-harbor-control data-harbor-parchment-control>
+              </label>
+              <div class="dialogActions">
+                <button class="button-flat" type="button" data-harbor-control data-harbor-parchment-control>Cancel</button>
+                <button class="button-submit" type="button" data-harbor-control data-harbor-parchment-control>Save</button>
+              </div>
+            </section>
+
+            <div class="toast" role="status">Voyage added to Lantern Watchlist</div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>

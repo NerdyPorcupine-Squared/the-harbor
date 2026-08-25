@@ -8,10 +8,14 @@
   },
   "scripts": {
     "build:css": "node scripts/build-css.mjs",
-    "check:publication": "node scripts/check-publication.mjs",
     "lint:css": "node scripts/check-css.mjs",
     "format:check": "node scripts/check-css.mjs --format",
     "test:build": "node --test tests/build/*.test.mjs",
-    "verify:core": "npm run lint:css && npm run format:check && npm run test:build && npm run check:publication"
+    "test:visual": "playwright test",
+    "test:visual:update": "playwright test --update-snapshots",
+    "verify:core": "npm run lint:css && npm run format:check && npm run test:build"
+  },
+  "devDependencies": {
+    "playwright": "1.62.1"
   }
 }

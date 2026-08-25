@@ -1,0 +1,5 @@
+:root {
+  --harbor-shadow-dark: 0 0.75rem 2rem rgb(0 0 0 / 45%);
+  --harbor-shadow-parchment: 0 0.35rem 1rem rgb(42 33 24 / 28%);
+  --harbor-shadow-frame: inset 0 1px rgb(211 184 115 / 16%);
+}

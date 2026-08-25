@@ -25,3 +25,631 @@
   --harbor-font-display: Georgia, "Times New Roman", serif;
   --harbor-font-body: Inter, ui-sans-serif, system-ui, sans-serif;
 }
+:root {
+  --harbor-motion-duration-fast: 120ms;
+  --harbor-motion-duration-standard: 200ms;
+  --harbor-motion-duration-slow: 360ms;
+  --harbor-motion-easing-standard: cubic-bezier(0.2, 0, 0, 1);
+}
+:root {
+  --harbor-shadow-dark: 0 0.75rem 2rem rgb(0 0 0 / 45%);
+  --harbor-shadow-parchment: 0 0.35rem 1rem rgb(42 33 24 / 28%);
+  --harbor-shadow-frame: inset 0 1px rgb(211 184 115 / 16%);
+}
+body {
+  margin: 0;
+}
+
+.skinBody {
+  color: var(--harbor-parchment-100);
+  font-family: var(--harbor-font-body);
+}
+
+:where(.skinBody h1, .skinBody h2, .skinBody h3) {
+  font-family: var(--harbor-font-display);
+}
+html {
+  background-color: var(--harbor-navy-950);
+  color-scheme: dark;
+}
+
+body {
+  background-color: var(--harbor-navy-950);
+  color: var(--harbor-parchment-100);
+}
+
+.backgroundContainer {
+  background-color: var(--harbor-navy-950);
+  background-image:
+    linear-gradient(160deg, rgb(7 19 28 / 92%), rgb(12 29 41 / 96%)),
+    radial-gradient(circle at 78% 12%, rgb(184 148 75 / 10%), transparent 34%),
+    url("./assets/parchment/fibers.svg");
+  background-repeat: no-repeat, no-repeat, repeat;
+  background-size: cover, cover, 6rem 6rem;
+}
+
+:where(.mainAnimatedPage, .page) {
+  background-color: transparent;
+}
+
+.skinHeader {
+  background-color: rgb(7 19 28 / 92%);
+  background-image: linear-gradient(180deg, rgb(12 29 41 / 96%), rgb(7 19 28 / 88%));
+  box-shadow: var(--harbor-shadow-frame), var(--harbor-shadow-dark);
+}
+
+:where(.mainDrawer, .drawerContent) {
+  background-color: var(--harbor-navy-900);
+  background-image:
+    linear-gradient(145deg, rgb(12 29 41 / 94%), rgb(7 19 28 / 97%)),
+    url("./assets/parchment/fibers.svg");
+  background-repeat: no-repeat, repeat;
+  background-size: cover, 6rem 6rem;
+  box-shadow: var(--harbor-shadow-frame), var(--harbor-shadow-dark);
+}
+.harbor-parchment-surface {
+  background-color: var(--harbor-parchment-100);
+  background-image:
+    linear-gradient(135deg, rgb(255 255 255 / 8%), rgb(111 86 55 / 8%)),
+    url("./assets/parchment/fibers.svg");
+  background-repeat: no-repeat, repeat;
+  background-size: cover, 6rem 6rem;
+  box-shadow: var(--harbor-shadow-parchment);
+  color: var(--harbor-ink-900);
+}
+.skinHeader {
+  position: relative;
+  z-index: 2;
+  border-block-end: 1px solid rgb(184 148 75 / 34%);
+}
+
+.headerTabs {
+  display: flex;
+  max-width: 100%;
+  gap: var(--harbor-space-1);
+  padding: var(--harbor-space-2) var(--harbor-space-4);
+  overflow-x: auto;
+  scrollbar-width: thin;
+}
+
+.emby-tab-button {
+  min-width: 2.5rem;
+  min-height: 2.5rem;
+  flex: 0 0 auto;
+  border: 0;
+  border-block-end: 0.125rem solid transparent;
+  padding: var(--harbor-space-2) var(--harbor-space-4);
+  background: transparent;
+  color: var(--harbor-parchment-200);
+  font: inherit;
+  transition:
+    border-color var(--harbor-motion-duration-fast) var(--harbor-motion-easing-standard),
+    color var(--harbor-motion-duration-fast) var(--harbor-motion-easing-standard),
+    background-color var(--harbor-motion-duration-fast) var(--harbor-motion-easing-standard);
+}
+
+.emby-tab-button:hover {
+  background-color: rgb(234 217 174 / 8%);
+  color: var(--harbor-parchment-100);
+}
+
+.emby-tab-button:active {
+  background-color: rgb(184 148 75 / 14%);
+}
+
+:where(.emby-tab-button-active, .emby-tab-button[aria-selected="true"]) {
+  border-block-end-color: var(--harbor-brass-500);
+  color: var(--harbor-focus);
+}
+
+.mainDrawer {
+  border-inline-end: 1px solid rgb(184 148 75 / 24%);
+  color: var(--harbor-parchment-100);
+}
+
+.drawerContent {
+  display: grid;
+  gap: var(--harbor-space-1);
+  padding: var(--harbor-space-4) var(--harbor-space-2);
+}
+
+.navMenuOption {
+  min-width: 100%;
+  min-height: 2.5rem;
+  border: 1px solid transparent;
+  border-radius: var(--harbor-radius-sm);
+  padding: var(--harbor-space-2) var(--harbor-space-4);
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: start;
+  transition:
+    background-color var(--harbor-motion-duration-fast) var(--harbor-motion-easing-standard),
+    border-color var(--harbor-motion-duration-fast) var(--harbor-motion-easing-standard);
+}
+
+.navMenuOption:hover {
+  background-color: rgb(234 217 174 / 8%);
+}
+
+.navMenuOption:active {
+  background-color: rgb(184 148 75 / 16%);
+}
+
+:where(.navMenuOption-selected, .navMenuOption[aria-current="page"]) {
+  border-inline-start-color: var(--harbor-brass-500);
+  background-color: rgb(184 148 75 / 12%);
+  color: var(--harbor-focus);
+}
+.card {
+  min-width: 0;
+  color: var(--harbor-parchment-100);
+}
+
+.cardBox {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgb(234 217 174 / 10%);
+  border-radius: var(--harbor-radius-md);
+  background-color: rgb(7 19 28 / 72%);
+  box-shadow: 0 0.35rem 1rem rgb(0 0 0 / 24%);
+  transition:
+    border-color var(--harbor-motion-duration-fast) var(--harbor-motion-easing-standard),
+    box-shadow var(--harbor-motion-duration-fast) var(--harbor-motion-easing-standard),
+    transform var(--harbor-motion-duration-fast) var(--harbor-motion-easing-standard);
+}
+
+:where(.card:focus-within, .card.selected) .cardBox {
+  border-color: rgb(184 148 75 / 78%);
+  box-shadow: 0 0 0 1px rgb(184 148 75 / 18%), 0 0.6rem 1.25rem rgb(0 0 0 / 34%);
+}
+
+.card:hover .cardBox {
+  box-shadow: 0 0.6rem 1.25rem rgb(0 0 0 / 34%);
+  transform: translateY(-0.125rem);
+}
+
+.cardImageContainer {
+  position: relative;
+  aspect-ratio: 2 / 3;
+  overflow: hidden;
+  background-color: var(--harbor-navy-900);
+  background-position: center;
+  background-size: cover;
+}
+
+.cardImageContainer-landscape {
+  aspect-ratio: 16 / 9;
+}
+
+.cardOverlayContainer {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  gap: var(--harbor-space-2);
+  padding: var(--harbor-space-2);
+  background: linear-gradient(180deg, transparent 48%, rgb(7 19 28 / 78%));
+  opacity: 0.84;
+  transition: opacity var(--harbor-motion-duration-fast) var(--harbor-motion-easing-standard);
+}
+
+:where(.card:hover, .card:focus-within) .cardOverlayContainer {
+  opacity: 1;
+}
+
+.cardOverlayButton {
+  min-width: 2.5rem;
+  min-height: 2.5rem;
+  border: 1px solid rgb(234 217 174 / 42%);
+  border-radius: 50%;
+  background-color: rgb(7 19 28 / 84%);
+  color: var(--harbor-parchment-100);
+}
+
+.playedIndicator {
+  position: absolute;
+  inset-block-start: var(--harbor-space-2);
+  inset-inline-end: var(--harbor-space-2);
+  display: grid;
+  width: 1.75rem;
+  height: 1.75rem;
+  place-items: center;
+  border: 1px solid var(--harbor-brass-300);
+  border-radius: 50%;
+  background-color: rgb(7 19 28 / 88%);
+  color: var(--harbor-focus);
+}
+
+.cardText {
+  padding: var(--harbor-space-3) var(--harbor-space-3) 0;
+  overflow: hidden;
+  font-family: var(--harbor-font-display);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cardText-secondary {
+  padding-block: var(--harbor-space-1) var(--harbor-space-3);
+  color: var(--harbor-parchment-200);
+  font-family: var(--harbor-font-body);
+  font-size: 0.875rem;
+}
+.itemProgressBar {
+  position: relative;
+  height: 0.3rem;
+  overflow: hidden;
+  background-color: rgb(234 217 174 / 18%);
+}
+
+.itemProgressBarForeground {
+  min-width: 0.125rem;
+  height: 100%;
+  background-color: var(--harbor-brass-500);
+  box-shadow: 0 0 0.5rem rgb(211 184 115 / 42%);
+  transition: width var(--harbor-motion-duration-standard) var(--harbor-motion-easing-standard);
+}
+:where(.button-flat, .button-submit) {
+  min-width: 2.5rem;
+  min-height: 2.5rem;
+  border-radius: var(--harbor-radius-sm);
+  padding: var(--harbor-space-2) var(--harbor-space-4);
+  font: 600 1rem/1.25 var(--harbor-font-body);
+  transition:
+    background-color var(--harbor-motion-duration-fast) var(--harbor-motion-easing-standard),
+    border-color var(--harbor-motion-duration-fast) var(--harbor-motion-easing-standard),
+    box-shadow var(--harbor-motion-duration-fast) var(--harbor-motion-easing-standard),
+    transform var(--harbor-motion-duration-fast) var(--harbor-motion-easing-standard);
+}
+
+.button-flat {
+  min-width: 2.5rem;
+  min-height: 2.5rem;
+  border: 1px solid rgb(184 148 75 / 52%);
+  background-color: transparent;
+  color: inherit;
+}
+
+.button-submit {
+  min-width: 2.5rem;
+  min-height: 2.5rem;
+  border: 1px solid var(--harbor-brass-300);
+  background-color: var(--harbor-parchment-200);
+  color: var(--harbor-ink-900);
+  box-shadow: inset 0 1px rgb(255 255 255 / 24%);
+}
+
+.button-flat:hover {
+  border-color: var(--harbor-brass-300);
+  background-color: rgb(234 217 174 / 8%);
+}
+
+.button-submit:hover {
+  border-color: var(--harbor-focus);
+  background-color: var(--harbor-parchment-100);
+}
+
+.button-flat:active {
+  background-color: rgb(184 148 75 / 16%);
+  transform: translateY(1px);
+}
+
+.button-submit:active {
+  background-color: var(--harbor-brass-300);
+  transform: translateY(1px);
+}
+
+.button-flat:disabled {
+  cursor: not-allowed;
+  opacity: 0.46;
+}
+
+.button-submit:disabled {
+  cursor: not-allowed;
+  filter: saturate(0.3);
+  opacity: 0.46;
+}
+
+.button-flat:focus-visible {
+  border-color: var(--harbor-focus);
+}
+
+.button-submit:focus-visible {
+  border-color: var(--harbor-focus);
+}
+:where(.emby-input, .emby-select) {
+  width: 100%;
+  min-width: 2.5rem;
+  min-height: 2.5rem;
+  border: 1px solid rgb(216 189 130 / 52%);
+  border-radius: var(--harbor-radius-sm);
+  padding: var(--harbor-space-2) var(--harbor-space-3);
+  background-color: rgb(7 19 28 / 76%);
+  color: var(--harbor-parchment-100);
+  font: inherit;
+  transition:
+    background-color var(--harbor-motion-duration-fast) var(--harbor-motion-easing-standard),
+    border-color var(--harbor-motion-duration-fast) var(--harbor-motion-easing-standard),
+    box-shadow var(--harbor-motion-duration-fast) var(--harbor-motion-easing-standard);
+}
+
+.emby-input {
+  min-width: 2.5rem;
+  min-height: 2.5rem;
+}
+
+.emby-select {
+  min-width: 2.5rem;
+  min-height: 2.5rem;
+}
+
+.emby-input:hover {
+  border-color: var(--harbor-brass-300);
+}
+
+.emby-input:active {
+  background-color: rgb(12 29 41 / 92%);
+}
+
+.emby-input:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.emby-input:focus-visible {
+  border-color: var(--harbor-focus);
+  box-shadow: 0 0 0 0.125rem rgb(242 213 138 / 16%);
+}
+
+.emby-select:hover {
+  border-color: var(--harbor-brass-300);
+}
+
+.emby-select:active {
+  background-color: rgb(12 29 41 / 92%);
+}
+
+.emby-select:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.emby-select:focus-visible {
+  border-color: var(--harbor-focus);
+  box-shadow: 0 0 0 0.125rem rgb(242 213 138 / 16%);
+}
+
+.checkboxLabel {
+  display: flex;
+  align-items: center;
+  gap: var(--harbor-space-2);
+}
+
+.emby-checkbox {
+  min-width: 2.5rem;
+  min-height: 2.5rem;
+  margin: 0;
+  border: 1px solid var(--harbor-brass-300);
+  border-radius: var(--harbor-radius-sm);
+  appearance: none;
+  background-color: rgb(7 19 28 / 76%);
+}
+
+.emby-checkbox:checked {
+  background-color: var(--harbor-parchment-200);
+  box-shadow: inset 0 0 0 0.55rem var(--harbor-ink-900);
+}
+
+.emby-checkbox:hover {
+  border-color: var(--harbor-focus);
+}
+
+.emby-checkbox:active {
+  background-color: rgb(184 148 75 / 24%);
+}
+
+.emby-checkbox:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.emby-checkbox:focus-visible {
+  border-color: var(--harbor-focus);
+}
+
+:where(.dialog, .actionSheet) :where(.emby-input, .emby-select) {
+  border-color: rgb(42 33 24 / 44%);
+  background-color: rgb(255 255 255 / 24%);
+  color: var(--harbor-ink-900);
+}
+.actionSheet {
+  width: min(100%, 22rem);
+  overflow: hidden;
+  border: 1px solid rgb(42 33 24 / 34%);
+  border-radius: var(--harbor-radius-md);
+  background-color: var(--harbor-parchment-100);
+  background-image:
+    linear-gradient(135deg, rgb(255 255 255 / 8%), rgb(111 86 55 / 8%)),
+    url("./assets/parchment/fibers.svg");
+  background-repeat: no-repeat, repeat;
+  background-size: cover, 6rem 6rem;
+  color: var(--harbor-ink-900);
+  box-shadow: var(--harbor-shadow-parchment);
+}
+
+.actionSheetTitle {
+  margin: 0;
+  padding: var(--harbor-space-4);
+  border-block-end: 1px solid rgb(42 33 24 / 20%);
+}
+
+.actionSheetMenuItem {
+  min-width: 100%;
+  min-height: 2.5rem;
+  border: 0;
+  border-block-end: 1px solid rgb(42 33 24 / 14%);
+  padding: var(--harbor-space-3) var(--harbor-space-4);
+  background-color: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: start;
+  transition:
+    background-color var(--harbor-motion-duration-fast) var(--harbor-motion-easing-standard),
+    color var(--harbor-motion-duration-fast) var(--harbor-motion-easing-standard);
+}
+
+.actionSheetMenuItem:last-child {
+  border-block-end: 0;
+}
+
+.actionSheetMenuItem:hover {
+  background-color: rgb(42 33 24 / 10%);
+}
+
+.actionSheetMenuItem:active {
+  background-color: rgb(42 33 24 / 18%);
+}
+
+.actionSheetMenuItem:disabled {
+  cursor: not-allowed;
+  opacity: 0.48;
+}
+
+.actionSheetMenuItem:focus-visible {
+  background-color: rgb(42 33 24 / 10%);
+}
+.dialog {
+  position: relative;
+  width: min(100%, 30rem);
+  border: 1px solid rgb(42 33 24 / 34%);
+  border-radius: var(--harbor-radius-md);
+  padding: var(--harbor-space-6);
+  background-color: var(--harbor-parchment-100);
+  background-image:
+    linear-gradient(135deg, rgb(255 255 255 / 8%), rgb(111 86 55 / 8%)),
+    url("./assets/parchment/fibers.svg");
+  background-repeat: no-repeat, repeat;
+  background-size: cover, 6rem 6rem;
+  color: var(--harbor-ink-900);
+  box-shadow: var(--harbor-shadow-parchment), 0 1.25rem 3rem rgb(0 0 0 / 36%);
+}
+
+.dialog > :first-child {
+  margin-block-start: 0;
+}
+
+.dialogActions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: var(--harbor-space-2);
+  margin-block-start: var(--harbor-space-4);
+}
+
+.dialog button {
+  min-width: 2.5rem;
+  min-height: 2.5rem;
+}
+
+.dialog .button-flat {
+  border-color: rgb(42 33 24 / 44%);
+  color: var(--harbor-ink-900);
+}
+
+.toast {
+  max-width: min(100%, 28rem);
+  border: 1px solid rgb(211 184 115 / 40%);
+  border-radius: var(--harbor-radius-sm);
+  padding: var(--harbor-space-3) var(--harbor-space-4);
+  background-color: rgb(7 19 28 / 96%);
+  color: var(--harbor-parchment-100);
+  box-shadow: var(--harbor-shadow-dark);
+}
+:where(
+  .emby-tab-button,
+  .navMenuOption,
+  .card,
+  .cardOverlayButton,
+  .button-flat,
+  .button-submit,
+  .emby-input,
+  .emby-select,
+  .emby-checkbox,
+  .actionSheetMenuItem,
+  .dialog button
+):focus-visible {
+  outline: 0.125rem solid var(--harbor-focus);
+  outline-offset: 0.125rem;
+}
+
+:where(.hideForScreenReader, .visually-hidden, .sr-only) {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  border: 0;
+  margin: -1px;
+  white-space: nowrap;
+}
+
+@media (forced-colors: active) {
+  :where(
+    .skinHeader,
+    .mainDrawer,
+    .cardBox,
+    .button-flat,
+    .button-submit,
+    .emby-input,
+    .emby-select,
+    .emby-checkbox,
+    .actionSheet,
+    .dialog,
+    .toast
+  ) {
+    border: 1px solid CanvasText;
+  }
+
+  :where(
+    .emby-tab-button,
+    .navMenuOption,
+    .cardOverlayButton,
+    .button-flat,
+    .button-submit,
+    .emby-input,
+    .emby-select,
+    .emby-checkbox,
+    .actionSheetMenuItem,
+    .dialog button
+  ):focus-visible {
+    outline-color: Highlight;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :where(
+    .emby-tab-button,
+    .navMenuOption,
+    .cardBox,
+    .cardOverlayContainer,
+    .itemProgressBarForeground,
+    .button-flat,
+    .button-submit,
+    .emby-input,
+    .emby-select,
+    .actionSheetMenuItem
+  ) {
+    transition: none;
+  }
+
+  :where(.backgroundContainer, .mainDrawer, .drawerContent, .harbor-parchment-surface) {
+    animation: none;
+  }
+
+  .card:hover .cardBox {
+    transform: none;
+  }
+}

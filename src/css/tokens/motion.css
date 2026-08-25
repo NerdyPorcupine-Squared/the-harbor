@@ -1,0 +1,6 @@
+:root {
+  --harbor-motion-duration-fast: 120ms;
+  --harbor-motion-duration-standard: 200ms;
+  --harbor-motion-duration-slow: 360ms;
+  --harbor-motion-easing-standard: cubic-bezier(0.2, 0, 0, 1);
+}

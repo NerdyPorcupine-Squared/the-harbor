@@ -1,0 +1,12 @@
+body {
+  margin: 0;
+}
+
+.skinBody {
+  color: var(--harbor-parchment-100);
+  font-family: var(--harbor-font-body);
+}
+
+:where(.skinBody h1, .skinBody h2, .skinBody h3) {
+  font-family: var(--harbor-font-display);
+}

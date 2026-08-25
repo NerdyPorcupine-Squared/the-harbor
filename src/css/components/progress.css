@@ -1,0 +1,14 @@
+.itemProgressBar {
+  position: relative;
+  height: 0.3rem;
+  overflow: hidden;
+  background-color: rgb(234 217 174 / 18%);
+}
+
+.itemProgressBarForeground {
+  min-width: 0.125rem;
+  height: 100%;
+  background-color: var(--harbor-brass-500);
+  box-shadow: 0 0 0.5rem rgb(211 184 115 / 42%);
+  transition: width var(--harbor-motion-duration-standard) var(--harbor-motion-easing-standard);
+}

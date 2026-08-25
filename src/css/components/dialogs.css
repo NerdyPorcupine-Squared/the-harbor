@@ -1,0 +1,47 @@
+.dialog {
+  position: relative;
+  width: min(100%, 30rem);
+  border: 1px solid rgb(42 33 24 / 34%);
+  border-radius: var(--harbor-radius-md);
+  padding: var(--harbor-space-6);
+  background-color: var(--harbor-parchment-100);
+  background-image:
+    linear-gradient(135deg, rgb(255 255 255 / 8%), rgb(111 86 55 / 8%)),
+    url("./assets/parchment/fibers.svg");
+  background-repeat: no-repeat, repeat;
+  background-size: cover, 6rem 6rem;
+  color: var(--harbor-ink-900);
+  box-shadow: var(--harbor-shadow-parchment), 0 1.25rem 3rem rgb(0 0 0 / 36%);
+}
+
+.dialog > :first-child {
+  margin-block-start: 0;
+}
+
+.dialogActions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: var(--harbor-space-2);
+  margin-block-start: var(--harbor-space-4);
+}
+
+.dialog button {
+  min-width: 2.5rem;
+  min-height: 2.5rem;
+}
+
+.dialog .button-flat {
+  border-color: rgb(42 33 24 / 44%);
+  color: var(--harbor-ink-900);
+}
+
+.toast {
+  max-width: min(100%, 28rem);
+  border: 1px solid rgb(211 184 115 / 40%);
+  border-radius: var(--harbor-radius-sm);
+  padding: var(--harbor-space-3) var(--harbor-space-4);
+  background-color: rgb(7 19 28 / 96%);
+  color: var(--harbor-parchment-100);
+  box-shadow: var(--harbor-shadow-dark);
+}
