@@ -1,0 +1,27 @@
+/*! The Harbor v0.0.0-development | MIT License */
+:root {
+  --harbor-navy-950: #07131c;
+  --harbor-navy-900: #0c1d29;
+  --harbor-timber-900: #21150f;
+  --harbor-parchment-100: #ead9ae;
+  --harbor-parchment-200: #d8bd82;
+  --harbor-ink-900: #2a2118;
+  --harbor-brass-500: #b8944b;
+  --harbor-brass-300: #d3b873;
+  --harbor-danger-500: #b84f45;
+  --harbor-focus: #f2d58a;
+}
+:root {
+  --harbor-space-1: 0.25rem;
+  --harbor-space-2: 0.5rem;
+  --harbor-space-3: 0.75rem;
+  --harbor-space-4: 1rem;
+  --harbor-space-6: 1.5rem;
+  --harbor-space-8: 2rem;
+  --harbor-radius-sm: 0.25rem;
+  --harbor-radius-md: 0.5rem;
+}
+:root {
+  --harbor-font-display: Georgia, "Times New Roman", serif;
+  --harbor-font-body: Inter, ui-sans-serif, system-ui, sans-serif;
+}

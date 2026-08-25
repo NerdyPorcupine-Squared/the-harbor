@@ -1,0 +1,10 @@
+:root {
+  --harbor-space-1: 0.25rem;
+  --harbor-space-2: 0.5rem;
+  --harbor-space-3: 0.75rem;
+  --harbor-space-4: 1rem;
+  --harbor-space-6: 1.5rem;
+  --harbor-space-8: 2rem;
+  --harbor-radius-sm: 0.25rem;
+  --harbor-radius-md: 0.5rem;
+}
