@@ -13,6 +13,23 @@ export function normalizeCss(css) {
   return `${css.replace(/\r\n?/gu, "\n").trimEnd()}\n`;
 }
 
+async function replaceOutput(sourceUrl, destinationUrl) {
+  const retryableCodes = new Set(["EACCES", "EBUSY", "EPERM"]);
+  const attempts = process.platform === "win32" ? 50 : 1;
+
+  for (let attempt = 0; attempt < attempts; attempt += 1) {
+    try {
+      await rename(sourceUrl, destinationUrl);
+      return;
+    } catch (error) {
+      if (!retryableCodes.has(error?.code) || attempt === attempts - 1) throw error;
+      await new Promise((resolveRetry) => {
+        setTimeout(resolveRetry, 10 + attempt * 2);
+      });
+    }
+  }
+}
+
 export async function buildCss() {
   const temporaryUrl = new URL(
     `.theme.css.${process.pid}.${randomUUID()}.tmp`,
@@ -32,7 +49,7 @@ export async function buildCss() {
       await temporaryFile.close();
     }
 
-    await rename(temporaryUrl, outputUrl);
+    await replaceOutput(temporaryUrl, outputUrl);
     temporaryFileExists = false;
   } finally {
     if (temporaryFileExists) await rm(temporaryUrl, { force: true });
