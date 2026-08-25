@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Harbor player OSD fixture</title>
+    <link rel="stylesheet" href="../../../theme.css">
+    <style>* { box-sizing: border-box; }</style>
+  </head>
+  <body class="skinBody">
+    <main class="videoPlayerContainer">
+      <div class="videoSurface" aria-label="Generated voyage frame"></div>
+      <section class="videoOsdBottom" aria-label="Playback controls">
+        <h1 class="osdTitle">Beyond Beacon Shoal</h1>
+        <div class="osdControls">
+          <button class="playerButton" type="button" aria-label="Previous">|◀</button>
+          <button class="playerButton" type="button" aria-label="Play" data-player-primary>▶</button>
+          <button class="playerButton" type="button" aria-label="Next">▶|</button>
+          <label class="hideForScreenReader" for="seek-slider">Seek position</label>
+          <input class="slider" id="seek-slider" type="range" min="0" max="100" value="42">
+          <span class="osdTime">42:10 / 1:40:00</span>
+          <button class="playerButton" type="button" aria-label="Mute">◖</button>
+          <label class="hideForScreenReader" for="volume-slider">Volume</label>
+          <input class="slider volumeSlider" id="volume-slider" type="range" min="0" max="100" value="65">
+          <button class="playerButton" type="button" aria-label="Captions">CC</button>
+          <button class="playerButton" type="button" aria-label="Fullscreen">⛶</button>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

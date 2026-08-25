@@ -1,0 +1,54 @@
+@media (width <= 599px) {
+  :where(.button-flat, .button-submit, .playerButton) {
+    min-width: 2.5rem;
+    min-height: 2.5rem;
+  }
+
+  :where(.libraryPage, .searchPage, .dashboardPage, .detailPageContent) {
+    padding-inline:
+      max(var(--harbor-space-4), env(safe-area-inset-left))
+      max(var(--harbor-space-4), env(safe-area-inset-right));
+  }
+}
+
+@media (600px <= width <= 1023px) {
+  :where(.libraryPage, .searchPage, .dashboardPage, .detailPageContent) {
+    padding-inline:
+      max(var(--harbor-space-6), env(safe-area-inset-left))
+      max(var(--harbor-space-6), env(safe-area-inset-right));
+  }
+}
+
+@media (width >= 1024px) {
+  :where(.libraryPage, .searchPage, .dashboardPage, .detailPageContent) {
+    padding-inline:
+      max(var(--harbor-space-8), env(safe-area-inset-left))
+      max(var(--harbor-space-8), env(safe-area-inset-right));
+  }
+}
+
+@media (width >= 1600px) {
+  :where(.libraryPage, .searchPage, .dashboardPage, .detailPageContent) {
+    padding-inline:
+      max(3rem, env(safe-area-inset-left))
+      max(3rem, env(safe-area-inset-right));
+  }
+}
+
+@media (pointer: coarse) {
+  :where(
+    .emby-tab-button,
+    .navMenuOption,
+    .cardOverlayButton,
+    .button-flat,
+    .button-submit,
+    .emby-input,
+    .emby-select,
+    .emby-checkbox,
+    .actionSheetMenuItem,
+    .playerButton
+  ) {
+    min-width: 2.5rem;
+    min-height: 2.5rem;
+  }
+}

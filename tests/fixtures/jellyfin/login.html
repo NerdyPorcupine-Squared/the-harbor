@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Harbor login fixture</title>
+    <link rel="stylesheet" href="../../../theme.css">
+    <style>* { box-sizing: border-box; }</style>
+  </head>
+  <body class="skinBody">
+    <div class="backgroundContainer"></div>
+    <main class="loginPage">
+      <form class="manualLoginForm" aria-labelledby="login-heading">
+        <span class="loginLogo" aria-hidden="true"></span>
+        <h1 id="login-heading">Enter the Harbor</h1>
+        <label>Captain's name
+          <input class="emby-input" type="text" value="Harbor Guest">
+        </label>
+        <label>Passphrase
+          <input class="emby-input" type="password">
+        </label>
+        <label class="checkboxLabel">
+          <input class="emby-checkbox" type="checkbox">
+          Remember this device
+        </label>
+        <button class="button-submit" type="button" data-login>Sign in</button>
+        <button class="button-flat" type="button">Forgot passphrase</button>
+      </form>
+    </main>
+  </body>
+</html>

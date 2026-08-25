@@ -1,0 +1,48 @@
+.loginPage {
+  display: grid;
+  min-height: 100svh;
+  place-items: center;
+  padding:
+    max(var(--harbor-space-6), env(safe-area-inset-top))
+    max(var(--harbor-space-4), env(safe-area-inset-right))
+    max(var(--harbor-space-6), env(safe-area-inset-bottom))
+    max(var(--harbor-space-4), env(safe-area-inset-left));
+}
+
+.manualLoginForm {
+  width: min(100%, 28rem);
+  border: var(--harbor-papyrus-border);
+  border-radius: var(--harbor-radius-md);
+  padding: clamp(var(--harbor-space-4), 5vw, var(--harbor-space-8));
+  background-color: var(--harbor-parchment-100);
+  background-image: var(--harbor-papyrus-image);
+  background-repeat: var(--harbor-papyrus-repeat);
+  background-size: var(--harbor-papyrus-size);
+  color: var(--harbor-ink-900);
+  box-shadow:
+    var(--harbor-papyrus-edge),
+    var(--harbor-shadow-parchment),
+    0 1.5rem 4rem rgb(0 0 0 / 38%);
+}
+
+.manualLoginForm > * + * {
+  margin-block-start: var(--harbor-space-4);
+}
+
+.manualLoginForm label:not(.checkboxLabel) {
+  display: grid;
+  gap: var(--harbor-space-1);
+}
+
+.manualLoginForm .button-submit {
+  width: 100%;
+}
+
+.loginLogo {
+  display: block;
+  width: 4rem;
+  height: 4rem;
+  margin-inline: auto;
+  margin-block-end: var(--harbor-space-4);
+  background: url("./assets/logos/harbor-mark.svg") center / contain no-repeat;
+}

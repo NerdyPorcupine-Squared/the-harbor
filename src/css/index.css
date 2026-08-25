@@ -21,5 +21,10 @@
 @import "./pages/library.css";
 @import "./pages/search.css";
 @import "./pages/details.css";
+@import "./pages/auth.css";
+@import "./pages/dashboard.css";
+@import "./pages/states.css";
+@import "./pages/player.css";
 @import "./integrations/media-bar-enhanced.css";
+@import "./responsive.css";
 @import "./accessibility.css";

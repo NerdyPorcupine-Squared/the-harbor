@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Harbor loading and error fixture</title>
+    <link rel="stylesheet" href="../../../theme.css">
+    <style>
+      * { box-sizing: border-box; }
+      .fixture-states { display: grid; gap: 2rem; padding: 2rem 1rem; }
+      .fixture-states .statePage { min-height: 24rem; }
+    </style>
+  </head>
+  <body class="skinBody">
+    <div class="backgroundContainer"></div>
+    <main class="fixture-states">
+      <section class="statePage" aria-labelledby="loading-heading">
+        <div class="loadingState" role="status">
+          <div class="loadingSpinner" aria-hidden="true"></div>
+          <h1 id="loading-heading">Reading the tide ledger</h1>
+          <p>The manifest remains in its original order while loading.</p>
+        </div>
+      </section>
+      <section class="statePage" aria-labelledby="error-heading">
+        <div class="errorPage">
+          <h1 id="error-heading">The chart could not be opened</h1>
+          <div class="alert alert-error" role="alert">
+            Harbor records are temporarily unavailable.
+          </div>
+          <button class="button-submit" type="button">Try again</button>
+          <button class="button-flat" type="button">Return to Beacon Shoal</button>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

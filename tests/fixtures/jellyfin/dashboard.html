@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Harbor dashboard fixture</title>
+    <link rel="stylesheet" href="../../../theme.css">
+    <style>
+      * { box-sizing: border-box; }
+      .fixture-header { min-height: 4.5rem; padding: 0.75rem 1rem; }
+      .fixture-header h1 { margin: 0; }
+    </style>
+  </head>
+  <body class="skinBody">
+    <div class="backgroundContainer"></div>
+    <header class="skinHeader fixture-header"><h1>Harbor Dashboard</h1></header>
+    <main class="dashboardPage mainAnimatedPage">
+      <div class="alert" role="status">Settings are staged locally until saved.</div>
+      <div class="dashboardGrid">
+        <section class="dashboardSection" aria-labelledby="settings-heading">
+          <h2 id="settings-heading">Chart Room Settings</h2>
+          <form class="dashboardForm">
+            <label>Default harbor
+              <select class="emby-select"><option>North Breakwater</option><option>Gull Cove</option></select>
+            </label>
+            <label>Display name
+              <input class="emby-input" type="text" value="Harbor Guest">
+            </label>
+            <label class="checkboxLabel">
+              <input class="emby-checkbox" type="checkbox" checked>
+              Show voyage progress
+            </label>
+            <button class="button-submit" type="button">Save settings</button>
+          </form>
+        </section>
+        <section class="dashboardSection" aria-labelledby="table-heading">
+          <h2 id="table-heading">Scheduled Tasks</h2>
+          <div class="tableContainer">
+            <table class="dataTable">
+              <thead><tr><th>Task</th><th>Status</th><th>Last run</th><th>Action</th></tr></thead>
+              <tbody>
+                <tr><td>Refresh tide charts</td><td>Ready</td><td>One bell ago</td><td><button class="button-flat" type="button">Run</button></td></tr>
+                <tr><td>Index lantern records</td><td>Paused</td><td>Four bells ago</td><td><button class="button-flat" type="button" disabled>Unavailable</button></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+    </main>
+  </body>
+</html>

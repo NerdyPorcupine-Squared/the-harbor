@@ -1,0 +1,83 @@
+.videoPlayerContainer {
+  position: relative;
+  display: grid;
+  min-height: 100svh;
+  place-items: center;
+  background-color: #000;
+  color: var(--harbor-parchment-100);
+}
+
+.videoSurface {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 68% 28%, rgb(216 189 130 / 48%) 0 7%, transparent 7.5%),
+    linear-gradient(165deg, #213f50 0 48%, #102a39 49% 62%, #02070a 63%);
+}
+
+.videoOsdBottom {
+  position: absolute;
+  z-index: 2;
+  inset-inline: 0;
+  inset-block-end: 0;
+  padding:
+    var(--harbor-space-6)
+    max(var(--harbor-space-4), env(safe-area-inset-right))
+    max(var(--harbor-space-4), env(safe-area-inset-bottom))
+    max(var(--harbor-space-4), env(safe-area-inset-left));
+  background: linear-gradient(0deg, rgb(0 0 0 / 94%), rgb(0 0 0 / 72%) 62%, transparent);
+}
+
+.osdTitle {
+  margin-block: 0 var(--harbor-space-3);
+  font-family: var(--harbor-font-display);
+  overflow-wrap: anywhere;
+}
+
+.osdControls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--harbor-space-2);
+}
+
+.playerButton {
+  min-width: 2.5rem;
+  min-height: 2.5rem;
+  border: 1px solid rgb(234 217 174 / 52%);
+  border-radius: 50%;
+  background-color: rgb(7 19 28 / 82%);
+  color: var(--harbor-parchment-100);
+}
+
+.slider {
+  min-width: min(100%, 10rem);
+  min-height: 2.5rem;
+  flex: 1 1 14rem;
+  accent-color: var(--harbor-brass-300);
+}
+
+.volumeSlider {
+  max-width: 10rem;
+}
+
+.osdTime {
+  min-width: max-content;
+  font-variant-numeric: tabular-nums;
+}
+
+@media (width <= 599px) {
+  .videoOsdBottom {
+    padding-block-start: 4rem;
+  }
+
+  .volumeSlider {
+    max-width: 7rem;
+  }
+}
+
+@media (forced-colors: active) {
+  .playerButton {
+    border-color: ButtonText;
+  }
+}
