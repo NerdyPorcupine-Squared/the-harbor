@@ -1,6 +1,15 @@
 {
   "version": 1,
-  "binaryFiles": [],
+  "binaryFiles": [
+    {
+      "path": "tests/visual/snapshots/shared-components-desktop.png",
+      "provenance": "generated-fixture"
+    },
+    {
+      "path": "tests/visual/snapshots/shared-components-mobile.png",
+      "provenance": "generated-fixture"
+    }
+  ],
   "publicFiles": [
     ".github/workflows/harbor-checks.yml",
     ".gitignore",
@@ -48,6 +57,8 @@
     "tests/visual/helpers.mjs",
     "tests/visual/shared-components.test.mjs",
     "tests/visual/snapshots/.gitkeep",
+    "tests/visual/snapshots/shared-components-desktop.png",
+    "tests/visual/snapshots/shared-components-mobile.png",
     "THIRD_PARTY_NOTICES.md",
     "theme.css"
   ]
