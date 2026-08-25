@@ -11,7 +11,13 @@ Every v1.0 visual asset in this directory was drawn by hand specifically for The
 ### `assets/parchment/fibers.svg`
 
 - Origin: Original Harbor artwork created for this repository.
-- Purpose: Low-contrast repeating fibers for opt-in parchment surfaces and restrained application-frame texture.
+- Purpose: Low-contrast repeating fibers for opt-in parchment surfaces and restrained application-frame texture. The tile is a seamless woven grid of crossed strip seams over finer organic fibers, echoing how papyrus sheets are actually laid.
+- Decorative: yes
+
+### `assets/parchment/mottle.svg`
+
+- Origin: Original Harbor artwork created for this repository.
+- Purpose: Soft tonal blotches and grain flecks that give parchment surfaces uneven, aged depth. Painted across the surface rather than tiled, so no seam ever repeats.
 - Decorative: yes
 
 ### `assets/icons/compass-rose.svg`

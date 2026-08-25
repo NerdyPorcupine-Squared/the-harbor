@@ -98,8 +98,25 @@
   border-color: var(--harbor-focus);
 }
 
-:where(.dialog, .actionSheet) :where(.emby-input, .emby-select) {
+:where(.harbor-parchment-surface, .actionSheet, .dialog, .harbor-metadata-panel)
+  :where(.emby-input, .emby-select) {
   border-color: rgb(42 33 24 / 44%);
   background-color: rgb(255 255 255 / 24%);
   color: var(--harbor-ink-900);
+}
+
+:where(.harbor-parchment-surface, .actionSheet, .dialog, .harbor-metadata-panel)
+  :where(.checkboxLabel, .fieldDescription, .inputLabel, label) {
+  color: var(--harbor-ink-900);
+}
+
+:where(.harbor-parchment-surface, .actionSheet, .dialog, .harbor-metadata-panel)
+  .emby-checkbox {
+  border-color: rgb(42 33 24 / 52%);
+  background-color: rgb(255 255 255 / 30%);
+}
+
+:where(.harbor-parchment-surface, .actionSheet, .dialog, .harbor-metadata-panel)
+  .emby-checkbox:checked {
+  background-color: var(--harbor-brass-500);
 }

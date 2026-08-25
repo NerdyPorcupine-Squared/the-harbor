@@ -10,6 +10,7 @@ const themeUrl = new URL("theme.css", repositoryUrl);
 const assetPaths = [
   "assets/logos/harbor-mark.svg",
   "assets/parchment/fibers.svg",
+  "assets/parchment/mottle.svg",
   "assets/icons/compass-rose.svg",
 ];
 

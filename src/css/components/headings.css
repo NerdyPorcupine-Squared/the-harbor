@@ -1,0 +1,37 @@
+.sectionTitle {
+  display: inline-block;
+  max-width: 100%;
+  border: var(--harbor-papyrus-border);
+  border-radius: var(--harbor-radius-sm);
+  padding: var(--harbor-space-2) var(--harbor-space-4);
+  margin-block: 0 var(--harbor-space-3);
+  background-color: var(--harbor-parchment-100);
+  background-image: var(--harbor-papyrus-image);
+  background-repeat: var(--harbor-papyrus-repeat);
+  background-size: var(--harbor-papyrus-size);
+  color: var(--harbor-ink-900);
+  box-shadow: var(--harbor-papyrus-edge), var(--harbor-shadow-parchment);
+  font-family: var(--harbor-font-display);
+  font-size: 1.25rem;
+  line-height: 1.3;
+  overflow-wrap: anywhere;
+}
+
+.sectionTitle::after {
+  display: block;
+  height: 0.125rem;
+  margin-block-start: var(--harbor-space-1);
+  background: linear-gradient(90deg, var(--harbor-brass-500), transparent);
+  content: "";
+}
+
+:where(.dialog, .actionSheet) .sectionTitle {
+  border: 0;
+  padding: 0;
+  background: none;
+  box-shadow: none;
+}
+
+:where(.dialog, .actionSheet) .sectionTitle::after {
+  display: none;
+}

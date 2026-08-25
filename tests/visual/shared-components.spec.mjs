@@ -56,8 +56,11 @@ test("shared Harbor components preserve responsive and accessible contracts", as
     expect(color).toBe("rgb(42, 33, 24)");
   }
 
-  const parchmentSurfaces = page.locator(".actionSheet, .dialog");
+  const parchmentSurfaces = page.locator(
+    ".actionSheet, .dialog, .sectionTitle, .mediaInfoItem, .harbor-metadata-panel",
+  );
   const parchmentSurfaceCount = await parchmentSurfaces.count();
+  expect(parchmentSurfaceCount).toBeGreaterThan(0);
 
   for (let index = 0; index < parchmentSurfaceCount; index += 1) {
     const surfaceStyle = await parchmentSurfaces.nth(index).evaluate((element) => {
@@ -65,10 +68,13 @@ test("shared Harbor components preserve responsive and accessible contracts", as
       return {
         backgroundColor: style.backgroundColor,
         backgroundImage: style.backgroundImage,
+        color: style.color,
       };
     });
     expect(surfaceStyle.backgroundColor).toBe("rgb(234, 217, 174)");
     expect(surfaceStyle.backgroundImage).toContain("fibers.svg");
+    expect(surfaceStyle.backgroundImage).toContain("mottle.svg");
+    expect(surfaceStyle.color).toBe("rgb(42, 33, 24)");
   }
 
   await expect(page).toHaveScreenshot(

@@ -4,6 +4,7 @@
 @import "./tokens/typography.css";
 @import "./tokens/motion.css";
 @import "./tokens/shadows.css";
+@import "./tokens/parchment.css";
 @import "./base/reset.css";
 @import "./base/shell.css";
 @import "./base/texture.css";
@@ -14,4 +15,6 @@
 @import "./components/forms.css";
 @import "./components/menus.css";
 @import "./components/dialogs.css";
+@import "./components/headings.css";
+@import "./components/metadata.css";
 @import "./accessibility.css";

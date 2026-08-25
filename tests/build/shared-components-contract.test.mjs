@@ -181,18 +181,20 @@ test("real action sheets and dialogs own their parchment backgrounds", async () 
   ]) {
     const block = declarationBlock(css, selector);
     assert.match(block, /background-color:\s*var\(--harbor-parchment-100\)/u);
-    assert.match(block, /background-image:[^;]*url\("\.\/assets\/parchment\/fibers\.svg"\)/su);
-    assert.match(block, /background-repeat:\s*no-repeat,\s*repeat/u);
+    assert.match(block, /background-image:\s*var\(--harbor-papyrus-image\)/u);
+    assert.match(block, /background-repeat:\s*var\(--harbor-papyrus-repeat\)/u);
+    assert.match(block, /background-size:\s*var\(--harbor-papyrus-size\)/u);
   }
 
   assert.doesNotMatch(
     fixture,
     /class="[^"]*(?:actionSheet|dialog)[^"]*harbor-parchment-surface/u,
   );
-  assert.match(spec, /page\.locator\("\.actionSheet, \.dialog"\)/u);
+  assert.match(spec, /\.actionSheet, \.dialog, \.sectionTitle, \.mediaInfoItem, \.harbor-metadata-panel/u);
   assert.match(spec, /backgroundColor/u);
   assert.match(spec, /backgroundImage/u);
   assert.match(spec, /fibers\.svg/u);
+  assert.match(spec, /mottle\.svg/u);
 });
 
 test("keeps parchment ink dark and global focus and motion preferences accessible", async () => {

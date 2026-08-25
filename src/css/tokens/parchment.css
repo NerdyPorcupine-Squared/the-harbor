@@ -1,0 +1,12 @@
+:root {
+  --harbor-papyrus-image:
+    radial-gradient(115% 85% at 14% 6%, rgb(255 250 232 / 34%), transparent 56%),
+    radial-gradient(105% 115% at 86% 98%, rgb(120 92 52 / 20%), transparent 60%),
+    url("./assets/parchment/mottle.svg"),
+    url("./assets/parchment/fibers.svg");
+  --harbor-papyrus-repeat: no-repeat, no-repeat, no-repeat, repeat;
+  --harbor-papyrus-size: cover, cover, cover, 6rem 6rem;
+  --harbor-papyrus-edge: inset 0 0 1.75rem rgb(120 92 52 / 20%);
+  --harbor-papyrus-border: 1px solid rgb(42 33 24 / 34%);
+  --harbor-papyrus-rule: 1px solid rgb(42 33 24 / 20%);
+}

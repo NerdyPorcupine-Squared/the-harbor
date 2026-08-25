@@ -131,7 +131,7 @@
 
       <main class="mainAnimatedPage fixture-main">
         <section class="fixture-section" aria-labelledby="fixture-cards-title">
-          <h2 id="fixture-cards-title">Recent Voyages</h2>
+          <h2 class="sectionTitle" id="fixture-cards-title">Recent Voyages</h2>
           <div class="fixture-card-grid">
             <article class="card">
               <div class="cardBox">
@@ -175,8 +175,37 @@
           </div>
         </section>
 
+        <section class="fixture-section" aria-labelledby="fixture-metadata-title">
+          <h2 class="sectionTitle" id="fixture-metadata-title">Voyage Record</h2>
+          <div class="itemMiscInfo">
+            <span class="mediaInfoItem">1874</span>
+            <span class="mediaInfoItem">2 h 14 m</span>
+            <span class="mediaInfoItem">Chart Room</span>
+            <span class="mediaInfoItem">Unrated</span>
+            <span class="mediaInfoItem">Four bells</span>
+          </div>
+
+          <div class="harbor-metadata-panel">
+            <dl>
+              <dt>Master of the vessel</dt>
+              <dd>Orla Finnegan-Reyes</dd>
+              <dt>Home port</dt>
+              <dd>North Breakwater</dd>
+              <dt>Log summary</dt>
+              <dd>
+                A survey crew charts the shoals beyond the beacon and returns with a
+                corrected map of every sandbar between the cove and the open water.
+              </dd>
+            </dl>
+            <label class="fixture-label">
+              Annotate this record
+              <input class="emby-input" type="text" value="Sighted the lantern at dusk" data-harbor-control data-harbor-parchment-control>
+            </label>
+          </div>
+        </section>
+
         <section class="fixture-section" aria-labelledby="fixture-controls-title">
-          <h2 id="fixture-controls-title">Controls</h2>
+          <h2 class="sectionTitle" id="fixture-controls-title">Controls</h2>
           <div class="fixture-controls">
             <button class="button-submit" type="button" autofocus data-harbor-control data-harbor-focused>
               Set Sail
@@ -205,7 +234,7 @@
         </section>
 
         <section class="fixture-section" aria-labelledby="fixture-surfaces-title">
-          <h2 id="fixture-surfaces-title">Menus and Messages</h2>
+          <h2 class="sectionTitle" id="fixture-surfaces-title">Menus and Messages</h2>
           <div class="fixture-surfaces">
             <aside class="actionSheet" aria-label="Voyage actions">
               <h3 class="actionSheetTitle">Voyage Actions</h3>
