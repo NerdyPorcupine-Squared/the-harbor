@@ -1,0 +1,82 @@
+.libraryPage {
+  min-width: 0;
+  padding:
+    var(--harbor-space-6)
+    max(var(--harbor-space-4), env(safe-area-inset-right))
+    max(var(--harbor-space-8), env(safe-area-inset-bottom))
+    max(var(--harbor-space-4), env(safe-area-inset-left));
+}
+
+.libraryToolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  gap: var(--harbor-space-3);
+  border: var(--harbor-papyrus-border);
+  border-radius: var(--harbor-radius-md);
+  padding: var(--harbor-space-4);
+  margin-block-end: var(--harbor-space-6);
+  background-color: var(--harbor-parchment-100);
+  background-image: var(--harbor-papyrus-image);
+  background-repeat: var(--harbor-papyrus-repeat);
+  background-size: var(--harbor-papyrus-size);
+  color: var(--harbor-ink-900);
+  box-shadow: var(--harbor-papyrus-edge), var(--harbor-shadow-parchment);
+}
+
+.libraryToolbar > * {
+  min-width: min(100%, 10rem);
+  flex: 1 1 10rem;
+}
+
+.libraryToolbar .emby-checkbox {
+  flex: 0 0 auto;
+}
+
+.libraryGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(10rem, 100%), 1fr));
+  gap: var(--harbor-space-4);
+  min-width: 0;
+}
+
+.libraryGrid .card-landscape {
+  grid-column: span 2;
+}
+
+.libraryGrid .card[aria-disabled="true"] {
+  filter: saturate(0.25);
+  opacity: 0.52;
+}
+
+.missingIndicator {
+  position: absolute;
+  inset: var(--harbor-space-4);
+  display: grid;
+  place-items: center;
+  border: 1px dashed rgb(216 189 130 / 52%);
+  color: var(--harbor-parchment-200);
+  font-family: var(--harbor-font-display);
+  text-align: center;
+}
+
+@media (width <= 599px) {
+  .libraryToolbar {
+    align-items: stretch;
+  }
+
+  .libraryGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .libraryGrid .card-landscape {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (width >= 1600px) {
+  .libraryPage {
+    width: min(100%, 104rem);
+    margin-inline: auto;
+  }
+}

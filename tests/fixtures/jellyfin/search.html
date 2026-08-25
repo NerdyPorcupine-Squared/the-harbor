@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Harbor search states fixture</title>
+    <link rel="stylesheet" href="../../../theme.css">
+    <style>
+      * { box-sizing: border-box; }
+      .fixture-header { min-height: 4.5rem; padding: 0.75rem 1rem; }
+      .fixture-header h1 { margin: 0; }
+      .fixture-art { background: radial-gradient(circle at 68% 25%, #d3b873 0 8%, transparent 9%), linear-gradient(155deg, #355c70 0 45%, #173647 46% 61%, #07131c 62%); }
+    </style>
+  </head>
+  <body class="skinBody">
+    <div class="backgroundContainer"></div>
+    <header class="skinHeader fixture-header"><h1>Search the Harbor</h1></header>
+    <main class="searchPage mainAnimatedPage">
+      <form class="searchForm" role="search">
+        <label class="hideForScreenReader" for="harbor-search">Search voyages</label>
+        <input class="emby-input" id="harbor-search" type="search" value="Beacon">
+        <button class="button-submit" type="button">Search</button>
+      </form>
+
+      <section class="searchState" data-search-state="populated" aria-labelledby="populated-heading">
+        <h2 class="sectionTitle" id="populated-heading">Results for Beacon</h2>
+        <div class="searchResults">
+          <article class="card">
+            <div class="cardBox">
+              <div class="cardImageContainer fixture-art">
+                <div class="cardOverlayContainer"><button class="cardOverlayButton" type="button" aria-label="Play Beacon Shoal">▶</button></div>
+              </div>
+              <div class="cardText">Beacon Shoal</div>
+              <div class="cardText cardText-secondary">First result</div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="searchState" data-search-state="empty" aria-labelledby="empty-heading">
+        <h2 class="sectionTitle" id="empty-heading">No tide records found</h2>
+        <div class="searchMessage">Try another title, person, or harbor.</div>
+      </section>
+
+      <section class="searchState" data-search-state="loading" aria-labelledby="loading-heading">
+        <h2 class="sectionTitle" id="loading-heading">Searching the manifest</h2>
+        <div class="searchMessage" role="status">
+          <span class="searchLoading" aria-hidden="true"></span>
+          Loading results without changing their order.
+        </div>
+      </section>
+
+      <section class="searchState" data-search-state="error" aria-labelledby="error-heading">
+        <h2 class="sectionTitle" id="error-heading">The manifest could not be opened</h2>
+        <div class="searchMessage searchMessage-error" role="alert">
+          The search failed. No results were reordered or removed.
+          <button class="button-flat" type="button">Try again</button>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

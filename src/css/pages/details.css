@@ -1,0 +1,150 @@
+.detailPage {
+  position: relative;
+  min-width: 0;
+  padding-block-end: max(var(--harbor-space-8), env(safe-area-inset-bottom));
+}
+
+.detailBackdrop {
+  position: relative;
+  height: clamp(18rem, 46svh, 34rem);
+  overflow: hidden;
+  background-color: var(--harbor-navy-900);
+  background-position: center;
+  background-size: cover;
+}
+
+.detailBackdrop::after {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(0deg, var(--harbor-navy-950), transparent 58%),
+    linear-gradient(90deg, rgb(7 19 28 / 72%), transparent 68%);
+  content: "";
+}
+
+.detailPagePrimaryContainer,
+.detailPageContent {
+  position: relative;
+  z-index: 1;
+  min-width: 0;
+  padding-inline:
+    max(var(--harbor-space-4), env(safe-area-inset-left))
+    max(var(--harbor-space-4), env(safe-area-inset-right));
+}
+
+.detailPagePrimaryContainer {
+  width: min(100%, 72rem);
+  margin-block-start: -10rem;
+}
+
+.detailPagePrimaryContainer .harbor-metadata-panel {
+  width: min(100%, 42rem);
+}
+
+.detailPageContent {
+  padding-block-start: var(--harbor-space-8);
+}
+
+.mainDetailButtons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--harbor-space-2);
+  margin-block-start: var(--harbor-space-4);
+}
+
+.overview {
+  max-width: 72ch;
+  line-height: 1.65;
+  overflow-wrap: anywhere;
+}
+
+.peopleSection,
+.seasonSection,
+.episodeList {
+  min-width: 0;
+  margin-block-start: var(--harbor-space-8);
+}
+
+.peopleItems {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(8rem, 100%), 11rem));
+  gap: var(--harbor-space-4);
+}
+
+.personCard {
+  min-width: 0;
+  border: 1px solid rgb(234 217 174 / 12%);
+  border-radius: var(--harbor-radius-md);
+  padding: var(--harbor-space-3);
+  background-color: rgb(7 19 28 / 72%);
+  overflow-wrap: anywhere;
+}
+
+.personCardPortrait {
+  aspect-ratio: 1;
+  border-radius: 50%;
+  margin-block-end: var(--harbor-space-2);
+  background-color: var(--harbor-navy-900);
+  background-position: center;
+  background-size: cover;
+}
+
+.seasonItems {
+  display: flex;
+  max-width: 100%;
+  gap: var(--harbor-space-2);
+  overflow-x: auto;
+  padding-block-end: var(--harbor-space-2);
+}
+
+.episode {
+  display: grid;
+  grid-template-columns: minmax(10rem, 18rem) minmax(0, 1fr);
+  gap: var(--harbor-space-4);
+  border-block-end: 1px solid rgb(234 217 174 / 14%);
+  padding-block: var(--harbor-space-4);
+}
+
+.episodeImage {
+  aspect-ratio: 16 / 9;
+  border-radius: var(--harbor-radius-sm);
+  background-color: var(--harbor-navy-900);
+  background-position: center;
+  background-size: cover;
+}
+
+.episodeBody {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+@media (width <= 599px) {
+  .detailBackdrop {
+    height: min(34svh, 18rem);
+  }
+
+  .detailPagePrimaryContainer {
+    margin-block-start: -4rem;
+  }
+
+  .episode {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (width >= 600px) {
+  .detailPagePrimaryContainer,
+  .detailPageContent {
+    padding-inline:
+      max(var(--harbor-space-8), env(safe-area-inset-left))
+      max(var(--harbor-space-8), env(safe-area-inset-right));
+  }
+}
+
+@media (width >= 1600px) {
+  .detailPagePrimaryContainer,
+  .detailPageContent {
+    width: min(100%, 104rem);
+    margin-inline: auto;
+  }
+}

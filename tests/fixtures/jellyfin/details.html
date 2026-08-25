@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Harbor details fixture</title>
+    <link rel="stylesheet" href="../../../theme.css">
+    <style>
+      * { box-sizing: border-box; }
+      .fixture-header { min-height: 4.5rem; padding: 0.75rem 1rem; }
+      .fixture-header h1 { margin: 0; }
+      .fixture-backdrop { background: radial-gradient(circle at 72% 24%, #d8bd82 0 7%, transparent 7.5%), linear-gradient(165deg, #31546b 0 48%, #173647 49% 62%, #07131c 63%); }
+      .fixture-person-one { background: radial-gradient(circle at 50% 37%, #d8bd82 0 24%, transparent 25%), linear-gradient(145deg, #31546b, #07131c); }
+      .fixture-person-two { background: radial-gradient(circle at 50% 37%, #ead9ae 0 24%, transparent 25%), linear-gradient(145deg, #43685f, #0c1d29); }
+      .fixture-episode { background: linear-gradient(170deg, #355c70 0 48%, #173647 49% 62%, #07131c 63%); }
+    </style>
+  </head>
+  <body class="skinBody">
+    <div class="backgroundContainer"></div>
+    <header class="skinHeader fixture-header"><h1>The Harbor</h1></header>
+    <main class="detailPage mainAnimatedPage">
+      <div class="detailBackdrop fixture-backdrop" aria-hidden="true"></div>
+      <section class="detailPagePrimaryContainer">
+        <div class="harbor-metadata-panel">
+          <div class="itemMiscInfo">
+            <span class="mediaInfoItem">1874</span>
+            <span class="mediaInfoItem">2 h 14 m</span>
+            <span class="mediaInfoItem">Four bells</span>
+          </div>
+          <h2>Beyond Beacon Shoal</h2>
+          <div class="mainDetailButtons">
+            <button class="button-submit" type="button" data-detail-play>▶ Play</button>
+            <button class="button-flat" type="button">Add to captain's list</button>
+          </div>
+        </div>
+      </section>
+      <div class="detailPageContent">
+        <section aria-labelledby="plot-heading">
+          <h2 class="sectionTitle" id="plot-heading">The Log</h2>
+          <p class="overview">
+            A cartographer follows a lantern beyond the known channel and discovers
+            a harbor missing from every chart. The recovered ledger contains the
+            reference UnbrokenChartReferenceWithoutAnyNaturalBreakPoints0123456789
+            so narrow and zoomed layouts must wrap safely.
+          </p>
+        </section>
+        <section class="peopleSection" aria-labelledby="people-heading">
+          <h2 class="sectionTitle" id="people-heading">People</h2>
+          <div class="peopleItems">
+            <article class="personCard"><div class="personCardPortrait fixture-person-one"></div><strong>Mara Vane</strong><br>Cartographer</article>
+            <article class="personCard"><div class="personCardPortrait fixture-person-two"></div><strong>Jonah Reed</strong><br>Lantern keeper</article>
+          </div>
+        </section>
+        <section class="seasonSection" aria-labelledby="season-heading">
+          <h2 class="sectionTitle" id="season-heading">Seasons</h2>
+          <div class="seasonItems">
+            <button class="button-submit" type="button">Season 1</button>
+            <button class="button-flat" type="button">Season 2</button>
+            <button class="button-flat" type="button" disabled>Season 3</button>
+          </div>
+        </section>
+        <section class="episodeList" aria-labelledby="episode-heading">
+          <h2 class="sectionTitle" id="episode-heading">Episodes</h2>
+          <article class="episode">
+            <div class="episodeImage fixture-episode"></div>
+            <div class="episodeBody">
+              <h3>1. The Lantern Beyond the Reef</h3>
+              <p>The crew sights an unfamiliar signal beyond the outer shoal.</p>
+              <div class="itemProgressBar"><div class="itemProgressBarForeground" style="width: 32%"></div></div>
+            </div>
+          </article>
+          <article class="episode">
+            <div class="episodeImage fixture-episode"></div>
+            <div class="episodeBody">
+              <h3>2. A Map Without a Margin</h3>
+              <p>The recovered chart points toward a passage hidden at low tide.</p>
+            </div>
+          </article>
+        </section>
+      </div>
+    </main>
+  </body>
+</html>
