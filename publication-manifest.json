@@ -1,8 +1,22 @@
 {
   "version": 1,
-  "binaryFiles": [],
+  "binaryFiles": [
+    {
+      "path": "tests/visual/snapshots/shared-components-desktop.png",
+      "provenance": "generated-fixture"
+    },
+    {
+      "path": "tests/visual/snapshots/shared-components-mobile.png",
+      "provenance": "generated-fixture"
+    }
+  ],
   "publicFiles": [
+    ".github/workflows/harbor-checks.yml",
     ".gitignore",
+    "assets/README.md",
+    "assets/icons/compass-rose.svg",
+    "assets/logos/harbor-mark.svg",
+    "assets/parchment/fibers.svg",
     "package-lock.json",
     "package.json",
     "publication-manifest.json",
@@ -11,14 +25,41 @@
     "scripts/check-publication.mjs",
     "scripts/css-imports.mjs",
     "scripts/css-syntax.mjs",
+    "scripts/run-visual.mjs",
     "src/css/index.css",
+    "src/css/base/reset.css",
+    "src/css/base/shell.css",
+    "src/css/base/texture.css",
+    "src/css/components/branding.css",
+    "src/css/components/navigation.css",
+    "src/css/components/cards.css",
+    "src/css/components/buttons.css",
+    "src/css/components/progress.css",
+    "src/css/accessibility/accessibility.css",
     "src/css/tokens/colors.css",
     "src/css/tokens/layout.css",
+    "src/css/tokens/motion.css",
+    "src/css/tokens/shadows.css",
     "src/css/tokens/typography.css",
+    "tests/build/core-assets.test.mjs",
     "tests/build/core-build.test.mjs",
+    "tests/build/ci-workflow.test.mjs",
     "tests/build/css-check.test.mjs",
     "tests/build/css-imports.test.mjs",
     "tests/build/publication-boundary.test.mjs",
+    "tests/fixtures/fixture.css",
+    "tests/fixtures/artwork-deep-current.svg",
+    "tests/fixtures/artwork-quiet-anchorage.svg",
+    "tests/fixtures/home-with-media-bar.html",
+    "tests/fixtures/home-without-media-bar.html",
+    "tests/fixtures/shared-components.html",
+    "tests/visual/harness.test.mjs",
+    "tests/visual/helpers.mjs",
+    "tests/visual/shared-components.test.mjs",
+    "tests/visual/snapshots/.gitkeep",
+    "tests/visual/snapshots/shared-components-desktop.png",
+    "tests/visual/snapshots/shared-components-mobile.png",
+    "THIRD_PARTY_NOTICES.md",
     "theme.css"
   ]
 }

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 900" role="img" aria-labelledby="title">
+  <title id="title">Invented quiet anchorage poster artwork</title>
+  <rect width="600" height="900" fill="#0c1d29"/>
+  <circle cx="430" cy="225" r="105" fill="#d8bd82" opacity=".8"/>
+  <path fill="#1e5265" d="M0 470 145 355l120 94 104-154 231 205v400H0V470Z"/>
+  <path fill="#07131c" d="M0 610c148-68 254 64 398 3 69-30 132-30 202-4v291H0V610Z"/>
+  <path fill="#b8944b" d="m285 458 30 0 0 250-30 0zM224 665h152v24H224z"/>
+</svg>

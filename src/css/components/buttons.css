@@ -1,0 +1,41 @@
+.headerButton,
+.emby-tab-button,
+.paper-icon-button-light,
+.cardOverlayButton,
+.cardMenuButton,
+.cardPlayButton,
+.card-actions button,
+.button-flat,
+.button-submit,
+.raised {
+  min-inline-size: 2.5rem;
+  min-block-size: 2.5rem;
+}
+
+.button-submit,
+.raised.button-submit,
+.card-actions button:first-child {
+  color: var(--harbor-ink-900);
+  background-color: var(--harbor-parchment-200);
+  border: 1px solid var(--harbor-brass-500);
+  border-radius: var(--harbor-radius-sm);
+  box-shadow: 0 0.2rem 0 var(--harbor-timber-900);
+}
+
+.button-flat,
+.card-actions button:not(:first-child) {
+  color: var(--harbor-parchment-100);
+  background-color: var(--harbor-navy-900);
+  border: 1px solid rgb(211 184 115 / 55%);
+  border-radius: var(--harbor-radius-sm);
+}
+
+.button-submit:not(:disabled, [aria-disabled="true"]):hover,
+.raised.button-submit:not(:disabled, [aria-disabled="true"]):hover,
+.card-actions button:not(:disabled, [aria-disabled="true"]):hover,
+.cardOverlayButton:not(:disabled, [aria-disabled="true"]):hover,
+.cardMenuButton:not(:disabled, [aria-disabled="true"]):hover,
+.cardPlayButton:not(:disabled, [aria-disabled="true"]):hover {
+  border-color: var(--harbor-brass-300);
+  box-shadow: 0 0 0 2px rgb(211 184 115 / 34%);
+}

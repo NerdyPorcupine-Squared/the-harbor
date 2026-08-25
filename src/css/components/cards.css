@@ -1,0 +1,66 @@
+.cardBox {
+  color: var(--harbor-parchment-100);
+  background-color: var(--harbor-navy-900);
+  border: 1px solid rgb(184 148 75 / 48%);
+  border-radius: var(--harbor-radius-md);
+  box-shadow: var(--harbor-shadow-dark);
+  transition:
+    border-color var(--harbor-motion-fast) ease,
+    box-shadow var(--harbor-motion-fast) ease,
+    transform var(--harbor-motion-standard) ease;
+}
+
+.card:hover .cardBox,
+.card:focus-within .cardBox,
+.cardBox:hover,
+.cardBox:focus-within {
+  border-color: var(--harbor-brass-300);
+  box-shadow:
+    0 0 0 1px var(--harbor-brass-500),
+    var(--harbor-shadow-dark);
+}
+
+.cardImageContainer,
+.cardImage,
+.cardImageContainer img {
+  object-fit: cover;
+  object-position: center;
+}
+
+.cardImage,
+.cardImageContainer img {
+  inline-size: 100%;
+  block-size: 100%;
+}
+
+.cardText,
+.cardText-secondary {
+  color: var(--harbor-parchment-100);
+}
+
+.cardOverlayContainer,
+.cardOverlayButton,
+.cardMenuButton,
+.cardPlayButton {
+  color: var(--harbor-parchment-100);
+}
+
+.cardOverlayButton,
+.cardMenuButton,
+.cardPlayButton {
+  border-color: rgb(211 184 115 / 58%);
+  background-color: rgb(7 19 28 / 82%);
+}
+
+.playedIndicator,
+.favoriteIndicator {
+  color: var(--harbor-ink-900);
+  background-color: var(--harbor-brass-300);
+}
+
+.countIndicator,
+.mediaSourceIndicator {
+  color: var(--harbor-parchment-100);
+  background-color: rgb(7 19 28 / 86%);
+  border: 1px solid rgb(211 184 115 / 58%);
+}

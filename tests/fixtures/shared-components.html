@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Harbor shared component fixture</title>
+    <link rel="stylesheet" href="../../theme.css">
+    <link rel="stylesheet" href="fixture.css">
+  </head>
+  <body>
+    <header class="skinHeader headerTop">
+      <button class="headerButton" type="button" aria-label="Open navigation">☰</button>
+      <a class="headerLogo pageTitleWithLogo" href="shared-components.html" aria-label="Home">
+        <img src="../../assets/icons/compass-rose.svg" alt="Legacy media server emblem">
+      </a>
+      <nav class="headerTabs" aria-label="Main sections">
+        <button class="emby-tab-button" type="button" aria-selected="true">Home</button>
+        <button class="emby-tab-button" type="button" aria-selected="false">Voyages</button>
+      </nav>
+      <button class="headerButton" type="button" aria-label="Search">⌕</button>
+    </header>
+    <main class="mainAnimatedPage component-stage">
+      <section class="horizontalSection" aria-labelledby="component-title">
+        <div class="section-header">
+          <h1 class="section-title" id="component-title">Shared Components</h1>
+          <button class="paper-icon-button-light" type="button" aria-label="Next row">→</button>
+        </div>
+        <div class="itemsContainer">
+          <article class="card">
+            <div class="cardBox">
+              <div class="cardScalable">
+                <div class="cardImageContainer">
+                  <img class="cardImage" src="artwork-quiet-anchorage.svg" alt="Invented quiet anchorage poster artwork">
+                </div>
+                <div class="cardOverlayContainer">
+                  <button class="cardPlayButton" type="button" aria-label="Play Quiet Anchorage">▶</button>
+                  <button class="cardMenuButton" type="button" aria-label="More actions for Quiet Anchorage">⋯</button>
+                </div>
+                <span class="favoriteIndicator" aria-label="Favorite">♥</span>
+                <span class="playedIndicator" aria-label="Watched">✓</span>
+                <span class="countIndicator" aria-label="Three unwatched episodes">3</span>
+                <span class="mediaSourceIndicator" aria-label="Ultra high definition">4K</span>
+                <div class="itemProgressBar" aria-label="62 percent watched">
+                  <div class="itemProgressBarForeground"></div>
+                </div>
+              </div>
+              <h2 class="cardText">Quiet Anchorage</h2>
+              <div class="card-actions">
+                <button type="button">Play</button>
+                <button type="button">Details</button>
+              </div>
+            </div>
+          </article>
+          <article class="card landscape">
+            <div class="cardBox">
+              <div class="cardScalable">
+                <div class="cardImageContainer">
+                  <img class="cardImage" src="artwork-deep-current.svg" alt="Invented deep current landscape artwork">
+                </div>
+                <div class="cardOverlayContainer">
+                  <button class="cardPlayButton" type="button" aria-label="Play Deep Current">▶</button>
+                  <button class="cardMenuButton" type="button" aria-label="More actions for Deep Current">⋯</button>
+                </div>
+              </div>
+              <h2 class="cardText">Deep Current</h2>
+              <div class="card-actions">
+                <button type="button">Play</button>
+                <button type="button">Details</button>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

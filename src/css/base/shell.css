@@ -1,0 +1,34 @@
+html,
+body {
+  min-block-size: 100%;
+  background-color: var(--harbor-navy-950);
+}
+
+body {
+  color: var(--harbor-parchment-100);
+  font-family: var(--harbor-font-body);
+}
+
+.backgroundContainer,
+.mainAnimatedPage,
+.page {
+  min-block-size: 100%;
+  background-color: var(--harbor-navy-950);
+}
+
+.backgroundContainer {
+  background-image: linear-gradient(
+    160deg,
+    var(--harbor-navy-900),
+    var(--harbor-navy-950) 62%
+  );
+}
+
+.skinHeader,
+.drawer,
+.mainDrawer,
+.drawer-content {
+  color: var(--harbor-parchment-100);
+  background-color: var(--harbor-timber-900);
+  box-shadow: var(--harbor-shadow-dark);
+}

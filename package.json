@@ -12,6 +12,11 @@
     "lint:css": "node scripts/check-css.mjs",
     "format:check": "node scripts/check-css.mjs --format",
     "test:build": "node --test tests/build/*.test.mjs",
+    "test:visual": "node scripts/run-visual.mjs",
+    "test:visual:update": "node scripts/run-visual.mjs --update",
     "verify:core": "npm run lint:css && npm run format:check && npm run test:build && npm run check:publication"
+  },
+  "devDependencies": {
+    "playwright": "1.62.1"
   }
 }

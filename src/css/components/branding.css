@@ -1,0 +1,45 @@
+.skinHeader .headerLogo,
+.skinHeader .pageTitleWithLogo,
+.skinHeader .harbor-brand {
+  color: var(--harbor-ink-900);
+  background-color: transparent;
+  background-image: url("assets/logos/harbor-mark.svg");
+  background-repeat: no-repeat;
+  background-position: left center;
+  background-size: auto 2.5rem;
+}
+
+.skinHeader .headerLogo,
+.skinHeader .pageTitleWithLogo {
+  display: inline-flex;
+  align-items: center;
+  min-inline-size: 10rem;
+  min-block-size: 2.75rem;
+  padding-inline-start: 2.5rem;
+}
+
+.skinHeader .headerLogo::after,
+.skinHeader .pageTitleWithLogo::after {
+  content: "The Harbor";
+  color: var(--harbor-ink-900);
+  font-family: var(--harbor-font-display);
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+
+.skinHeader .headerLogo > img,
+.skinHeader .headerLogo > svg,
+.skinHeader .pageTitleWithLogo > img,
+.skinHeader .pageTitleWithLogo > svg {
+  display: none;
+}
+
+.skinHeader .harbor-brand {
+  min-block-size: 2.5rem;
+  padding-inline-start: 2.25rem;
+  font-family: var(--harbor-font-display);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
