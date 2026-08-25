@@ -10,7 +10,7 @@
     "build:css": "node scripts/build-css.mjs",
     "lint:css": "node scripts/check-css.mjs",
     "format:check": "node scripts/check-css.mjs --format",
-    "test:build": "node --test tests/build/*.test.mjs",
+    "test:build": "node scripts/run-build-tests.mjs",
     "test:visual": "playwright test",
     "test:visual:update": "playwright test --update-snapshots",
     "check:publication": "node scripts/check-publication.mjs",

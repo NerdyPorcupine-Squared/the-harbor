@@ -26,6 +26,7 @@
     "scripts/check-publication.mjs",
     "scripts/css-imports.mjs",
     "scripts/css-syntax.mjs",
+    "scripts/run-build-tests.mjs",
     "src/css/accessibility.css",
     "src/css/base/reset.css",
     "src/css/base/shell.css",

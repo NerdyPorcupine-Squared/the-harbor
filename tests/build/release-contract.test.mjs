@@ -109,6 +109,10 @@ test("package scripts expose publication and release verification", async () => 
   const packageJson = JSON.parse(await readRepositoryFile("package.json"));
 
   assert.equal(
+    packageJson.scripts?.["test:build"],
+    "node scripts/run-build-tests.mjs",
+  );
+  assert.equal(
     packageJson.scripts?.["check:publication"],
     "node scripts/check-publication.mjs",
   );

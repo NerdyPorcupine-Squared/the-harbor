@@ -47,7 +47,7 @@ The latest local candidate passed:
   skipped because the account lacks symlink permission).
 - `npm run test:visual`: 27 passing Chromium checks across desktop and mobile;
   three duplicate conditional viewport checks skipped by design.
-- `npm run check:publication`: exact 102-file sanitized candidate accepted.
+- `npm run check:publication`: exact 103-file sanitized candidate accepted.
 - `npm run verify:release`: complete local release command accepted.
 - A detached clean checkout with `npm ci` also passed `npm run verify:release`.
 - Two consecutive CSS builds are byte-identical.
