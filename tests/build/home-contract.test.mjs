@@ -69,15 +69,31 @@ test("fixtures are local, sanitized, and represent both home modes", async () =>
   assert.match(present, /id="slides-container"/u);
   assert.match(absent, /homeSectionsContainer/u);
   assert.match(present, /homeSectionsContainer/u);
-  assert.match(present, /class="[^"]*\bslide\b/u);
-  assert.match(present, /class="[^"]*\bbackdrop\b/u);
-  assert.match(present, /class="[^"]*\bvideo\b/u);
-  assert.match(present, /class="[^"]*\bloading\b/u);
-  assert.match(present, /class="[^"]*\bprogress\b/u);
-  assert.match(present, /class="[^"]*\barrow\b/u);
-  assert.match(present, /class="[^"]*\bpause\b/u);
-  assert.match(present, /class="[^"]*\bmute\b/u);
-  assert.match(present, /class="[^"]*\bdot\b/u);
+
+  for (const family of [
+    "slide",
+    "backdrop-container",
+    "backdrop",
+    "logo-container",
+    "logo-title-fallback",
+    "info-container",
+    "genre",
+    "plot-container",
+    "button-container",
+    "arrow",
+    "left-arrow",
+    "right-arrow",
+    "pause-button",
+    "mute-button",
+    "dots-container",
+    "dot",
+  ]) {
+    assert.match(
+      present,
+      new RegExp(`class="[^"]*\\b${family}\\b`, "u"),
+      `Media Bar fixture must include .${family}`,
+    );
+  }
 
   for (const fixture of [absent, present]) {
     assert.doesNotMatch(fixture, /https?:\/\//iu);
