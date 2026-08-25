@@ -13,7 +13,9 @@
     "test:build": "node --test tests/build/*.test.mjs",
     "test:visual": "playwright test",
     "test:visual:update": "playwright test --update-snapshots",
-    "verify:core": "npm run lint:css && npm run format:check && npm run test:build"
+    "check:publication": "node scripts/check-publication.mjs",
+    "verify:core": "npm run lint:css && npm run format:check && npm run test:build",
+    "verify:release": "npm run verify:core && npm run check:publication && npm run test:visual"
   },
   "devDependencies": {
     "playwright": "1.62.1"
