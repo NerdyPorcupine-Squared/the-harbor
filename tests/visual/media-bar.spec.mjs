@@ -11,7 +11,7 @@ test.beforeEach(async ({ page }) => {
   await page.goto(fixtureUrl);
 });
 
-test("Media Bar forms a responsive, accessible trailer hero", async ({
+test("Media Bar forms a responsive, accessible trailer hero when plugin CSS loads after Harbor", async ({
   page,
 }, testInfo) => {
   const viewport = page.viewportSize();
@@ -33,13 +33,20 @@ test("Media Bar forms a responsive, accessible trailer hero", async ({
   expect(rowOffsetFromHeroBottom).toBeGreaterThanOrEqual(-40);
   expect(rowOffsetFromHeroBottom).toBeLessThanOrEqual(80);
 
-  const metadataBox = await page
-    .locator("#slides-container .harbor-metadata-panel")
+  const logoBox = await page
+    .locator("#slides-container .logo-container")
     .boundingBox();
-  expect(metadataBox).not.toBeNull();
+  expect(logoBox).not.toBeNull();
   if (testInfo.project.name === "desktop") {
-    expect(metadataBox.width / heroBox.width).toBeLessThanOrEqual(0.48);
+    expect(logoBox.width / heroBox.width).toBeLessThanOrEqual(0.48);
   }
+
+  const plotBox = await page
+    .locator("#slides-container .plot-container")
+    .boundingBox();
+  expect(plotBox).not.toBeNull();
+  expect(plotBox.x).toBeGreaterThanOrEqual(heroBox.x);
+  expect(plotBox.x + plotBox.width).toBeLessThanOrEqual(heroBox.x + heroBox.width);
 
   const overflow = await page.evaluate(() => ({
     clientWidth: document.documentElement.clientWidth,
