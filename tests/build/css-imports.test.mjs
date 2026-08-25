@@ -120,7 +120,33 @@ test("rejects imports outside the configured source root", async () => {
   }
 });
 
-test("rejects symlinks that escape the configured source root", async () => {
+test("rejects linked directories that escape the configured source root", async () => {
+  const parentPath = await mkdtemp(join(tmpdir(), "harbor-css-junction-"));
+  const rootPath = join(parentPath, "source");
+
+  try {
+    await mkdir(rootPath);
+    await mkdir(join(parentPath, "outside"));
+    await writeFile(join(parentPath, "outside", "linked.css"), ".outside {}\n", "utf8");
+    await writeFile(join(rootPath, "entry.css"), '@import "./escape/linked.css";\n', "utf8");
+    await symlink(
+      join(parentPath, "outside"),
+      join(rootPath, "escape"),
+      process.platform === "win32" ? "junction" : "dir",
+    );
+
+    await assert.rejects(
+      bundleCss(pathToFileURL(join(rootPath, "entry.css")), {
+        rootDir: pathToFileURL(`${rootPath}/`),
+      }),
+      /\[Harbor CSS\].*outside/u,
+    );
+  } finally {
+    await rm(parentPath, { recursive: true, force: true });
+  }
+});
+
+test("rejects file symlinks that escape the configured source root", async (t) => {
   const parentPath = await mkdtemp(join(tmpdir(), "harbor-css-symlink-"));
   const rootPath = join(parentPath, "source");
 
@@ -128,7 +154,14 @@ test("rejects symlinks that escape the configured source root", async () => {
     await mkdir(rootPath);
     await writeFile(join(parentPath, "outside.css"), ".outside {}\n", "utf8");
     await writeFile(join(rootPath, "entry.css"), '@import "./linked.css";\n', "utf8");
-    await symlink(join(parentPath, "outside.css"), join(rootPath, "linked.css"));
+
+    try {
+      await symlink(join(parentPath, "outside.css"), join(rootPath, "linked.css"));
+    } catch (error) {
+      if (error?.code !== "EPERM") throw error;
+      t.skip("this operating system account may not create file symlinks");
+      return;
+    }
 
     await assert.rejects(
       bundleCss(pathToFileURL(join(rootPath, "entry.css")), {

@@ -77,7 +77,11 @@ test("configures deterministic file-backed desktop and mobile visual projects", 
   assert.match(config, /viewport:\s*\{\s*width:\s*390,\s*height:\s*844\s*\}/u);
   assert.match(config, /trace:\s*"on-first-retry"/u);
   assert.match(config, /screenshot:\s*"only-on-failure"/u);
-  assert.match(config, /snapshotPathTemplate:\s*"\{testDir\}\/snapshots\/\{arg\}\{ext\}"/u);
+  assert.match(
+    config,
+    /snapshotPathTemplate:\s*"\{testDir\}\/snapshots\/\{platform\}\/\{arg\}\{ext\}"/u,
+    "pixel baselines must be scoped per platform because font rasterization differs by operating system",
+  );
   assert.doesNotMatch(config, /webServer/u);
 
   assert.match(spec, /pathToFileURL/u);

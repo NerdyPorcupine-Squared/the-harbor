@@ -3,7 +3,7 @@ import { defineConfig } from "playwright/test";
 export default defineConfig({
   testDir: "./tests/visual",
   outputDir: "./test-results",
-  snapshotPathTemplate: "{testDir}/snapshots/{arg}{ext}",
+  snapshotPathTemplate: "{testDir}/snapshots/{platform}/{arg}{ext}",
   fullyParallel: false,
   forbidOnly: Boolean(process.env.CI),
   retries: process.env.CI ? 2 : 0,

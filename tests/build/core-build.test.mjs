@@ -1,23 +1,25 @@
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import { spawn, spawnSync } from "node:child_process";
+import { fileURLToPath } from "node:url";
 import test from "node:test";
 
 import { normalizeCss } from "../../scripts/build-css.mjs";
 
-const npmCommand = process.platform === "win32" ? "npm.cmd" : "npm";
+const repositoryUrl = new URL("../../", import.meta.url);
+const buildScriptPath = fileURLToPath(new URL("scripts/build-css.mjs", repositoryUrl));
 
 function buildCore() {
-  return spawnSync(npmCommand, ["run", "build:css"], {
-    cwd: new URL("../..", import.meta.url),
+  return spawnSync(process.execPath, [buildScriptPath], {
+    cwd: repositoryUrl,
     encoding: "utf8",
   });
 }
 
 function buildCoreAsync() {
   return new Promise((resolve) => {
-    const child = spawn(npmCommand, ["run", "build:css"], {
-      cwd: new URL("../..", import.meta.url),
+    const child = spawn(process.execPath, [buildScriptPath], {
+      cwd: repositoryUrl,
     });
     let stdout = "";
     let stderr = "";
@@ -36,6 +38,14 @@ function buildCoreAsync() {
 
 test("normalizes CRLF and lone CR line endings", () => {
   assert.equal(normalizeCss("one\r\ntwo\rthree"), "one\ntwo\nthree\n");
+});
+
+test("wires the published build script to the generator this suite exercises", async () => {
+  const packageJson = JSON.parse(
+    await readFile(new URL("package.json", repositoryUrl), "utf8"),
+  );
+
+  assert.equal(packageJson.scripts?.["build:css"], "node scripts/build-css.mjs");
 });
 
 test("Core build emits a deterministic flattened release stylesheet", async () => {

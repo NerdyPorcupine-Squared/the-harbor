@@ -43,6 +43,7 @@ async function resolveImports(fileUrl, rootPath, activeFiles) {
   }
 
   assertInsideRoot(canonicalFilePath, rootPath);
+  const canonicalFileUrl = pathToFileURL(canonicalFilePath);
 
   if (activeFiles.includes(canonicalFilePath)) {
     const cycle = [...activeFiles, canonicalFilePath].map((path) =>
@@ -72,7 +73,7 @@ async function resolveImports(fileUrl, rootPath, activeFiles) {
   for (const match of source.matchAll(localImportPattern)) {
     chunks.push(source.slice(lastIndex, match.index));
 
-    const importedUrl = new URL(match[2], fileUrl);
+    const importedUrl = new URL(match[2], canonicalFileUrl);
     if (importedUrl.protocol !== "file:") {
       throw harborError(`Only local CSS imports are allowed: ${match[2]}`);
     }
@@ -105,5 +106,18 @@ export async function bundleCss(entryPath, options = {}) {
     throw harborError(`Unable to read configured source root ${rootUrl.href}`, error);
   }
 
-  return resolveImports(entryUrl, rootPath, []);
+  if (entryUrl.protocol !== "file:") {
+    throw harborError(`Only local CSS imports are allowed: ${entryUrl.href}`);
+  }
+
+  const entryFilePath = fileURLToPath(entryUrl);
+  let canonicalEntryPath;
+
+  try {
+    canonicalEntryPath = await realpath(entryFilePath);
+  } catch (error) {
+    throw harborError(`Unable to read imported stylesheet ${entryFilePath}`, error);
+  }
+
+  return resolveImports(pathToFileURL(canonicalEntryPath), rootPath, []);
 }
