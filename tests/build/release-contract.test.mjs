@@ -61,12 +61,12 @@ test("compatibility docs separate automated and real-server evidence", async () 
   assert.doesNotMatch(matrix, /\bPass(?:ed)?\b/iu);
 });
 
-test("CI runs clean Linux build, publication, and Chromium gates", async () => {
+test("CI runs clean Windows build, publication, and Chromium gates", async () => {
   const workflow = await readRepositoryFile(".github/workflows/ci.yml");
 
-  assert.match(workflow, /ubuntu-latest/u);
+  assert.match(workflow, /windows-latest/u);
   assert.match(workflow, /npm ci/u);
-  assert.match(workflow, /playwright install --with-deps chromium/u);
+  assert.match(workflow, /playwright install chromium/u);
   assert.match(workflow, /npm run verify:core/u);
   assert.match(workflow, /npm run check:publication/u);
   assert.match(workflow, /npm run test:visual/u);
