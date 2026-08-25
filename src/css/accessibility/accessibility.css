@@ -1,0 +1,50 @@
+:where(a, button, input, select, textarea, [tabindex]):focus-visible {
+  outline: 3px solid var(--harbor-focus);
+  outline-offset: 3px;
+}
+
+.skinHeader :where(a, button, [tabindex]):focus-visible {
+  outline-color: var(--harbor-ink-900);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --harbor-motion-fast: 0.01ms;
+    --harbor-motion-standard: 0.01ms;
+  }
+
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+
+@media (forced-colors: active) {
+  .skinHeader,
+  .cardBox,
+  .button-flat,
+  .button-submit,
+  .cardOverlayButton,
+  .cardMenuButton,
+  .cardPlayButton {
+    border: 1px solid CanvasText;
+  }
+
+  .skinHeader .emby-tab-button[aria-selected="true"],
+  .skinHeader .emby-tab-button.emby-tab-button-active {
+    border-color: Highlight;
+  }
+
+  :where(a, button, input, select, textarea, [tabindex]):focus-visible {
+    outline-color: Highlight;
+  }
+
+  .skinHeader :where(a, button, [tabindex]):focus-visible {
+    outline-color: Highlight;
+  }
+}

@@ -1,0 +1,16 @@
+.itemProgressBar,
+.emby-progressbar {
+  overflow: hidden;
+  background-color: rgb(234 217 174 / 24%);
+  border-radius: 999px;
+}
+
+.itemProgressBarForeground,
+.emby-progressbar-inner {
+  background-color: var(--harbor-brass-300);
+  box-shadow: 0 0 0.45rem rgb(211 184 115 / 45%);
+}
+
+.card .itemProgressBar {
+  min-block-size: 0.3rem;
+}

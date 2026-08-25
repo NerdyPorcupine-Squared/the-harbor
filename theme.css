@@ -112,3 +112,278 @@ body {
   background-color: var(--harbor-parchment-100);
   background-image: url("assets/parchment/fibers.svg");
 }
+.skinHeader .headerLogo,
+.skinHeader .pageTitleWithLogo,
+.skinHeader .harbor-brand {
+  color: var(--harbor-ink-900);
+  background-color: transparent;
+  background-image: url("assets/logos/harbor-mark.svg");
+  background-repeat: no-repeat;
+  background-position: left center;
+  background-size: auto 2.5rem;
+}
+
+.skinHeader .headerLogo,
+.skinHeader .pageTitleWithLogo {
+  display: inline-flex;
+  align-items: center;
+  min-inline-size: 10rem;
+  min-block-size: 2.75rem;
+  padding-inline-start: 2.5rem;
+}
+
+.skinHeader .headerLogo::after,
+.skinHeader .pageTitleWithLogo::after {
+  content: "The Harbor";
+  color: var(--harbor-ink-900);
+  font-family: var(--harbor-font-display);
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+
+.skinHeader .headerLogo > img,
+.skinHeader .headerLogo > svg,
+.skinHeader .pageTitleWithLogo > img,
+.skinHeader .pageTitleWithLogo > svg {
+  display: none;
+}
+
+.skinHeader .harbor-brand {
+  min-block-size: 2.5rem;
+  padding-inline-start: 2.25rem;
+  font-family: var(--harbor-font-display);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+.skinHeader {
+  color: var(--harbor-ink-900);
+  background-color: var(--harbor-parchment-100);
+  background-image:
+    linear-gradient(90deg, rgb(234 217 174 / 96%), rgb(216 189 130 / 94%)),
+    url("assets/parchment/fibers.svg");
+  border-block-end: 0.25rem solid var(--harbor-timber-900);
+  box-shadow: var(--harbor-shadow-parchment);
+}
+
+.skinHeader .headerTabs {
+  min-inline-size: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.skinHeader .headerTabs::-webkit-scrollbar {
+  display: none;
+}
+
+.skinHeader .headerButton,
+.skinHeader .emby-tab-button,
+.skinHeader .paper-icon-button-light,
+.skinHeader a {
+  color: var(--harbor-ink-900);
+}
+
+.skinHeader .emby-tab-button {
+  border: 1px solid transparent;
+  border-radius: var(--harbor-radius-sm);
+  background-color: transparent;
+  transition:
+    border-color var(--harbor-motion-fast) ease,
+    box-shadow var(--harbor-motion-fast) ease,
+    color var(--harbor-motion-fast) ease;
+}
+
+.skinHeader .emby-tab-button[aria-selected="true"],
+.skinHeader .emby-tab-button.emby-tab-button-active {
+  border-color: var(--harbor-brass-500);
+  box-shadow: inset 0 -0.2rem 0 var(--harbor-brass-500);
+}
+
+.drawer .navMenuOption,
+.mainDrawer .navMenuOption {
+  color: var(--harbor-parchment-100);
+  border-inline-start: 0.2rem solid transparent;
+}
+
+.drawer .navMenuOption-selected,
+.mainDrawer .navMenuOption-selected,
+.drawer .navMenuOption[aria-current="page"],
+.mainDrawer .navMenuOption[aria-current="page"] {
+  color: var(--harbor-focus);
+  border-inline-start-color: var(--harbor-brass-500);
+  background-color: rgb(184 148 75 / 16%);
+}
+.cardBox {
+  color: var(--harbor-parchment-100);
+  background-color: var(--harbor-navy-900);
+  border: 1px solid rgb(184 148 75 / 48%);
+  border-radius: var(--harbor-radius-md);
+  box-shadow: var(--harbor-shadow-dark);
+  transition:
+    border-color var(--harbor-motion-fast) ease,
+    box-shadow var(--harbor-motion-fast) ease,
+    transform var(--harbor-motion-standard) ease;
+}
+
+.card:hover .cardBox,
+.card:focus-within .cardBox,
+.cardBox:hover,
+.cardBox:focus-within {
+  border-color: var(--harbor-brass-300);
+  box-shadow:
+    0 0 0 1px var(--harbor-brass-500),
+    var(--harbor-shadow-dark);
+}
+
+.cardImageContainer,
+.cardImage,
+.cardImageContainer img {
+  object-fit: cover;
+  object-position: center;
+}
+
+.cardImage,
+.cardImageContainer img {
+  inline-size: 100%;
+  block-size: 100%;
+}
+
+.cardText,
+.cardText-secondary {
+  color: var(--harbor-parchment-100);
+}
+
+.cardOverlayContainer,
+.cardOverlayButton,
+.cardMenuButton,
+.cardPlayButton {
+  color: var(--harbor-parchment-100);
+}
+
+.cardOverlayButton,
+.cardMenuButton,
+.cardPlayButton {
+  border-color: rgb(211 184 115 / 58%);
+  background-color: rgb(7 19 28 / 82%);
+}
+
+.playedIndicator,
+.favoriteIndicator {
+  color: var(--harbor-ink-900);
+  background-color: var(--harbor-brass-300);
+}
+
+.countIndicator,
+.mediaSourceIndicator {
+  color: var(--harbor-parchment-100);
+  background-color: rgb(7 19 28 / 86%);
+  border: 1px solid rgb(211 184 115 / 58%);
+}
+.headerButton,
+.emby-tab-button,
+.paper-icon-button-light,
+.cardOverlayButton,
+.cardMenuButton,
+.cardPlayButton,
+.card-actions button,
+.button-flat,
+.button-submit,
+.raised {
+  min-inline-size: 2.5rem;
+  min-block-size: 2.5rem;
+}
+
+.button-submit,
+.raised.button-submit,
+.card-actions button:first-child {
+  color: var(--harbor-ink-900);
+  background-color: var(--harbor-parchment-200);
+  border: 1px solid var(--harbor-brass-500);
+  border-radius: var(--harbor-radius-sm);
+  box-shadow: 0 0.2rem 0 var(--harbor-timber-900);
+}
+
+.button-flat,
+.card-actions button:not(:first-child) {
+  color: var(--harbor-parchment-100);
+  background-color: var(--harbor-navy-900);
+  border: 1px solid rgb(211 184 115 / 55%);
+  border-radius: var(--harbor-radius-sm);
+}
+
+.button-submit:not(:disabled, [aria-disabled="true"]):hover,
+.raised.button-submit:not(:disabled, [aria-disabled="true"]):hover,
+.card-actions button:not(:disabled, [aria-disabled="true"]):hover,
+.cardOverlayButton:not(:disabled, [aria-disabled="true"]):hover,
+.cardMenuButton:not(:disabled, [aria-disabled="true"]):hover,
+.cardPlayButton:not(:disabled, [aria-disabled="true"]):hover {
+  border-color: var(--harbor-brass-300);
+  box-shadow: 0 0 0 2px rgb(211 184 115 / 34%);
+}
+.itemProgressBar,
+.emby-progressbar {
+  overflow: hidden;
+  background-color: rgb(234 217 174 / 24%);
+  border-radius: 999px;
+}
+
+.itemProgressBarForeground,
+.emby-progressbar-inner {
+  background-color: var(--harbor-brass-300);
+  box-shadow: 0 0 0.45rem rgb(211 184 115 / 45%);
+}
+
+.card .itemProgressBar {
+  min-block-size: 0.3rem;
+}
+:where(a, button, input, select, textarea, [tabindex]):focus-visible {
+  outline: 3px solid var(--harbor-focus);
+  outline-offset: 3px;
+}
+
+.skinHeader :where(a, button, [tabindex]):focus-visible {
+  outline-color: var(--harbor-ink-900);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --harbor-motion-fast: 0.01ms;
+    --harbor-motion-standard: 0.01ms;
+  }
+
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+
+@media (forced-colors: active) {
+  .skinHeader,
+  .cardBox,
+  .button-flat,
+  .button-submit,
+  .cardOverlayButton,
+  .cardMenuButton,
+  .cardPlayButton {
+    border: 1px solid CanvasText;
+  }
+
+  .skinHeader .emby-tab-button[aria-selected="true"],
+  .skinHeader .emby-tab-button.emby-tab-button-active {
+    border-color: Highlight;
+  }
+
+  :where(a, button, input, select, textarea, [tabindex]):focus-visible {
+    outline-color: Highlight;
+  }
+
+  .skinHeader :where(a, button, [tabindex]):focus-visible {
+    outline-color: Highlight;
+  }
+}

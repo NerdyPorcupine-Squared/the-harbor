@@ -1,0 +1,57 @@
+.skinHeader {
+  color: var(--harbor-ink-900);
+  background-color: var(--harbor-parchment-100);
+  background-image:
+    linear-gradient(90deg, rgb(234 217 174 / 96%), rgb(216 189 130 / 94%)),
+    url("assets/parchment/fibers.svg");
+  border-block-end: 0.25rem solid var(--harbor-timber-900);
+  box-shadow: var(--harbor-shadow-parchment);
+}
+
+.skinHeader .headerTabs {
+  min-inline-size: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.skinHeader .headerTabs::-webkit-scrollbar {
+  display: none;
+}
+
+.skinHeader .headerButton,
+.skinHeader .emby-tab-button,
+.skinHeader .paper-icon-button-light,
+.skinHeader a {
+  color: var(--harbor-ink-900);
+}
+
+.skinHeader .emby-tab-button {
+  border: 1px solid transparent;
+  border-radius: var(--harbor-radius-sm);
+  background-color: transparent;
+  transition:
+    border-color var(--harbor-motion-fast) ease,
+    box-shadow var(--harbor-motion-fast) ease,
+    color var(--harbor-motion-fast) ease;
+}
+
+.skinHeader .emby-tab-button[aria-selected="true"],
+.skinHeader .emby-tab-button.emby-tab-button-active {
+  border-color: var(--harbor-brass-500);
+  box-shadow: inset 0 -0.2rem 0 var(--harbor-brass-500);
+}
+
+.drawer .navMenuOption,
+.mainDrawer .navMenuOption {
+  color: var(--harbor-parchment-100);
+  border-inline-start: 0.2rem solid transparent;
+}
+
+.drawer .navMenuOption-selected,
+.mainDrawer .navMenuOption-selected,
+.drawer .navMenuOption[aria-current="page"],
+.mainDrawer .navMenuOption[aria-current="page"] {
+  color: var(--harbor-focus);
+  border-inline-start-color: var(--harbor-brass-500);
+  background-color: rgb(184 148 75 / 16%);
+}

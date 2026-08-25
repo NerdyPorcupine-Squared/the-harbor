@@ -1,0 +1,8 @@
+<svg viewBox="0 0 900 520" role="img" aria-labelledby="title">
+  <title id="title">Invented deep current landscape artwork</title>
+  <rect width="900" height="520" fill="#07131c"/>
+  <circle cx="680" cy="135" r="82" fill="#d3b873" opacity=".82"/>
+  <path fill="#24536a" d="M0 230c157-82 265 72 415 5 175-78 294 70 485-13v298H0V230Z"/>
+  <path fill="#102d3e" d="M0 330c174-63 294 60 465-2 172-63 279 49 435-12v204H0V330Z"/>
+  <path fill="#b8944b" d="M190 215h25v177h-25zM142 374h122v18H142z"/>
+</svg>
