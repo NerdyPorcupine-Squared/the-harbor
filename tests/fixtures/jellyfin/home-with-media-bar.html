@@ -31,6 +31,113 @@
           radial-gradient(circle at 68% 28%, #d3b873 0 8%, transparent 9%),
           linear-gradient(155deg, #355c70 0 44%, #173647 45% 60%, #07131c 61%);
       }
+
+      /*
+       * Media Bar Enhanced injects its stylesheet after Jellyfin custom CSS.
+       * Keep this small cascade model aligned with the plugin's real selectors
+       * so the fixture catches source-order regressions seen on a live server.
+       */
+      .homeSectionsContainer {
+        position: relative;
+        top: 65vh;
+        z-index: 6;
+      }
+
+      #slides-container {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 90vh;
+        overflow: hidden;
+        margin: 0 auto;
+        pointer-events: auto;
+        z-index: 1;
+      }
+
+      .arrow {
+        position: absolute;
+        top: 50%;
+        width: 40px;
+        height: 40px;
+        transform: translateY(-50%);
+      }
+
+      .left-arrow {
+        left: 20px;
+      }
+
+      .right-arrow {
+        right: 20px;
+      }
+
+      .pause-button {
+        position: absolute;
+        top: 5rem;
+        right: 0.8rem;
+      }
+
+      .mute-button {
+        position: absolute;
+        top: 5rem;
+        right: 3.5rem;
+      }
+
+      .dots-container {
+        position: absolute;
+        top: calc(50% + 18vh);
+        right: 3%;
+        display: flex;
+      }
+
+      .dot {
+        width: 0.5em;
+        height: 0.5em;
+        margin: 0 5px;
+      }
+
+      .slide {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+      }
+
+      .logo-container {
+        position: relative;
+        width: 40%;
+        height: 35%;
+        display: flex;
+        align-items: center;
+      }
+
+      .info-container,
+      .genre,
+      .plot-container,
+      .button-container {
+        position: absolute;
+        left: 5vw;
+      }
+
+      .info-container {
+        top: 50%;
+      }
+
+      .genre {
+        top: 58%;
+      }
+
+      .plot-container {
+        top: 63%;
+        width: 45%;
+      }
+
+      .button-container {
+        top: 76%;
+        display: flex;
+        gap: 0.75rem;
+      }
     </style>
   </head>
   <body class="skinBody">
@@ -40,33 +147,33 @@
     </header>
     <main class="mainAnimatedPage">
       <section id="slides-container" aria-label="Featured voyages">
-        <article class="slide">
-          <div class="backdrop fixture-hero-art" aria-hidden="true"></div>
-          <div class="video" aria-hidden="true"></div>
-          <div class="harbor-metadata-panel">
-            <div class="itemMiscInfo">
-              <span class="mediaInfoItem">1874</span>
-              <span class="mediaInfoItem">2 h 14 m</span>
-              <span class="mediaInfoItem">Adventure</span>
-            </div>
-            <h2 class="slideTitle">Beyond Beacon Shoal</h2>
-            <p class="slidePlot">
-              A cartographer follows a lantern beyond the known channel and finds
-              a harbor absent from every chart.
-            </p>
-            <div class="slideActions">
-              <button class="button-submit" type="button" data-hero-primary>▶ Play</button>
-              <button class="button-flat" type="button">More details</button>
-            </div>
+        <article class="slide active">
+          <div class="backdrop-container">
+            <div class="backdrop fixture-hero-art" aria-hidden="true"></div>
+            <div class="gradient-overlay" aria-hidden="true"></div>
+          </div>
+          <div class="logo-container">
+            <div class="logo-title-fallback">Beyond Beacon Shoal</div>
+          </div>
+          <div class="info-container itemMiscInfo">
+            <span class="mediaInfoItem">1874</span>
+            <span class="mediaInfoItem">2 h 14 m</span>
+          </div>
+          <div class="genre">Adventure</div>
+          <div class="plot-container">
+            A cartographer follows a lantern beyond the known channel and finds
+            a harbor absent from every chart.
+          </div>
+          <div class="button-container">
+            <button class="button-submit" type="button" data-hero-primary>▶ Play</button>
+            <button class="button-flat" type="button">More details</button>
           </div>
         </article>
-        <div class="loading" hidden aria-label="Loading feature"></div>
-        <div class="progress" aria-hidden="true"><span></span></div>
-        <button class="arrow previous" type="button" aria-label="Previous feature">‹</button>
-        <button class="arrow next" type="button" aria-label="Next feature">›</button>
-        <div class="slideControls" aria-label="Feature controls">
-          <button class="pause" type="button" aria-label="Pause feature">Ⅱ</button>
-          <button class="mute" type="button" aria-label="Mute feature">◖</button>
+        <button class="arrow left-arrow" type="button" aria-label="Previous feature">‹</button>
+        <button class="arrow right-arrow" type="button" aria-label="Next feature">›</button>
+        <button class="pause-button" type="button" aria-label="Pause feature">Ⅱ</button>
+        <button class="mute-button" type="button" aria-label="Mute feature">◖</button>
+        <div class="dots-container" aria-label="Feature controls">
           <button class="dot active" type="button" aria-label="Feature one"></button>
           <button class="dot" type="button" aria-label="Feature two"></button>
         </div>
