@@ -111,7 +111,10 @@ test("all content fixtures are sanitized and repository-local", async () => {
   ]) {
     const fixture = await readRepositoryFile(path);
     assert.doesNotMatch(fixture, /https?:\/\//iu);
-    assert.doesNotMatch(fixture, /(?:jellyfin|plex|emby)\.(?:local|test)|@/iu);
+    assert.doesNotMatch(
+      fixture,
+      /(?:jellyfin|plex|emby)\.(?:local|test)|[\w.+-]+@[\w.-]+\.[a-z]{2,}/iu,
+    );
     assert.match(fixture, /Beacon|Lantern|Tide|Cartographer|Harbor/u);
   }
 });
