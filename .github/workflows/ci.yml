@@ -5,7 +5,7 @@ on:
   pull_request:
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   core:
@@ -33,29 +33,8 @@ jobs:
       - name: Check publication candidate
         run: npm run check:publication
 
-      - name: Approve reviewed visual baselines
-        if: github.event_name == 'push' && github.ref == 'refs/heads/feat/treasure-map-rc'
-        run: npm run test:visual:update
-
       - name: Test Chromium
         run: npm run test:visual
-
-      - name: Commit approved candidate artifacts
-        if: github.event_name == 'push' && github.ref == 'refs/heads/feat/treasure-map-rc'
-        shell: pwsh
-        run: |
-          npm run build:css
-          npm run check:publication
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git checkout HEAD^ -- .github/workflows/ci.yml
-          git add .github/workflows/ci.yml theme.css tests/visual/snapshots/win32
-          $changes = git diff --cached --name-only
-          if (-not $changes) {
-            throw "Expected reviewed baseline or generated candidate changes, but none were staged."
-          }
-          git commit -m "test: approve treasure map visual baselines"
-          git push origin HEAD:feat/treasure-map-rc
 
       - name: Upload generated candidate
         if: always()
