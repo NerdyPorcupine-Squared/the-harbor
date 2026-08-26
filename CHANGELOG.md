@@ -10,6 +10,7 @@ Release candidate work:
 - Added full-color media cards framed with dark timber, aged brass, and compact parchment labels.
 - Kept header and drawer navigation structurally dark while details and Media Bar Enhanced remain cinematic.
 - Kept playback dark and isolated from parchment and cartography decoration.
+- Approved refreshed Windows Chromium visual baselines after reviewing the completed treasure-map layout on desktop and mobile fixtures.
 - Added the deterministic single-file Core CSS build and repository-local assets.
 - Added shared navigation, cards, controls, forms, menus, dialogs, and papyrus design primitives.
 - Added compact and Media Bar Enhanced home layouts.
