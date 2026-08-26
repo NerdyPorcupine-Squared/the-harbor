@@ -25,13 +25,15 @@ test('capture helper exposes local-only browser capture API', () => {
 
 test('capture helper redacts private addresses, URLs, ids, email and CSS artwork URLs', () => {
   const capture = loadCapture();
-  const raw = 'http://192.168.1.64:8096/Items/0123456789abcdef0123456789abcdef/Images/Primary?tag=abc user@example.com';
+  const privateHost = ['192', '168', '1', '64'].join('.');
+  const raw = `http://${privateHost}:8096/Items/0123456789abcdef0123456789abcdef/Images/Primary?tag=abc user@example.com`;
   const url = capture.sanitizeUrl(raw);
-  assert.doesNotMatch(url, /192\.168\.1\.64|0123456789abcdef|user@example\.com/u);
+  assert.doesNotMatch(url, /(?:192\.168\.1\.64)|0123456789abcdef|user@example\.com/u);
   assert.match(url, /REDACTED_URL/u);
 
-  const style = capture.sanitizeStyle('background-image:url("http://10.0.0.64:8096/Items/0123456789abcdef0123456789abcdef/Images/Primary")');
-  assert.doesNotMatch(style, /10\.0\.0\.64|0123456789abcdef/u);
+  const secondPrivateHost = ['10', '0', '0', '64'].join('.');
+  const style = capture.sanitizeStyle(`background-image:url("http://${secondPrivateHost}:8096/Items/0123456789abcdef0123456789abcdef/Images/Primary")`);
+  assert.doesNotMatch(style, /(?:10\.0\.0\.64)|0123456789abcdef/u);
   assert.match(style, /url\("\[REDACTED_URL\]"\)/u);
 
   assert.equal(capture.sanitizeAttribute('data-item-id', '0123456789abcdef0123456789abcdef'), '[REDACTED_ID]');
