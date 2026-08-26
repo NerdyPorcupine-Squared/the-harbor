@@ -29,15 +29,17 @@ test("imports library, search, and details page layers", async () => {
   }
 });
 
-test("library fixture covers mixed cards and control states", async () => {
+test("library fixture covers real Jellyfin scalable cards and control states", async () => {
   const fixture = await readRepositoryFile(
     "tests/fixtures/jellyfin/library.html",
   );
 
   for (const marker of [
-    "cardImageContainer-landscape",
+    "cardScalable",
+    "cardPadder-portrait",
+    "cardPadder-backdrop",
+    "cardContent",
     "cardImageContainer",
-    "missingIndicator",
     "itemProgressBar",
     "selected",
     "disabled",
@@ -66,18 +68,22 @@ test("search fixture keeps populated, empty, loading, and error states in order"
   assert.doesNotMatch(fixture, /<(?:script|iframe|img)\b/iu);
 });
 
-test("details fixture covers backdrop, actions, plot, people, seasons, and episodes", async () => {
+test("details fixture covers Jellyfin 10.11.11 detail structure", async () => {
   const fixture = await readRepositoryFile("tests/fixtures/jellyfin/details.html");
 
   for (const marker of [
-    "detailBackdrop",
+    "itemDetailPage",
+    "itemBackdrop",
     "detailPagePrimaryContainer",
+    "detailImageContainer",
+    "detailRibbon",
+    "detailPagePrimaryContent",
+    "detailPageSecondaryContainer",
     "detailPageContent",
     "mainDetailButtons",
     "overview",
-    "peopleSection",
-    "seasonSection",
-    "episodeList",
+    "castCollapsible",
+    "childrenCollapsible",
   ]) {
     assert.match(fixture, new RegExp(marker, "u"));
   }
@@ -92,6 +98,8 @@ test("content browser coverage includes tablet, zoom, overflow, state, and scree
   assert.match(spec, /200% zoom/u);
   assert.match(spec, /scrollWidth/u);
   assert.match(spec, /data-search-state/u);
+  assert.match(spec, /itemDetailPage/u);
+  assert.match(spec, /detailPageSecondaryContainer/u);
   assert.match(spec, /toHaveScreenshot/u);
 });
 

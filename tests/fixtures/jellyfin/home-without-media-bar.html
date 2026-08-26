@@ -4,12 +4,48 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Harbor home without Media Bar fixture</title>
-    <link rel="stylesheet" href="../../../theme.css">
     <style>
       * {
         box-sizing: border-box;
       }
 
+      .cardScalable {
+        position: relative;
+      }
+
+      .cardPadder {
+        position: relative;
+      }
+
+      .cardPadder-portrait {
+        padding-bottom: 150%;
+      }
+
+      .cardPadder-backdrop {
+        padding-bottom: 56.25%;
+      }
+
+      .cardContent {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+      }
+
+      .cardScalable .cardImageContainer {
+        width: 100%;
+        height: 100%;
+      }
+
+      .cardBox {
+        padding: 0 !important;
+        margin: 0.6em;
+      }
+
+    </style>
+    <link rel="stylesheet" href="../../../theme.css">
+    <style>
       .fixture-header {
         min-height: 4.5rem;
         padding: 0.75rem 1rem;
@@ -52,21 +88,27 @@
           <div class="itemsContainer">
             <article class="card">
               <div class="cardBox">
-                <div class="cardImageContainer fixture-art-one">
-                  <div class="cardOverlayContainer">
-                    <button class="cardOverlayButton" type="button" aria-label="Play Beacon Shoal">▶</button>
+                <div class="cardScalable">
+                  <div class="cardPadder cardPadder-portrait"></div>
+                  <div class="cardContent">
+                    <div class="cardImageContainer fixture-art-one">
+                      <div class="cardOverlayContainer"><button class="cardOverlayButton" type="button" aria-label="Play Beacon Shoal">▶</button></div>
+                      <div class="itemProgressBar"><div class="itemProgressBarForeground" style="width: 64%"></div></div>
+                    </div>
                   </div>
                 </div>
-                <div class="itemProgressBar"><div class="itemProgressBarForeground" style="width: 64%"></div></div>
                 <div class="cardText">Beacon Shoal</div>
                 <div class="cardText cardText-secondary">Resume the chart</div>
               </div>
             </article>
             <article class="card">
               <div class="cardBox">
-                <div class="cardImageContainer fixture-art-two">
-                  <div class="cardOverlayContainer">
-                    <button class="cardOverlayButton" type="button" aria-label="Play Lanterns at Low Tide">▶</button>
+                <div class="cardScalable">
+                  <div class="cardPadder cardPadder-portrait"></div>
+                  <div class="cardContent">
+                    <div class="cardImageContainer fixture-art-two">
+                      <div class="cardOverlayContainer"><button class="cardOverlayButton" type="button" aria-label="Play Lanterns at Low Tide">▶</button></div>
+                    </div>
                   </div>
                 </div>
                 <div class="cardText">Lanterns at Low Tide</div>
@@ -75,9 +117,12 @@
             </article>
             <article class="card">
               <div class="cardBox">
-                <div class="cardImageContainer fixture-art-three">
-                  <div class="cardOverlayContainer">
-                    <button class="cardOverlayButton" type="button" aria-label="Play The Cartographer's Wake">▶</button>
+                <div class="cardScalable">
+                  <div class="cardPadder cardPadder-portrait"></div>
+                  <div class="cardContent">
+                    <div class="cardImageContainer fixture-art-three">
+                      <div class="cardOverlayContainer"><button class="cardOverlayButton" type="button" aria-label="Play The Cartographer's Wake">▶</button></div>
+                    </div>
                   </div>
                 </div>
                 <div class="cardText">The Cartographer's Wake</div>

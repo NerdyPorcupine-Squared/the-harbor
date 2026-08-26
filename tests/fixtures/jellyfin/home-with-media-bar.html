@@ -4,199 +4,68 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Harbor home with Media Bar fixture</title>
+    <style>
+      * { box-sizing: border-box; }
+      .cardScalable { position: relative; }
+      .cardPadder { position: relative; }
+      .cardPadder-portrait { padding-bottom: 150%; }
+      .cardContent { position: absolute; inset: 0; width: 100%; height: 100%; overflow: hidden; }
+      .cardScalable .cardImageContainer { width: 100%; height: 100%; }
+      .cardBox { padding: 0 !important; margin: 0.6em; }
+    </style>
     <link rel="stylesheet" href="../../../theme.css">
     <style>
-      * {
-        box-sizing: border-box;
-      }
-
-      .fixture-header {
-        min-height: 4.5rem;
-        padding: 0.75rem 1rem;
-      }
-
-      .fixture-header h1 {
-        margin: 0;
-      }
-
-      #slides-container .fixture-hero-art {
-        background:
-          radial-gradient(circle at 74% 28%, #d8bd82 0 6%, transparent 6.5%),
-          linear-gradient(170deg, transparent 0 48%, rgb(7 19 28 / 74%) 49%),
-          linear-gradient(155deg, #416b7c 0 52%, #193d50 53% 65%, #07131c 66%);
-      }
-
-      .fixture-card-art {
-        background:
-          radial-gradient(circle at 68% 28%, #d3b873 0 8%, transparent 9%),
-          linear-gradient(155deg, #355c70 0 44%, #173647 45% 60%, #07131c 61%);
-      }
-
-      /*
-       * Media Bar Enhanced injects its stylesheet after Jellyfin custom CSS.
-       * Keep this small cascade model aligned with the plugin's real selectors
-       * so the fixture catches source-order regressions seen on a live server.
-       */
-      .homeSectionsContainer {
-        position: relative;
-        top: 65vh;
-        z-index: 6;
-      }
-
-      #slides-container {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 90vh;
-        overflow: hidden;
-        margin: 0 auto;
-        pointer-events: auto;
-        z-index: 1;
-      }
-
-      .arrow {
-        position: absolute;
-        top: 50%;
-        width: 40px;
-        height: 40px;
-        transform: translateY(-50%);
-      }
-
-      .left-arrow {
-        left: 20px;
-      }
-
-      .right-arrow {
-        right: 20px;
-      }
-
-      .pause-button {
-        position: absolute;
-        top: 5rem;
-        right: 0.8rem;
-      }
-
-      .mute-button {
-        position: absolute;
-        top: 5rem;
-        right: 3.5rem;
-      }
-
-      .dots-container {
-        position: absolute;
-        top: calc(50% + 18vh);
-        right: 3%;
-        display: flex;
-      }
-
-      .dot {
-        width: 0.5em;
-        height: 0.5em;
-        margin: 0 5px;
-      }
-
-      .slide {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-      }
-
-      .logo-container {
-        position: relative;
-        width: 40%;
-        height: 35%;
-        display: flex;
-        align-items: center;
-      }
-
-      .info-container,
-      .genre,
-      .plot-container,
-      .button-container {
-        position: absolute;
-        left: 5vw;
-      }
-
-      .info-container {
-        top: 50%;
-      }
-
-      .genre {
-        top: 58%;
-      }
-
-      .plot-container {
-        top: 63%;
-        width: 45%;
-      }
-
-      .button-container {
-        top: 76%;
-        display: flex;
-        gap: 0.75rem;
-      }
+      .fixture-header { min-height: 4.5rem; padding: 0.75rem 1rem; }
+      .fixture-header h1 { margin: 0; }
+      #slides-container .fixture-hero-art { background: radial-gradient(circle at 74% 28%, #d8bd82 0 6%, transparent 6.5%), linear-gradient(170deg, transparent 0 48%, rgb(7 19 28 / 74%) 49%), linear-gradient(155deg, #416b7c 0 52%, #193d50 53% 65%, #07131c 66%); }
+      #slides-container .fixture-video-art { background: radial-gradient(circle at 76% 24%, #d3b873 0 7%, transparent 7.5%), linear-gradient(145deg, #4a7180 0 52%, #173647 53% 68%, #07131c 69%); opacity: 0.84; }
+      .fixture-card-art { background: radial-gradient(circle at 68% 28%, #d3b873 0 8%, transparent 9%), linear-gradient(155deg, #355c70 0 44%, #173647 45% 60%, #07131c 61%); }
+      .homeSectionsContainer { position: relative; top: 65vh; z-index: 6; }
+      #slides-container { position: absolute; top: 0; left: 0; width: 100vw; height: 90vh; overflow: hidden; margin: 0 auto; pointer-events: auto; z-index: 1; }
+      .slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+      .backdrop-container { position: absolute; top: 0; right: 0; width: 100%; height: 100%; }
+      .backdrop { position: absolute; right: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 20%; }
+      .video-backdrop { position: absolute; top: 50%; left: 50%; z-index: 3; object-fit: cover; transform: translate(-50%, -50%); }
+      .video-backdrop-default { width: 100%; height: 100%; }
+      .backdrop-overlay, .gradient-overlay { position: absolute; top: 0; left: 0; z-index: 4; width: 100%; height: 100%; }
+      .logo-container { position: relative; top: 15vh; left: 4vw; z-index: 5; display: flex; width: 40%; height: 35%; align-items: center; }
+      .info-container { position: absolute; top: 50%; left: 4vw; z-index: 5; display: flex; }
+      .genre { position: absolute; top: calc(50% + 4vh); left: 4vw; z-index: 5; }
+      .plot-container { position: absolute; top: calc(50% + 8vh); left: 4vw; z-index: 5; width: 90%; height: 15%; }
+      .button-container { position: absolute; top: calc(50% + 17vh); left: 4vw; z-index: 5; display: flex; gap: 15px; }
+      .play-button, .detail-button { min-width: 40px; min-height: 40px; border: 0; border-radius: 8px; padding: 8px 16px; background: white; color: black; }
+      .arrow { position: absolute; top: 50%; z-index: 5; width: 40px; height: 40px; transform: translateY(-50%); }
+      .left-arrow { left: 20px; }
+      .right-arrow { right: 20px; }
+      .pause-button { position: absolute; top: 5rem; right: 0.8rem; z-index: 10; }
+      .mute-button { position: absolute; top: 5rem; right: 3.5rem; z-index: 10; }
+      .dots-container { position: absolute; top: calc(50% + 18vh); right: 3%; z-index: 5; display: flex; }
+      .dot { width: 0.5em; height: 0.5em; margin: 0 5px; }
     </style>
   </head>
   <body class="skinBody">
     <div class="backgroundContainer"></div>
-    <header class="skinHeader fixture-header">
-      <h1>The Harbor</h1>
-    </header>
+    <header class="skinHeader fixture-header"><h1>The Harbor</h1></header>
     <main class="mainAnimatedPage">
       <section id="slides-container" aria-label="Featured voyages">
         <article class="slide active">
-          <div class="backdrop-container">
-            <div class="backdrop fixture-hero-art" aria-hidden="true"></div>
-            <div class="video" aria-hidden="true"></div>
-            <div class="gradient-overlay" aria-hidden="true"></div>
-          </div>
-          <div class="logo-container">
-            <div class="logo-title-fallback">Beyond Beacon Shoal</div>
-          </div>
-          <div class="info-container itemMiscInfo">
-            <span class="mediaInfoItem">1874</span>
-            <span class="mediaInfoItem">2 h 14 m</span>
-          </div>
+          <div class="backdrop-container"><div class="backdrop fixture-hero-art" aria-hidden="true"></div><div class="video-backdrop video-backdrop-default fixture-video-art" aria-hidden="true"></div><div class="backdrop-overlay" aria-hidden="true"></div><div class="gradient-overlay" aria-hidden="true"></div></div>
+          <div class="logo-container"><div class="logo-title-fallback">Beyond Beacon Shoal</div></div>
+          <div class="info-container"><div class="misc-info"><span class="mediaInfoItem">1874</span><span class="mediaInfoItem">2 h 14 m</span></div></div>
           <div class="genre">Adventure</div>
-          <div class="plot-container">
-            A cartographer follows a lantern beyond the known channel and finds
-            a harbor absent from every chart.
-          </div>
-          <div class="button-container">
-            <button class="button-submit" type="button" data-hero-primary>▶ Play</button>
-            <button class="button-flat" type="button">More details</button>
-          </div>
+          <div class="plot-container"><div class="plot">A cartographer follows a lantern beyond the known channel and finds a harbor absent from every chart.</div></div>
+          <div class="button-container"><button class="play-button" type="button" data-hero-primary>▶ Play</button><button class="detail-button" type="button" aria-label="More details">i</button></div>
         </article>
         <button class="arrow left-arrow" type="button" aria-label="Previous feature">‹</button>
         <button class="arrow right-arrow" type="button" aria-label="Next feature">›</button>
         <button class="pause-button" type="button" aria-label="Pause feature">Ⅱ</button>
         <button class="mute-button" type="button" aria-label="Mute feature">◖</button>
-        <div class="dots-container" aria-label="Feature controls">
-          <button class="dot active" type="button" aria-label="Feature one"></button>
-          <button class="dot" type="button" aria-label="Feature two"></button>
-        </div>
+        <div class="dots-container" aria-label="Feature controls"><button class="dot active" type="button" aria-label="Feature one"></button><button class="dot" type="button" aria-label="Feature two"></button></div>
       </section>
-
       <div class="homeSectionsContainer">
         <section class="homeSection" aria-labelledby="featured-row-heading">
           <h2 class="sectionTitle" id="featured-row-heading">Continue the Voyage</h2>
-          <div class="itemsContainer">
-            <article class="card">
-              <div class="cardBox">
-                <div class="cardImageContainer fixture-card-art">
-                  <div class="cardOverlayContainer">
-                    <button class="cardOverlayButton" type="button" aria-label="Play Lanterns at Low Tide">▶</button>
-                  </div>
-                </div>
-                <div class="itemProgressBar"><div class="itemProgressBarForeground" style="width: 42%"></div></div>
-                <div class="cardText">Lanterns at Low Tide</div>
-                <div class="cardText cardText-secondary">Continue</div>
-              </div>
-            </article>
-          </div>
+          <div class="itemsContainer"><article class="card"><div class="cardBox"><div class="cardScalable"><div class="cardPadder cardPadder-portrait"></div><div class="cardContent"><div class="cardImageContainer fixture-card-art"><div class="cardOverlayContainer"><button class="cardOverlayButton" type="button" aria-label="Play Lanterns at Low Tide">▶</button></div><div class="itemProgressBar"><div class="itemProgressBarForeground" style="width: 42%"></div></div></div></div></div><div class="cardText">Lanterns at Low Tide</div><div class="cardText cardText-secondary">Continue</div></div></article></div>
         </section>
       </div>
     </main>

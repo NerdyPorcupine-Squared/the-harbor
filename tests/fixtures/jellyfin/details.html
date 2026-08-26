@@ -4,12 +4,31 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Harbor details fixture</title>
-    <link rel="stylesheet" href="../../../theme.css">
     <style>
       * { box-sizing: border-box; }
+      .cardScalable { position: relative; }
+      .cardPadder { position: relative; }
+      .cardPadder-portrait { padding-bottom: 150%; }
+      .cardPadder-backdrop { padding-bottom: 56.25%; }
+      .cardContent { position: absolute; inset: 0; width: 100%; height: 100%; overflow: hidden; }
+      .cardScalable .cardImageContainer { width: 100%; height: 100%; }
+      .cardBox { padding: 0 !important; margin: 0.6em; }
+      .itemBackdrop { height: 40vh; background-position: center 20%; background-size: cover; }
+      .detailPagePrimaryContainer { position: relative; }
+      .detailRibbon { position: relative; min-height: 7.2em; margin-top: -7.2em; padding: 0.5em 1% 0.5em 32.45vw; }
+      .detailImageContainer.hide-mobile { position: absolute; left: 3.3%; top: -12.96em; width: 25vw; max-width: 24em; }
+      .detailImageContainer.hide-desktop { display: none; }
+      .detailPagePrimaryContent, .detailPageContent { padding-right: 2%; padding-left: 32.45vw; }
+      .mainDetailButtons { display: flex; flex-wrap: wrap; }
+      .itemsContainer { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(10rem, 100%), 14rem)); gap: 1rem; }
+      @media (max-width: 600px) { .itemBackdrop { height: 30vh; } .detailRibbon { min-height: 0; margin-top: 0; padding: 1rem; } .detailImageContainer.hide-mobile { display: none; } .detailImageContainer.hide-desktop { display: block; width: min(44vw, 10rem); margin-bottom: 1rem; } .detailPagePrimaryContent, .detailPageContent { padding: 1rem; } }
+    </style>
+    <link rel="stylesheet" href="../../../theme.css">
+    <style>
       .fixture-header { min-height: 4.5rem; padding: 0.75rem 1rem; }
       .fixture-header h1 { margin: 0; }
       .fixture-backdrop { background: radial-gradient(circle at 72% 24%, #d8bd82 0 7%, transparent 7.5%), linear-gradient(165deg, #31546b 0 48%, #173647 49% 62%, #07131c 63%); }
+      .fixture-poster { background: radial-gradient(circle at 68% 25%, #d3b873 0 8%, transparent 9%), linear-gradient(155deg, #355c70 0 45%, #173647 46% 61%, #07131c 62%); }
       .fixture-person-one { background: radial-gradient(circle at 50% 37%, #d8bd82 0 24%, transparent 25%), linear-gradient(145deg, #31546b, #07131c); }
       .fixture-person-two { background: radial-gradient(circle at 50% 37%, #ead9ae 0 24%, transparent 25%), linear-gradient(145deg, #43685f, #0c1d29); }
       .fixture-episode { background: linear-gradient(170deg, #355c70 0 48%, #173647 49% 62%, #07131c 63%); }
@@ -18,65 +37,28 @@
   <body class="skinBody">
     <div class="backgroundContainer"></div>
     <header class="skinHeader fixture-header"><h1>The Harbor</h1></header>
-    <main class="detailPage mainAnimatedPage">
-      <div class="detailBackdrop fixture-backdrop" aria-hidden="true"></div>
-      <section class="detailPagePrimaryContainer">
-        <div class="harbor-metadata-panel">
-          <div class="itemMiscInfo">
-            <span class="mediaInfoItem">1874</span>
-            <span class="mediaInfoItem">2 h 14 m</span>
-            <span class="mediaInfoItem">Four bells</span>
+    <main id="itemDetailPage" class="page libraryPage itemDetailPage mainAnimatedPage">
+      <div id="itemBackdrop" class="itemBackdrop fixture-backdrop" aria-hidden="true"></div>
+      <div class="detailPageWrapperContainer">
+        <div class="detailPagePrimaryContainer">
+          <div class="detailImageContainer hide-mobile"><div class="card"><div class="cardBox"><div class="cardScalable"><div class="cardPadder cardPadder-portrait"></div><div class="cardContent"><div class="cardImageContainer fixture-poster"><div class="cardOverlayContainer"><button class="cardOverlayButton" type="button" aria-label="Play Beyond Beacon Shoal">▶</button></div></div></div></div><div class="cardText">Beyond Beacon Shoal</div><div class="cardText cardText-secondary">Feature</div></div></div></div>
+          <div class="detailRibbon">
+            <div class="detailImageContainer hide-desktop"><div class="card"><div class="cardBox"><div class="cardScalable"><div class="cardPadder cardPadder-portrait"></div><div class="cardContent"><div class="cardImageContainer fixture-poster"></div></div></div></div></div></div>
+            <div class="infoWrapper"><div class="nameContainer"><h1 class="itemName">Beyond Beacon Shoal</h1></div><div class="itemMiscInfo"><span class="mediaInfoItem">1874</span><span class="mediaInfoItem">2 h 14 m</span><span class="mediaInfoItem">Four bells</span></div></div>
+            <div class="mainDetailButtons"><button class="button-submit" type="button" data-detail-play>▶ Play</button><button class="button-flat" type="button">Add to captain's list</button></div>
           </div>
-          <h2>Beyond Beacon Shoal</h2>
-          <div class="mainDetailButtons">
-            <button class="button-submit" type="button" data-detail-play>▶ Play</button>
-            <button class="button-flat" type="button">Add to captain's list</button>
+          <div class="detailPagePrimaryContent">
+            <section class="detailSection"><div class="detailSectionContent"><h2 class="sectionTitle">The Log</h2><p class="overview">A cartographer follows a lantern beyond the known channel and discovers a harbor missing from every chart. The recovered ledger contains the reference UnbrokenChartReferenceWithoutAnyNaturalBreakPoints0123456789 so narrow and zoomed layouts must wrap safely.</p><div class="itemDetailsGroup"><p>Genres: Adventure, Mystery</p><p>Studio: Beacon House</p></div></div></section>
+            <section class="nextUpSection detailVerticalSection"><h2 class="sectionTitle">Next Up</h2><div class="itemsContainer"><article class="card"><div class="cardBox"><div class="cardScalable"><div class="cardPadder cardPadder-backdrop"></div><div class="cardContent"><div class="cardImageContainer fixture-episode"></div></div></div><div class="cardText">The Lantern Beyond the Reef</div><div class="cardText cardText-secondary">Episode 1</div></div></article></div></section>
           </div>
         </div>
-      </section>
-      <div class="detailPageContent">
-        <section aria-labelledby="plot-heading">
-          <h2 class="sectionTitle" id="plot-heading">The Log</h2>
-          <p class="overview">
-            A cartographer follows a lantern beyond the known channel and discovers
-            a harbor missing from every chart. The recovered ledger contains the
-            reference UnbrokenChartReferenceWithoutAnyNaturalBreakPoints0123456789
-            so narrow and zoomed layouts must wrap safely.
-          </p>
-        </section>
-        <section class="peopleSection" aria-labelledby="people-heading">
-          <h2 class="sectionTitle" id="people-heading">People</h2>
-          <div class="peopleItems">
-            <article class="personCard"><div class="personCardPortrait fixture-person-one"></div><strong>Mara Vane</strong><br>Cartographer</article>
-            <article class="personCard"><div class="personCardPortrait fixture-person-two"></div><strong>Jonah Reed</strong><br>Lantern keeper</article>
+        <div class="detailPageSecondaryContainer">
+          <div class="detailPageContent">
+            <section id="castCollapsible" class="detailVerticalSection"><h2 class="sectionTitle">Cast & Crew</h2><div class="itemsContainer"><article class="card"><div class="cardBox"><div class="cardScalable"><div class="cardPadder cardPadder-portrait"></div><div class="cardContent"><div class="cardImageContainer fixture-person-one"></div></div></div><div class="cardText">Mara Vane</div><div class="cardText cardText-secondary">Cartographer</div></div></article><article class="card"><div class="cardBox"><div class="cardScalable"><div class="cardPadder cardPadder-portrait"></div><div class="cardContent"><div class="cardImageContainer fixture-person-two"></div></div></div><div class="cardText">Jonah Reed</div><div class="cardText cardText-secondary">Lantern keeper</div></div></article></div></section>
+            <section id="childrenCollapsible" class="detailVerticalSection"><h2 class="sectionTitle">Episodes</h2><div class="itemsContainer"><article class="card"><div class="cardBox"><div class="cardScalable"><div class="cardPadder cardPadder-backdrop"></div><div class="cardContent"><div class="cardImageContainer fixture-episode"><div class="itemProgressBar"><div class="itemProgressBarForeground" style="width: 32%"></div></div></div></div></div><div class="cardText">The Lantern Beyond the Reef</div><div class="cardText cardText-secondary">Episode 1</div></div></article><article class="card"><div class="cardBox"><div class="cardScalable"><div class="cardPadder cardPadder-backdrop"></div><div class="cardContent"><div class="cardImageContainer fixture-episode"></div></div></div><div class="cardText">A Map Without a Margin</div><div class="cardText cardText-secondary">Episode 2</div></div></article></div></section>
+            <section id="similarCollapsible" class="detailVerticalSection"><h2 class="sectionTitle">More Like This</h2></section>
           </div>
-        </section>
-        <section class="seasonSection" aria-labelledby="season-heading">
-          <h2 class="sectionTitle" id="season-heading">Seasons</h2>
-          <div class="seasonItems">
-            <button class="button-submit" type="button">Season 1</button>
-            <button class="button-flat" type="button">Season 2</button>
-            <button class="button-flat" type="button" disabled>Season 3</button>
-          </div>
-        </section>
-        <section class="episodeList" aria-labelledby="episode-heading">
-          <h2 class="sectionTitle" id="episode-heading">Episodes</h2>
-          <article class="episode">
-            <div class="episodeImage fixture-episode"></div>
-            <div class="episodeBody">
-              <h3>1. The Lantern Beyond the Reef</h3>
-              <p>The crew sights an unfamiliar signal beyond the outer shoal.</p>
-              <div class="itemProgressBar"><div class="itemProgressBarForeground" style="width: 32%"></div></div>
-            </div>
-          </article>
-          <article class="episode">
-            <div class="episodeImage fixture-episode"></div>
-            <div class="episodeBody">
-              <h3>2. A Map Without a Margin</h3>
-              <p>The recovered chart points toward a passage hidden at low tide.</p>
-            </div>
-          </article>
-        </section>
+        </div>
       </div>
     </main>
   </body>

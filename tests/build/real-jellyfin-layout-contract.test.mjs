@@ -66,6 +66,17 @@ test("details styling is rooted in the real Jellyfin 10.11.11 detail page", asyn
   assert.match(fixture, /class="[^"]*\bdetailPageSecondaryContainer\b/u);
 });
 
+test("item detail pages are excluded from the broad library map surface", async () => {
+  const mapSurface = await readRepositoryFile("src/css/base/map-surface.css");
+
+  assert.match(mapSurface, /\.libraryPage:not\(\.itemDetailPage\)/u);
+  assert.doesNotMatch(
+    mapSurface,
+    /(?:^|,)\s*\.libraryPage\s*(?:,|\n)/mu,
+    "Jellyfin item details also carry .libraryPage and must remain cinematic at the root",
+  );
+});
+
 test("Media Bar integration targets the plugin's current video backdrop class", async () => {
   const mediaBar = await readRepositoryFile(
     "src/css/integrations/media-bar-enhanced.css",

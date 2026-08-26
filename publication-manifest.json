@@ -73,6 +73,7 @@
     "tests/build/css-imports.test.mjs",
     "tests/build/home-contract.test.mjs",
     "tests/build/papyrus-contract.test.mjs",
+    "tests/build/real-jellyfin-layout-contract.test.mjs",
     "tests/build/release-contract.test.mjs",
     "tests/build/shared-components-contract.test.mjs",
     "tests/build/system-pages-contract.test.mjs",

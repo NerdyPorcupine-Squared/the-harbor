@@ -37,7 +37,7 @@
 @media (forced-colors: active) {
   :where(
     .homeSectionsContainer,
-    .libraryPage,
+    .libraryPage:not(.itemDetailPage),
     .searchPage,
     .detailPageContent,
     .statePage
@@ -48,7 +48,7 @@
   :where(
     .skinHeader,
     .mainDrawer,
-    .cardBox,
+    .cardScalable,
     .button-flat,
     .button-submit,
     .emby-input,
@@ -87,7 +87,7 @@
   :where(
     .emby-tab-button,
     .navMenuOption,
-    .cardBox,
+    .cardScalable,
     .cardOverlayContainer,
     .itemProgressBarForeground,
     .button-flat,
@@ -110,7 +110,7 @@
     animation: none;
   }
 
-  .card:hover .cardBox {
+  .card:hover .cardScalable {
     transform: none;
   }
 }

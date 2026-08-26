@@ -1,151 +1,128 @@
-.detailPage {
+#itemDetailPage {
   position: relative;
   min-width: 0;
   padding-block-end: max(var(--harbor-space-8), env(safe-area-inset-bottom));
+  background-color: var(--harbor-cinematic-navy);
+  color: var(--harbor-parchment-100);
 }
 
-.detailBackdrop {
+#itemDetailPage .itemBackdrop {
   position: relative;
-  height: clamp(18rem, 46svh, 34rem);
   overflow: hidden;
   background-color: var(--harbor-navy-900);
-  background-position: center;
+  background-position: center 20%;
   background-size: cover;
 }
 
-.detailBackdrop::after {
+#itemDetailPage .itemBackdrop::after {
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(0deg, var(--harbor-navy-950), transparent 58%),
-    linear-gradient(90deg, rgb(7 19 28 / 72%), transparent 68%);
+    linear-gradient(0deg, var(--harbor-cinematic-navy), transparent 64%),
+    linear-gradient(90deg, rgb(7 19 28 / 58%), transparent 72%);
   content: "";
+  pointer-events: none;
 }
 
-.detailPagePrimaryContainer,
-.detailPageContent {
-  position: relative;
-  z-index: 1;
+#itemDetailPage .detailPageWrapperContainer,
+#itemDetailPage .detailPagePrimaryContainer,
+#itemDetailPage .detailPagePrimaryContent,
+#itemDetailPage .detailPageSecondaryContainer,
+#itemDetailPage .detailPageContent {
   min-width: 0;
-  padding-inline:
-    max(var(--harbor-space-4), env(safe-area-inset-left))
-    max(var(--harbor-space-4), env(safe-area-inset-right));
 }
 
-.detailPagePrimaryContainer {
-  width: min(100%, 72rem);
-  margin-block-start: -10rem;
+#itemDetailPage .detailRibbon {
+  position: relative;
+  z-index: 2;
+  background:
+    linear-gradient(180deg, rgb(7 19 28 / 58%), rgb(7 19 28 / 96%)),
+    var(--harbor-navy-950);
+  color: var(--harbor-parchment-100);
+  box-shadow: 0 0.6rem 1.4rem rgb(0 0 0 / 28%);
 }
 
-.detailPagePrimaryContainer .harbor-metadata-panel {
-  width: min(100%, 42rem);
+#itemDetailPage .detailRibbon :where(
+  .nameContainer,
+  .itemName,
+  .parentName,
+  .itemMiscInfo,
+  .mediaInfoItem,
+  .infoWrapper
+) {
+  color: inherit;
 }
 
-.detailPageContent {
-  padding-block-start: var(--harbor-space-8);
+#itemDetailPage .detailImageContainer .card {
+  color: var(--harbor-parchment-100);
 }
 
-.mainDetailButtons {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--harbor-space-2);
-  margin-block-start: var(--harbor-space-4);
+#itemDetailPage .detailPagePrimaryContent {
+  background:
+    linear-gradient(180deg, rgb(7 19 28 / 98%), rgb(12 29 41 / 94%)),
+    var(--harbor-navy-950);
+  color: var(--harbor-parchment-100);
 }
 
-.overview {
+#itemDetailPage .detailSection,
+#itemDetailPage .detailSectionContent,
+#itemDetailPage .nextUpSection {
+  min-width: 0;
+}
+
+#itemDetailPage .overview,
+#itemDetailPage .itemDetailsGroup {
   max-width: 72ch;
   line-height: 1.65;
   overflow-wrap: anywhere;
 }
 
-.peopleSection,
-.seasonSection,
-.episodeList {
+#itemDetailPage .mainDetailButtons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--harbor-space-2);
+}
+
+#itemDetailPage .detailPageSecondaryContainer {
+  min-width: 0;
+  background-color: var(--harbor-map-paper);
+  color: var(--harbor-map-ink);
+}
+
+#itemDetailPage .detailPageContent {
+  min-width: 0;
+  color: var(--harbor-map-ink);
+}
+
+#itemDetailPage .detailPageSecondaryContainer :where(
+  .sectionTitle,
+  .detailVerticalSection,
+  .cardText
+) {
+  color: var(--harbor-map-ink);
+}
+
+#itemDetailPage .detailVerticalSection {
   min-width: 0;
   margin-block-start: var(--harbor-space-8);
 }
 
-.peopleItems {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(8rem, 100%), 11rem));
-  gap: var(--harbor-space-4);
+#itemDetailPage .detailPageSecondaryContainer .card {
+  color: var(--harbor-map-ink);
 }
 
-.personCard {
-  min-width: 0;
-  border: 1px solid rgb(234 217 174 / 12%);
-  border-radius: var(--harbor-radius-md);
-  padding: var(--harbor-space-3);
-  background-color: rgb(7 19 28 / 72%);
-  color: var(--harbor-parchment-100);
-  overflow-wrap: anywhere;
-}
-
-.personCardPortrait {
-  aspect-ratio: 1;
-  border-radius: 50%;
-  margin-block-end: var(--harbor-space-2);
-  background-color: var(--harbor-navy-900);
-  background-position: center;
-  background-size: cover;
-}
-
-.seasonItems {
-  display: flex;
+#itemDetailPage :where(.button-flat, .button-submit) {
   max-width: 100%;
-  gap: var(--harbor-space-2);
-  overflow-x: auto;
-  padding-block-end: var(--harbor-space-2);
-}
-
-.episode {
-  display: grid;
-  grid-template-columns: minmax(10rem, 18rem) minmax(0, 1fr);
-  gap: var(--harbor-space-4);
-  border-block-end: 1px solid rgb(234 217 174 / 14%);
-  padding-block: var(--harbor-space-4);
-}
-
-.episodeImage {
-  aspect-ratio: 16 / 9;
-  border-radius: var(--harbor-radius-sm);
-  background-color: var(--harbor-navy-900);
-  background-position: center;
-  background-size: cover;
-}
-
-.episodeBody {
-  min-width: 0;
-  overflow-wrap: anywhere;
 }
 
 @media (width <= 599px) {
-  .detailBackdrop {
-    height: min(34svh, 18rem);
+  #itemDetailPage .detailRibbon,
+  #itemDetailPage .detailPagePrimaryContent,
+  #itemDetailPage .detailPageContent {
+    overflow-wrap: anywhere;
   }
 
-  .detailPagePrimaryContainer {
-    margin-block-start: -4rem;
-  }
-
-  .episode {
-    grid-template-columns: 1fr;
-  }
-}
-
-@media (width >= 600px) {
-  .detailPagePrimaryContainer,
-  .detailPageContent {
-    padding-inline:
-      max(var(--harbor-space-8), env(safe-area-inset-left))
-      max(var(--harbor-space-8), env(safe-area-inset-right));
-  }
-}
-
-@media (width >= 1600px) {
-  .detailPagePrimaryContainer,
-  .detailPageContent {
-    width: min(100%, 104rem);
-    margin-inline: auto;
+  #itemDetailPage .mainDetailButtons {
+    gap: var(--harbor-space-1);
   }
 }

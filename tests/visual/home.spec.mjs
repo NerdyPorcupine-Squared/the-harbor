@@ -22,6 +22,20 @@ test("home stays compact and usable without Media Bar", async ({ page }, testInf
   expect(headingBox).not.toBeNull();
   expect(headingBox.y).toBeLessThanOrEqual(500);
 
+  const image = page.locator(".cardImageContainer").first();
+  const scalable = page.locator(".cardScalable").first();
+  const imageBox = await image.boundingBox();
+  const scalableBox = await scalable.boundingBox();
+  expect(imageBox).not.toBeNull();
+  expect(scalableBox).not.toBeNull();
+  expect(Math.abs(imageBox.width - scalableBox.width)).toBeLessThanOrEqual(2);
+  expect(Math.abs(imageBox.height - scalableBox.height)).toBeLessThanOrEqual(2);
+
+  const imageAspectRatio = await image.evaluate(
+    (element) => getComputedStyle(element).aspectRatio,
+  );
+  expect(imageAspectRatio).toBe("auto");
+
   const firstControl = page.locator(".cardOverlayButton").first();
   await expect(firstControl).toBeVisible();
   await expect(firstControl).toBeEnabled();

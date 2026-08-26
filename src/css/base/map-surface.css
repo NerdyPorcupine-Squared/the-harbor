@@ -1,6 +1,6 @@
 :where(
   .homeSectionsContainer,
-  .libraryPage,
+  .libraryPage:not(.itemDetailPage),
   .searchPage,
   .detailPageContent,
   .statePage
@@ -39,7 +39,7 @@ body:has(#slides-container) .homeSectionsContainer {
 @media (width <= 599px) {
   :where(
     .homeSectionsContainer,
-    .libraryPage,
+    .libraryPage:not(.itemDetailPage),
     .searchPage,
     .detailPageContent,
     .statePage

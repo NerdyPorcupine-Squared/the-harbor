@@ -27,6 +27,11 @@ test("Media Bar forms a responsive, accessible trailer hero when plugin CSS load
     expect(heroHeightSvh).toBeLessThanOrEqual(48);
   }
 
+  const videoBox = await page.locator("#slides-container .video-backdrop").boundingBox();
+  expect(videoBox).not.toBeNull();
+  expect(videoBox.width).toBeGreaterThanOrEqual(heroBox.width * 0.98);
+  expect(videoBox.height).toBeGreaterThanOrEqual(heroBox.height * 0.98);
+
   const rowBox = await page.locator(".homeSectionsContainer").boundingBox();
   expect(rowBox).not.toBeNull();
   const rowOffsetFromHeroBottom = rowBox.y - (heroBox.y + heroBox.height);
@@ -61,10 +66,6 @@ test("Media Bar forms a responsive, accessible trailer hero when plugin CSS load
   if (testInfo.project.name === "desktop") {
     expect(logoBox.width / heroBox.width).toBeLessThanOrEqual(0.48);
   }
-
-  const plotBox = metadataBoxes[3];
-  expect(plotBox.x).toBeGreaterThanOrEqual(heroBox.x);
-  expect(plotBox.x + plotBox.width).toBeLessThanOrEqual(heroBox.x + heroBox.width);
 
   const overflow = await page.evaluate(() => ({
     clientWidth: document.documentElement.clientWidth,

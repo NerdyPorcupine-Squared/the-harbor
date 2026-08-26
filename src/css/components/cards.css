@@ -5,10 +5,19 @@
 
 .cardBox {
   position: relative;
+  overflow: visible;
+  border: 0;
+  border-radius: 0;
+  padding: 0;
+  background-color: var(--harbor-timber-900);
+  box-shadow: none;
+}
+
+.cardScalable {
+  position: relative;
   overflow: hidden;
   border: 1px solid rgb(184 148 75 / 44%);
   border-radius: var(--harbor-radius-md);
-  padding: var(--harbor-space-1);
   background-color: var(--harbor-timber-900);
   box-shadow: 0 0.35rem 1rem rgb(42 33 24 / 28%);
   transition:
@@ -17,28 +26,29 @@
     transform var(--harbor-motion-duration-fast) var(--harbor-motion-easing-standard);
 }
 
-:where(.card:focus-within, .card.selected) .cardBox {
+:where(.card:focus-within, .card.selected) .cardScalable {
   border-color: rgb(184 148 75 / 78%);
   box-shadow: 0 0 0 1px rgb(184 148 75 / 18%), 0 0.6rem 1.25rem rgb(0 0 0 / 34%);
 }
 
-.card:hover .cardBox {
+.card:hover .cardScalable {
   box-shadow: 0 0.6rem 1.25rem rgb(42 33 24 / 36%);
   transform: translateY(-0.125rem);
 }
 
+.cardImageContainer,
+.cardContent,
+.cardImage,
+.blurhash-canvas,
+.cardPadder {
+  border-radius: calc(var(--harbor-radius-md) - 1px);
+}
+
 .cardImageContainer {
-  position: relative;
-  aspect-ratio: 2 / 3;
   overflow: hidden;
-  border-radius: calc(var(--harbor-radius-md) - var(--harbor-space-1));
   background-color: var(--harbor-navy-900);
   background-position: center;
   background-size: cover;
-}
-
-.cardImageContainer-landscape {
-  aspect-ratio: 16 / 9;
 }
 
 .cardOverlayContainer {
@@ -97,4 +107,9 @@
   color: rgb(58 45 33 / 78%);
   font-family: var(--harbor-font-body);
   font-size: 0.875rem;
+}
+
+.card[aria-disabled="true"] {
+  opacity: 0.5;
+  pointer-events: none;
 }

@@ -32,7 +32,7 @@ test("keeps Media Bar selectors scoped and displacement presence-dependent", asy
   for (const family of [
     "slide",
     "backdrop",
-    "video",
+    "video-backdrop",
     "loading",
     "progress",
     "arrow",
@@ -45,11 +45,11 @@ test("keeps Media Bar selectors scoped and displacement presence-dependent", asy
 
   assert.match(
     css,
-    /body:has\(#slides-container\)\s+\.homeSectionsContainer\s*\{/u,
+    /body:has\(#slides-container\)[^{]*\.homeSectionsContainer\s*\{/u,
   );
   assert.doesNotMatch(
     css.replace(
-      /body:has\(#slides-container\)\s+\.homeSectionsContainer\s*\{[^}]*\}/gu,
+      /body:has\(#slides-container\)[^{]*\.homeSectionsContainer\s*\{[^}]*\}/gu,
       "",
     ),
     /\.homeSectionsContainer\s*\{[^}]*margin-block-start/gu,
@@ -74,6 +74,8 @@ test("fixtures are local, sanitized, and represent both home modes", async () =>
     "slide",
     "backdrop-container",
     "backdrop",
+    "video-backdrop",
+    "backdrop-overlay",
     "logo-container",
     "logo-title-fallback",
     "info-container",
@@ -109,11 +111,14 @@ test("visual specs assert layout, interaction, and screenshots", async () => {
 
   assert.match(homeSpec, /scrollWidth/u);
   assert.match(homeSpec, /toBeLessThanOrEqual\(500\)/u);
+  assert.match(homeSpec, /cardScalable/u);
+  assert.match(homeSpec, /aspectRatio/u);
   assert.match(homeSpec, /toHaveScreenshot/u);
 
   assert.match(mediaBarSpec, /58/u);
   assert.match(mediaBarSpec, /67/u);
   assert.match(mediaBarSpec, /48/u);
+  assert.match(mediaBarSpec, /video-backdrop/u);
   assert.match(mediaBarSpec, /boundingBox/u);
   assert.match(mediaBarSpec, /toBeEnabled/u);
   assert.match(mediaBarSpec, /toBeFocused/u);

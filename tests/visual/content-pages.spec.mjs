@@ -33,7 +33,7 @@ test("library supports mixed media and interaction states", async ({ page }, tes
   await expectNoHorizontalOverflow(page);
   await expectMobileTargets(page, testInfo.project.name);
 
-  const selectedBorder = await page.locator(".card.selected .cardBox").evaluate(
+  const selectedBorder = await page.locator(".card.selected .cardScalable").evaluate(
     (element) => getComputedStyle(element).borderColor,
   );
   expect(selectedBorder).toBe("rgba(184, 148, 75, 0.78)");
@@ -42,6 +42,12 @@ test("library supports mixed media and interaction states", async ({ page }, tes
     (element) => Number.parseFloat(getComputedStyle(element).opacity),
   );
   expect(disabledOpacity).toBeLessThan(1);
+
+  const portraitImage = page.locator(".cardPadder-portrait + .cardContent .cardImageContainer").first();
+  const portraitRatio = await portraitImage.evaluate(
+    (element) => getComputedStyle(element).aspectRatio,
+  );
+  expect(portraitRatio).toBe("auto");
 
   await expect(page).toHaveScreenshot(`library-${testInfo.project.name}.png`, {
     animations: "disabled",
@@ -66,18 +72,35 @@ test("search renders all states without reordering them", async ({ page }, testI
   });
 });
 
-test("details preserve actions and wrap long metadata", async ({ page }, testInfo) => {
+test("details preserve Jellyfin geometry, actions, and readable content", async ({
+  page,
+}, testInfo) => {
   await page.goto(fixtureUrl("details"));
   await expectNoHorizontalOverflow(page);
   await expectMobileTargets(page, testInfo.project.name);
+
+  const detailPage = page.locator("#itemDetailPage");
+  await expect(detailPage).toBeVisible();
+  await expect(page.locator(".itemBackdrop")).toBeVisible();
+  await expect(page.locator(".detailRibbon")).toBeVisible();
+  await expect(page.locator(".detailPagePrimaryContent")).toBeVisible();
+  await expect(page.locator(".detailPageSecondaryContainer")).toBeVisible();
+  await expect(page.locator("#castCollapsible")).toBeVisible();
+  await expect(page.locator("#childrenCollapsible")).toBeVisible();
 
   const play = page.locator("[data-detail-play]");
   await play.focus();
   await expect(play).toBeFocused();
   await expect(play).toBeEnabled();
-  await expect(page.locator(".peopleSection")).toBeVisible();
-  await expect(page.locator(".seasonSection")).toBeVisible();
-  await expect(page.locator(".episodeList")).toBeVisible();
+
+  const primaryBackground = await page.locator(".detailPagePrimaryContent").evaluate(
+    (element) => getComputedStyle(element).backgroundColor,
+  );
+  const secondaryColor = await page.locator(".detailPageSecondaryContainer").evaluate(
+    (element) => getComputedStyle(element).color,
+  );
+  expect(primaryBackground).not.toBe("rgba(0, 0, 0, 0)");
+  expect(secondaryColor).toBe("rgb(58, 45, 33)");
 
   await expect(page).toHaveScreenshot(`details-${testInfo.project.name}.png`, {
     animations: "disabled",
