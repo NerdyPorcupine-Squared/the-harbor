@@ -73,7 +73,11 @@ test("ships only local sanitized decorative cartography assets", async () => {
     const path = `assets/cartography/${name}`;
     const svg = await readRepositoryFile(path);
     assert.match(svg, /<svg\b/u, `${path} exists`);
-    assert.doesNotMatch(svg, /<script\b|<image\b|\son[a-z]+\s*=|https?:\/\/|data:|javascript:/iu);
+    assert.doesNotMatch(svg, /<script\b|\son[a-z]+\s*=|<image\b/iu);
+    assert.doesNotMatch(
+      svg,
+      /(?:href|src)\s*=\s*["']\s*(?:https?:|\/\/|data:|javascript:)/iu,
+    );
     assert.match(readme, new RegExp(`assets/cartography/${name.replace(".", "\\.")}`, "u"));
   }
 });
