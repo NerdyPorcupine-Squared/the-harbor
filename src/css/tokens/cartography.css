@@ -1,0 +1,15 @@
+:root {
+  --harbor-map-cartography-image:
+    url("./assets/cartography/coastline.svg"),
+    url("./assets/cartography/route.svg"),
+    url("./assets/cartography/ship.svg"),
+    url("./assets/cartography/anchor.svg"),
+    url("./assets/cartography/chart-grid.svg");
+  --harbor-map-cartography-repeat: no-repeat, no-repeat, no-repeat, no-repeat, repeat;
+  --harbor-map-cartography-size:
+    min(46rem, 76vw) auto,
+    min(54rem, 88vw) auto,
+    5.5rem auto,
+    4.5rem auto,
+    24rem 24rem;
+}

@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" aria-hidden="true" focusable="false">
+  <g fill="none" stroke="#5b4632" stroke-opacity="0.10" stroke-linecap="round" stroke-width="1.5">
+    <path d="M72 0c38 126 38 386 0 512M168 0c22 132 22 380 0 512M256 0v512M344 0c-22 132-22 380 0 512M440 0c-38 126-38 386 0 512" />
+    <path d="M0 78c126 36 386 36 512 0M0 174c132 20 380 20 512 0M0 256h512M0 338c132-20 380-20 512 0M0 434c126-36 386-36 512 0" />
+  </g>
+</svg>

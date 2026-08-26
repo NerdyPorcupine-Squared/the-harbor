@@ -1,15 +1,16 @@
 .card {
   min-width: 0;
-  color: var(--harbor-parchment-100);
+  color: var(--harbor-map-ink);
 }
 
 .cardBox {
   position: relative;
   overflow: hidden;
-  border: 1px solid rgb(234 217 174 / 10%);
+  border: 1px solid rgb(184 148 75 / 44%);
   border-radius: var(--harbor-radius-md);
-  background-color: rgb(7 19 28 / 72%);
-  box-shadow: 0 0.35rem 1rem rgb(0 0 0 / 24%);
+  padding: var(--harbor-space-1);
+  background-color: var(--harbor-timber-900);
+  box-shadow: 0 0.35rem 1rem rgb(42 33 24 / 28%);
   transition:
     border-color var(--harbor-motion-duration-fast) var(--harbor-motion-easing-standard),
     box-shadow var(--harbor-motion-duration-fast) var(--harbor-motion-easing-standard),
@@ -22,7 +23,7 @@
 }
 
 .card:hover .cardBox {
-  box-shadow: 0 0.6rem 1.25rem rgb(0 0 0 / 34%);
+  box-shadow: 0 0.6rem 1.25rem rgb(42 33 24 / 36%);
   transform: translateY(-0.125rem);
 }
 
@@ -30,6 +31,7 @@
   position: relative;
   aspect-ratio: 2 / 3;
   overflow: hidden;
+  border-radius: calc(var(--harbor-radius-md) - var(--harbor-space-1));
   background-color: var(--harbor-navy-900);
   background-position: center;
   background-size: cover;
@@ -80,16 +82,19 @@
 }
 
 .cardText {
-  padding: var(--harbor-space-3) var(--harbor-space-3) 0;
+  padding: var(--harbor-space-2) var(--harbor-space-3) 0;
   overflow: hidden;
+  background-color: var(--harbor-map-paper);
+  color: var(--harbor-map-ink);
   font-family: var(--harbor-font-display);
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
 .cardText-secondary {
-  padding-block: var(--harbor-space-1) var(--harbor-space-3);
-  color: var(--harbor-parchment-200);
+  padding: var(--harbor-space-1) var(--harbor-space-3) var(--harbor-space-2);
+  background-color: var(--harbor-map-paper);
+  color: rgb(58 45 33 / 78%);
   font-family: var(--harbor-font-body);
   font-size: 0.875rem;
 }

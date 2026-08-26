@@ -1,0 +1,63 @@
+:where(
+  .homeSectionsContainer,
+  .libraryPage,
+  .searchPage,
+  .detailPageContent,
+  .statePage
+) {
+  background-color: var(--harbor-map-paper);
+  background-image:
+    var(--harbor-map-cartography-image),
+    var(--harbor-papyrus-image);
+  background-repeat:
+    var(--harbor-map-cartography-repeat),
+    var(--harbor-papyrus-repeat);
+  background-position:
+    calc(100% + 8rem) 2rem,
+    12% 13rem,
+    88% 34rem,
+    6% 44rem,
+    0 0,
+    0 0,
+    0 0,
+    0 0,
+    0 0;
+  background-size:
+    var(--harbor-map-cartography-size),
+    var(--harbor-papyrus-size);
+  color: var(--harbor-map-ink);
+  box-shadow: var(--harbor-papyrus-edge);
+}
+
+body:has(#slides-container) .homeSectionsContainer {
+  border-radius: var(--harbor-radius-lg) var(--harbor-radius-lg) 0 0;
+  box-shadow:
+    0 -1.5rem 2.75rem rgb(7 19 28 / 46%),
+    var(--harbor-papyrus-edge);
+}
+
+@media (width <= 599px) {
+  :where(
+    .homeSectionsContainer,
+    .libraryPage,
+    .searchPage,
+    .detailPageContent,
+    .statePage
+  ) {
+    background-image:
+      url("./assets/cartography/chart-grid.svg"),
+      var(--harbor-papyrus-image);
+    background-repeat:
+      repeat,
+      var(--harbor-papyrus-repeat);
+    background-position:
+      0 0,
+      0 0,
+      0 0,
+      0 0,
+      0 0;
+    background-size:
+      18rem 18rem,
+      var(--harbor-papyrus-size);
+  }
+}

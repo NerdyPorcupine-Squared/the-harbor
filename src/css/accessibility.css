@@ -36,6 +36,16 @@
 
 @media (forced-colors: active) {
   :where(
+    .homeSectionsContainer,
+    .libraryPage,
+    .searchPage,
+    .detailPageContent,
+    .statePage
+  ) {
+    background-image: none;
+  }
+
+  :where(
     .skinHeader,
     .mainDrawer,
     .cardBox,

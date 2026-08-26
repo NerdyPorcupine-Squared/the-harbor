@@ -9,4 +9,11 @@
   --harbor-brass-300: #d3b873;
   --harbor-danger-500: #b84f45;
   --harbor-focus: #f2d58a;
+  --harbor-map-paper: #ead9ae;
+  --harbor-map-paper-highlight: #f2e5c2;
+  --harbor-map-paper-edge: #b9945d;
+  --harbor-map-ink: #3a2d21;
+  --harbor-map-ink-faded: rgb(58 45 33 / 24%);
+  --harbor-map-stain: rgb(120 82 43 / 16%);
+  --harbor-cinematic-navy: #07131c;
 }

@@ -20,8 +20,9 @@ alwaysApply: true
   when it does not.
 - Preserve Jellyfin behavior and semantics. Never change playback state,
   network requests, result order, lazy loading, or essential-control behavior.
-- Use parchment on controlled accents and metadata surfaces; keep artwork,
-  video, content grids, and the application frame dark.
+- Use parchment-dominant browsing surfaces with restrained cartography; keep
+  header and drawer navigation structurally dark, preserve full-color artwork,
+  keep cinematic media regions dark, and keep the player dark and unobstructed.
 - Use test-driven development. Observe a meaningful RED failure before feature
   implementation, then run focused tests, `npm run verify:core`, and affected
   Playwright specs.
@@ -35,4 +36,3 @@ alwaysApply: true
   to a public candidate.
 - Do not tag `v1.0.0` or state that Harbor is real-server validated until the
   owner's manual Jellyfin test matrix passes.
-

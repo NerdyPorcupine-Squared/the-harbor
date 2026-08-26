@@ -35,3 +35,19 @@ jobs:
 
       - name: Test Chromium
         run: npm run test:visual
+
+      - name: Upload generated candidate
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: harbor-generated-candidate
+          path: theme.css
+          if-no-files-found: error
+
+      - name: Upload Playwright failures
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-failures
+          path: test-results/
+          if-no-files-found: ignore
