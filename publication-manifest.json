@@ -23,6 +23,7 @@
     "assets/parchment/mottle.svg",
     "docs/compatibility.md",
     "docs/testing/core-manual-matrix.md",
+    "docs/testing/runtime-capture.md",
     "package-lock.json",
     "package.json",
     "playwright.config.mjs",
@@ -75,6 +76,8 @@
     "tests/build/papyrus-contract.test.mjs",
     "tests/build/real-jellyfin-layout-contract.test.mjs",
     "tests/build/release-contract.test.mjs",
+    "tests/build/runtime-capture-contract.test.mjs",
+    "tests/build/runtime-capture-docs.test.mjs",
     "tests/build/shared-components-contract.test.mjs",
     "tests/build/system-pages-contract.test.mjs",
     "tests/build/treasure-map-contract.test.mjs",
@@ -114,6 +117,7 @@
     "tests/visual/snapshots/win32/states-mobile.png",
     "tests/visual/system-pages.spec.mjs",
     "tests/visual/treasure-map.spec.mjs",
-    "theme.css"
+    "theme.css",
+    "tools/runtime-capture/harbor-capture.js"
   ]
 }
