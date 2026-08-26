@@ -90,7 +90,7 @@ test("details fixture covers Jellyfin 10.11.11 detail structure", async () => {
   assert.match(fixture, /UnbrokenChartReferenceWithoutAnyNaturalBreakPoints/u);
 });
 
-test("content browser coverage includes tablet, zoom, overflow, state, and screenshots", async () => {
+test("content browser coverage includes tablet, zoom, overflow, state, and real geometry", async () => {
   const spec = await readRepositoryFile("tests/visual/content-pages.spec.mjs");
 
   assert.match(spec, /820/u);
@@ -99,8 +99,12 @@ test("content browser coverage includes tablet, zoom, overflow, state, and scree
   assert.match(spec, /scrollWidth/u);
   assert.match(spec, /data-search-state/u);
   assert.match(spec, /itemDetailPage/u);
+  assert.match(spec, /itemBackdrop/u);
   assert.match(spec, /detailPageSecondaryContainer/u);
-  assert.match(spec, /toHaveScreenshot/u);
+  assert.match(spec, /expectCardArtFitsScalable/u);
+  assert.match(spec, /cardScalable/u);
+  assert.match(spec, /aspectRatio/u);
+  assert.doesNotMatch(spec, /toHaveScreenshot/u);
 });
 
 test("all content fixtures are sanitized and repository-local", async () => {

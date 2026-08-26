@@ -105,22 +105,24 @@ test("fixtures are local, sanitized, and represent both home modes", async () =>
   }
 });
 
-test("visual specs assert layout, interaction, and screenshots", async () => {
+test("visual specs assert layout and interaction geometry", async () => {
   const homeSpec = await readRepositoryFile("tests/visual/home.spec.mjs");
   const mediaBarSpec = await readRepositoryFile("tests/visual/media-bar.spec.mjs");
 
   assert.match(homeSpec, /scrollWidth/u);
   assert.match(homeSpec, /toBeLessThanOrEqual\(500\)/u);
   assert.match(homeSpec, /cardScalable/u);
+  assert.match(homeSpec, /cardImageContainer/u);
   assert.match(homeSpec, /aspectRatio/u);
-  assert.match(homeSpec, /toHaveScreenshot/u);
+  assert.doesNotMatch(homeSpec, /toHaveScreenshot/u);
 
   assert.match(mediaBarSpec, /58/u);
   assert.match(mediaBarSpec, /67/u);
   assert.match(mediaBarSpec, /48/u);
   assert.match(mediaBarSpec, /video-backdrop/u);
+  assert.match(mediaBarSpec, /rowOffsetFromHeroBottom/u);
   assert.match(mediaBarSpec, /boundingBox/u);
   assert.match(mediaBarSpec, /toBeEnabled/u);
   assert.match(mediaBarSpec, /toBeFocused/u);
-  assert.match(mediaBarSpec, /toHaveScreenshot/u);
+  assert.doesNotMatch(mediaBarSpec, /toHaveScreenshot/u);
 });

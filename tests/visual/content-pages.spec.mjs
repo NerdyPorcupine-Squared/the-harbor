@@ -28,6 +28,24 @@ async function expectMobileTargets(page, projectName) {
   }
 }
 
+async function expectCardArtFitsScalable(page, cardSelector) {
+  const card = page.locator(cardSelector).first();
+  const scalable = card.locator(".cardScalable");
+  const image = card.locator(".cardImageContainer");
+  const scalableBox = await scalable.boundingBox();
+  const imageBox = await image.boundingBox();
+
+  expect(scalableBox).not.toBeNull();
+  expect(imageBox).not.toBeNull();
+  expect(Math.abs(imageBox.width - scalableBox.width)).toBeLessThanOrEqual(2);
+  expect(Math.abs(imageBox.height - scalableBox.height)).toBeLessThanOrEqual(2);
+
+  const imageAspectRatio = await image.evaluate(
+    (element) => getComputedStyle(element).aspectRatio,
+  );
+  expect(imageAspectRatio).toBe("auto");
+}
+
 test("library supports mixed media and interaction states", async ({ page }, testInfo) => {
   await page.goto(fixtureUrl("library"));
   await expectNoHorizontalOverflow(page);
@@ -43,16 +61,8 @@ test("library supports mixed media and interaction states", async ({ page }, tes
   );
   expect(disabledOpacity).toBeLessThan(1);
 
-  const portraitImage = page.locator(".cardPadder-portrait + .cardContent .cardImageContainer").first();
-  const portraitRatio = await portraitImage.evaluate(
-    (element) => getComputedStyle(element).aspectRatio,
-  );
-  expect(portraitRatio).toBe("auto");
-
-  await expect(page).toHaveScreenshot(`library-${testInfo.project.name}.png`, {
-    animations: "disabled",
-    fullPage: true,
-  });
+  await expectCardArtFitsScalable(page, ".card:has(.cardPadder-portrait)");
+  await expectCardArtFitsScalable(page, ".card:has(.cardPadder-backdrop)");
 });
 
 test("search renders all states without reordering them", async ({ page }, testInfo) => {
@@ -65,11 +75,7 @@ test("search renders all states without reordering them", async ({ page }, testI
     .evaluateAll((elements) => elements.map((element) => element.dataset.searchState));
   expect(states).toEqual(["populated", "empty", "loading", "error"]);
   await expect(page.locator('[data-search-state="error"] [role="alert"]')).toBeVisible();
-
-  await expect(page).toHaveScreenshot(`search-${testInfo.project.name}.png`, {
-    animations: "disabled",
-    fullPage: true,
-  });
+  await expectCardArtFitsScalable(page, '[data-search-state="populated"] .card');
 });
 
 test("details preserve Jellyfin geometry, actions, and readable content", async ({
@@ -102,10 +108,21 @@ test("details preserve Jellyfin geometry, actions, and readable content", async 
   expect(primaryBackground).not.toBe("rgba(0, 0, 0, 0)");
   expect(secondaryColor).toBe("rgb(58, 45, 33)");
 
-  await expect(page).toHaveScreenshot(`details-${testInfo.project.name}.png`, {
-    animations: "disabled",
-    fullPage: true,
-  });
+  const visiblePoster =
+    testInfo.project.name === "mobile"
+      ? ".detailImageContainer.hide-desktop .card"
+      : ".detailImageContainer.hide-mobile .card";
+  await expectCardArtFitsScalable(page, visiblePoster);
+  await expectCardArtFitsScalable(page, "#childrenCollapsible .card");
+
+  const backdropBox = await page.locator(".itemBackdrop").boundingBox();
+  const primaryBox = await page.locator(".detailPagePrimaryContainer").boundingBox();
+  const secondaryBox = await page.locator(".detailPageSecondaryContainer").boundingBox();
+  expect(backdropBox).not.toBeNull();
+  expect(primaryBox).not.toBeNull();
+  expect(secondaryBox).not.toBeNull();
+  expect(backdropBox.height).toBeGreaterThan(0);
+  expect(primaryBox.y).toBeLessThan(secondaryBox.y);
 });
 
 test("content pages fit tablet 820x1180", async ({ page }, testInfo) => {

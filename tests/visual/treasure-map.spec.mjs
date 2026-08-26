@@ -60,13 +60,15 @@ test("library and search use the map canvas without covering media art", async (
 
 test("details transition from cinematic art into map browsing content", async ({ page }, testInfo) => {
   await page.goto(fixtureUrl("details"));
-  const backdrop = await computed(page, ".detailBackdrop");
+  const backdrop = await computed(page, "#itemDetailPage .itemBackdrop");
   const content = await computed(page, ".detailPageContent");
-  const person = await computed(page, ".personCard");
+  const personArt = await computed(page, "#castCollapsible .cardImageContainer");
+  const personLabel = await computed(page, "#castCollapsible .cardText");
 
   expect(backdrop.backgroundImage).not.toContain("cartography");
   expect(content.backgroundImage).toContain("chart-grid.svg");
-  expect(person.color).toBe("rgb(234, 217, 174)");
+  expect(personArt.backgroundImage).not.toContain("cartography");
+  expect(personLabel.color).toBe("rgb(58, 45, 33)");
   if (testInfo.project.name === "desktop") {
     expect(content.backgroundImage).toContain("coastline.svg");
   }

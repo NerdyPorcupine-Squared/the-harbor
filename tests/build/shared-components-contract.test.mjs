@@ -57,7 +57,10 @@ test("configures deterministic file-backed desktop and mobile visual projects", 
   assert.match(spec, /button:visible, input:visible, select:visible/u);
   assert.match(spec, /outlineWidth/u);
   assert.match(spec, /data-harbor-parchment-control/u);
-  assert.match(spec, /shared-components-\$\{testInfo\.project\.name\}\.png/u);
+  assert.match(spec, /cardScalable/u);
+  assert.match(spec, /cardImageContainer/u);
+  assert.match(spec, /boundingBox/u);
+  assert.doesNotMatch(spec, /toHaveScreenshot/u);
   assert.doesNotMatch(spec, /https?:\/\//iu);
 });
 

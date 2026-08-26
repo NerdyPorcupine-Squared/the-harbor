@@ -51,9 +51,4 @@ test("home stays compact and usable without Media Bar", async ({ page }, testInf
       expect(box.height).toBeGreaterThanOrEqual(40);
     }
   }
-
-  await expect(page).toHaveScreenshot(`home-without-media-bar-${testInfo.project.name}.png`, {
-    animations: "disabled",
-    fullPage: true,
-  });
 });

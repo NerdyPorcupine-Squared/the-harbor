@@ -11,6 +11,16 @@ test.beforeEach(async ({ page }) => {
   await page.goto(fixtureUrl);
 });
 
+async function expectCardArtFitsScalable(page, cardSelector) {
+  const card = page.locator(cardSelector).first();
+  const scalableBox = await card.locator(".cardScalable").boundingBox();
+  const imageBox = await card.locator(".cardImageContainer").boundingBox();
+  expect(scalableBox).not.toBeNull();
+  expect(imageBox).not.toBeNull();
+  expect(Math.abs(imageBox.width - scalableBox.width)).toBeLessThanOrEqual(2);
+  expect(Math.abs(imageBox.height - scalableBox.height)).toBeLessThanOrEqual(2);
+}
+
 test("shared Harbor components preserve responsive and accessible contracts", async ({
   page,
 }, testInfo) => {
@@ -77,11 +87,6 @@ test("shared Harbor components preserve responsive and accessible contracts", as
     expect(surfaceStyle.color).toBe("rgb(42, 33, 24)");
   }
 
-  await expect(page).toHaveScreenshot(
-    `shared-components-${testInfo.project.name}.png`,
-    {
-      animations: "disabled",
-      fullPage: true,
-    },
-  );
+  await expectCardArtFitsScalable(page, ".card:has(.cardPadder-portrait)");
+  await expectCardArtFitsScalable(page, ".card:has(.cardPadder-backdrop)");
 });

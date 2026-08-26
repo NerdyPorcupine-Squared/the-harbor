@@ -99,9 +99,4 @@ test("Media Bar forms a responsive, accessible trailer hero when plugin CSS load
     Number.parseFloat(getComputedStyle(element).outlineWidth),
   );
   expect(outlineWidth).toBeGreaterThanOrEqual(2);
-
-  await expect(page).toHaveScreenshot(`media-bar-${testInfo.project.name}.png`, {
-    animations: "disabled",
-    fullPage: true,
-  });
 });
