@@ -14,13 +14,24 @@ body:has(#slides-container) #slides-container {
 #slides-container .slide {
   position: absolute;
   inset: 0;
-  display: grid;
-  align-items: end;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-start;
+  gap: var(--harbor-space-2);
   padding:
     clamp(5rem, 15svh, 9rem)
     max(var(--harbor-space-8), env(safe-area-inset-right))
     clamp(4.5rem, 10svh, 7rem)
     max(var(--harbor-space-8), env(safe-area-inset-left));
+}
+
+#slides-container .backdrop-container {
+  position: absolute;
+  z-index: -2;
+  inset: 0;
+  width: 100%;
+  height: 100%;
 }
 
 #slides-container .backdrop,
@@ -59,23 +70,55 @@ body:has(#slides-container) #slides-container {
   max-height: 100%;
 }
 
+#slides-container :where(
+  .logo-container,
+  .info-container,
+  .genre,
+  .plot-container,
+  .button-container
+) {
+  position: relative;
+  inset: auto;
+  width: min(48%, 38rem);
+  height: auto;
+  margin: 0;
+}
+
+#slides-container .logo-container {
+  display: flex;
+  align-items: flex-end;
+}
+
+#slides-container .logo-title-fallback,
 #slides-container .slideTitle {
-  margin-block: 0 var(--harbor-space-2);
+  margin: 0;
+  color: var(--harbor-parchment-100);
+  font-family: var(--harbor-font-display);
   font-size: clamp(1.75rem, 4vw, 3.75rem);
+  font-weight: 700;
   line-height: 1.05;
   overflow-wrap: anywhere;
 }
 
+#slides-container .info-container,
 #slides-container .slideActions,
-#slides-container .slideControls {
+#slides-container .slideControls,
+#slides-container .button-container,
+#slides-container .dots-container {
   display: flex;
   flex-wrap: wrap;
   gap: var(--harbor-space-2);
   align-items: center;
 }
 
-#slides-container .slideActions {
-  margin-block-start: var(--harbor-space-4);
+#slides-container .plot-container {
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+
+#slides-container .slideActions,
+#slides-container .button-container {
+  margin-block-start: var(--harbor-space-2);
 }
 
 #slides-container .loading {
@@ -139,11 +182,14 @@ body:has(#slides-container) #slides-container {
   inset-inline-end: max(var(--harbor-space-3), env(safe-area-inset-right));
 }
 
-#slides-container .slideControls {
+#slides-container .slideControls,
+#slides-container .dots-container {
   position: absolute;
   z-index: 5;
-  inset-inline-end: max(var(--harbor-space-4), env(safe-area-inset-right));
+  inset-block-start: auto;
   inset-block-end: var(--harbor-space-4);
+  inset-inline-start: auto;
+  inset-inline-end: max(var(--harbor-space-4), env(safe-area-inset-right));
 }
 
 #slides-container .pause,
@@ -151,6 +197,23 @@ body:has(#slides-container) #slides-container {
 #slides-container .mute,
 #slides-container .mute-button {
   border-radius: 50%;
+}
+
+#slides-container .pause-button,
+#slides-container .mute-button {
+  position: absolute;
+  z-index: 5;
+  inset-block-start: var(--harbor-space-4);
+  inset-block-end: auto;
+  inset-inline-start: auto;
+}
+
+#slides-container .pause-button {
+  inset-inline-end: max(var(--harbor-space-4), env(safe-area-inset-right));
+}
+
+#slides-container .mute-button {
+  inset-inline-end: calc(max(var(--harbor-space-4), env(safe-area-inset-right)) + 3rem);
 }
 
 #slides-container .dot {
@@ -191,8 +254,9 @@ body:has(#slides-container) .homeSectionsContainer {
   }
 
   #slides-container .slide {
+    gap: var(--harbor-space-1);
     padding:
-      var(--harbor-space-6)
+      var(--harbor-space-4)
       max(var(--harbor-space-4), env(safe-area-inset-right))
       4.75rem
       max(var(--harbor-space-4), env(safe-area-inset-left));
@@ -204,16 +268,38 @@ body:has(#slides-container) .homeSectionsContainer {
       linear-gradient(90deg, rgb(7 19 28 / 72%), transparent);
   }
 
-  #slides-container .harbor-metadata-panel {
+  #slides-container .harbor-metadata-panel,
+  #slides-container :where(
+    .logo-container,
+    .info-container,
+    .genre,
+    .plot-container,
+    .button-container
+  ) {
     width: 100%;
+  }
+
+  #slides-container .harbor-metadata-panel {
     padding: var(--harbor-space-3);
   }
 
+  #slides-container .logo-title-fallback,
+  #slides-container .slideTitle {
+    font-size: clamp(1.35rem, 7vw, 2rem);
+  }
+
+  #slides-container .plot-container,
   #slides-container .slidePlot {
     display: -webkit-box;
     overflow: hidden;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
+  }
+
+  #slides-container .info-container,
+  #slides-container .genre,
+  #slides-container .plot-container {
+    font-size: 0.875rem;
   }
 
   #slides-container .arrow {

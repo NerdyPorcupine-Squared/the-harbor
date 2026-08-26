@@ -9,7 +9,7 @@ function fixtureUrl(name) {
 }
 
 async function computed(page, selector) {
-  return page.locator(selector).evaluate((element) => {
+  return page.locator(selector).first().evaluate((element) => {
     const style = getComputedStyle(element);
     return {
       backgroundColor: style.backgroundColor,
@@ -62,9 +62,11 @@ test("details transition from cinematic art into map browsing content", async ({
   await page.goto(fixtureUrl("details"));
   const backdrop = await computed(page, ".detailBackdrop");
   const content = await computed(page, ".detailPageContent");
+  const person = await computed(page, ".personCard");
 
   expect(backdrop.backgroundImage).not.toContain("cartography");
   expect(content.backgroundImage).toContain("chart-grid.svg");
+  expect(person.color).toBe("rgb(234, 217, 174)");
   if (testInfo.project.name === "desktop") {
     expect(content.backgroundImage).toContain("coastline.svg");
   }

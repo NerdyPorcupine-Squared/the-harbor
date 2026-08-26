@@ -33,18 +33,36 @@ test("Media Bar forms a responsive, accessible trailer hero when plugin CSS load
   expect(rowOffsetFromHeroBottom).toBeGreaterThanOrEqual(-40);
   expect(rowOffsetFromHeroBottom).toBeLessThanOrEqual(80);
 
-  const logoBox = await page
-    .locator("#slides-container .logo-container")
-    .boundingBox();
-  expect(logoBox).not.toBeNull();
+  const metadataSelectors = [
+    ".logo-container",
+    ".info-container",
+    ".genre",
+    ".plot-container",
+    ".button-container",
+  ];
+  const metadataBoxes = [];
+  for (const selector of metadataSelectors) {
+    const box = await page.locator(`#slides-container ${selector}`).boundingBox();
+    expect(box).not.toBeNull();
+    metadataBoxes.push(box);
+    expect(box.x).toBeGreaterThanOrEqual(heroBox.x);
+    expect(box.x + box.width).toBeLessThanOrEqual(heroBox.x + heroBox.width);
+    expect(box.y).toBeGreaterThanOrEqual(heroBox.y);
+    expect(box.y + box.height).toBeLessThanOrEqual(heroBox.y + heroBox.height);
+  }
+
+  for (let index = 1; index < metadataBoxes.length; index += 1) {
+    const previous = metadataBoxes[index - 1];
+    const current = metadataBoxes[index];
+    expect(current.y).toBeGreaterThanOrEqual(previous.y + previous.height - 1);
+  }
+
+  const logoBox = metadataBoxes[0];
   if (testInfo.project.name === "desktop") {
     expect(logoBox.width / heroBox.width).toBeLessThanOrEqual(0.48);
   }
 
-  const plotBox = await page
-    .locator("#slides-container .plot-container")
-    .boundingBox();
-  expect(plotBox).not.toBeNull();
+  const plotBox = metadataBoxes[3];
   expect(plotBox.x).toBeGreaterThanOrEqual(heroBox.x);
   expect(plotBox.x + plotBox.width).toBeLessThanOrEqual(heroBox.x + heroBox.width);
 
