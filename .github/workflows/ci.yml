@@ -14,6 +14,8 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 3
 
       - name: Set up Node
         uses: actions/setup-node@v4
@@ -42,7 +44,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git show HEAD^:.github/workflows/ci.yml > .github/workflows/ci.yml
+          git show HEAD~2:.github/workflows/ci.yml > .github/workflows/ci.yml
           git add theme.css .github/workflows/ci.yml
           if git diff --cached --quiet; then
             echo "No generated theme changes to publish."
