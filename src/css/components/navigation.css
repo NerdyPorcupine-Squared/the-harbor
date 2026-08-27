@@ -1,28 +1,13 @@
 .skinHeader {
-  position: relative;
-  z-index: 2;
   border-block-end: 1px solid rgb(184 148 75 / 34%);
-}
-
-.headerTabs {
-  display: flex;
-  max-width: 100%;
-  gap: var(--harbor-space-1);
-  padding: var(--harbor-space-2) var(--harbor-space-4);
-  overflow-x: auto;
-  scrollbar-width: thin;
 }
 
 .emby-tab-button {
   min-width: 2.5rem;
   min-height: 2.5rem;
-  flex: 0 0 auto;
-  border: 0;
   border-block-end: 0.125rem solid transparent;
-  padding: var(--harbor-space-2) var(--harbor-space-4);
-  background: transparent;
+  background-color: transparent;
   color: var(--harbor-parchment-200);
-  font: inherit;
   transition:
     border-color var(--harbor-motion-duration-fast) var(--harbor-motion-easing-standard),
     color var(--harbor-motion-duration-fast) var(--harbor-motion-easing-standard),
@@ -48,22 +33,13 @@
   color: var(--harbor-parchment-100);
 }
 
-.drawerContent {
-  display: grid;
-  gap: var(--harbor-space-1);
-  padding: var(--harbor-space-4) var(--harbor-space-2);
-}
-
 .navMenuOption {
-  min-width: 100%;
+  min-width: 2.5rem;
   min-height: 2.5rem;
   border: 1px solid transparent;
   border-radius: var(--harbor-radius-sm);
-  padding: var(--harbor-space-2) var(--harbor-space-4);
-  background: transparent;
+  background-color: transparent;
   color: inherit;
-  font: inherit;
-  text-align: start;
   transition:
     background-color var(--harbor-motion-duration-fast) var(--harbor-motion-easing-standard),
     border-color var(--harbor-motion-duration-fast) var(--harbor-motion-easing-standard);

@@ -1,40 +1,13 @@
 #itemDetailPage {
-  position: relative;
-  min-width: 0;
-  padding-block-end: max(var(--harbor-space-8), env(safe-area-inset-bottom));
   background-color: var(--harbor-cinematic-navy);
   color: var(--harbor-parchment-100);
 }
 
 #itemDetailPage .itemBackdrop {
-  position: relative;
-  overflow: hidden;
   background-color: var(--harbor-navy-900);
-  background-position: center 20%;
-  background-size: cover;
-}
-
-#itemDetailPage .itemBackdrop::after {
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(0deg, var(--harbor-cinematic-navy), transparent 64%),
-    linear-gradient(90deg, rgb(7 19 28 / 58%), transparent 72%);
-  content: "";
-  pointer-events: none;
-}
-
-#itemDetailPage .detailPageWrapperContainer,
-#itemDetailPage .detailPagePrimaryContainer,
-#itemDetailPage .detailPagePrimaryContent,
-#itemDetailPage .detailPageSecondaryContainer,
-#itemDetailPage .detailPageContent {
-  min-width: 0;
 }
 
 #itemDetailPage .detailRibbon {
-  position: relative;
-  z-index: 2;
   background:
     linear-gradient(180deg, rgb(7 19 28 / 58%), rgb(7 19 28 / 96%)),
     var(--harbor-navy-950);
@@ -64,33 +37,18 @@
   color: var(--harbor-parchment-100);
 }
 
-#itemDetailPage .detailSection,
-#itemDetailPage .detailSectionContent,
-#itemDetailPage .nextUpSection {
-  min-width: 0;
-}
-
 #itemDetailPage .overview,
 #itemDetailPage .itemDetailsGroup {
-  max-width: 72ch;
   line-height: 1.65;
   overflow-wrap: anywhere;
 }
 
-#itemDetailPage .mainDetailButtons {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--harbor-space-2);
-}
-
 #itemDetailPage .detailPageSecondaryContainer {
-  min-width: 0;
   background-color: var(--harbor-map-paper);
   color: var(--harbor-map-ink);
 }
 
 #itemDetailPage .detailPageContent {
-  min-width: 0;
   color: var(--harbor-map-ink);
 }
 
@@ -100,29 +58,4 @@
   .cardText
 ) {
   color: var(--harbor-map-ink);
-}
-
-#itemDetailPage .detailVerticalSection {
-  min-width: 0;
-  margin-block-start: var(--harbor-space-8);
-}
-
-#itemDetailPage .detailPageSecondaryContainer .card {
-  color: var(--harbor-map-ink);
-}
-
-#itemDetailPage :where(.button-flat, .button-submit) {
-  max-width: 100%;
-}
-
-@media (width <= 599px) {
-  #itemDetailPage .detailRibbon,
-  #itemDetailPage .detailPagePrimaryContent,
-  #itemDetailPage .detailPageContent {
-    overflow-wrap: anywhere;
-  }
-
-  #itemDetailPage .mainDetailButtons {
-    gap: var(--harbor-space-1);
-  }
 }

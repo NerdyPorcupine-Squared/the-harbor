@@ -2,7 +2,6 @@
   .homeSectionsContainer,
   .libraryPage:not(.itemDetailPage),
   .searchPage,
-  .detailPageContent,
   .statePage
 ) {
   background-color: var(--harbor-map-paper);
@@ -41,7 +40,6 @@ body:has(#slides-container) .homeSectionsContainer {
     .homeSectionsContainer,
     .libraryPage:not(.itemDetailPage),
     .searchPage,
-    .detailPageContent,
     .statePage
   ) {
     background-image:

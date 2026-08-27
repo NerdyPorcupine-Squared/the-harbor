@@ -88,10 +88,11 @@ test("preserves mobile touch targets and visible interaction states", async () =
   }
 });
 
-test("reserves brass card framing for focus and selection", async () => {
+test("uses non-sizing brass card framing for focus and selection", async () => {
   const cards = await readRepositoryFile("src/css/components/cards.css");
-  assert.match(cards, /\.card:focus-within[^}]*\.card\.selected[^{}]*\.cardScalable\s*\{[^}]*border-color:/su);
-  assert.doesNotMatch(cards, /\.card:hover[^{}]*\.cardScalable\s*\{[^}]*border-color:\s*rgb\(184 148 75/su);
+  assert.match(cards, /\.card:focus-within[^}]*\.card\.selected[^{}]*\.cardScalable\s*\{[^}]*box-shadow:/su);
+  assert.doesNotMatch(cards, /\.cardScalable\s*\{[^}]*(?:border|transform|overflow)\s*:/su);
+  assert.doesNotMatch(cards, /\.card:hover[^{}]*\.cardScalable\s*\{[^}]*transform:/su);
 });
 
 test("real action sheets and dialogs own their parchment backgrounds", async () => {

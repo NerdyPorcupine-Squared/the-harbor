@@ -82,20 +82,22 @@ test("ships only local sanitized decorative cartography assets", async () => {
   }
 });
 
-test("map surface scopes cartography to browsing and never player source", async () => {
+test("map surface scopes cartography to browsing and never player or cinematic detail roots", async () => {
   const mapSurface = await readRepositoryFile("src/css/base/map-surface.css");
+  const details = await readRepositoryFile("src/css/pages/details.css");
   const player = await readRepositoryFile("src/css/pages/player.css");
 
   for (const selector of [
     ".homeSectionsContainer",
     ".libraryPage",
     ".searchPage",
-    ".detailPageContent",
     ".statePage",
   ]) {
     assert.match(mapSurface, new RegExp(selector.replace(".", "\\."), "u"), selector);
   }
 
+  assert.doesNotMatch(mapSurface, /\.detailPageContent/u);
+  assert.match(details, /\.detailPageSecondaryContainer\s*\{[^}]*background-color:\s*var\(--harbor-map-paper\)/su);
   assert.match(mapSurface, /background-color:\s*var\(--harbor-map-paper\)/u);
   assert.match(mapSurface, /var\(--harbor-map-cartography-image\)/u);
   assert.match(mapSurface, /var\(--harbor-papyrus-image\)/u);
@@ -104,14 +106,15 @@ test("map surface scopes cartography to browsing and never player source", async
   assert.doesNotMatch(player, /assets\/cartography|harbor-map-cartography/u);
 });
 
-test("framed cards preserve art inside timber and parchment metadata", async () => {
+test("framed cards preserve artwork with non-sizing framing and parchment metadata", async () => {
   const cards = await readRepositoryFile("src/css/components/cards.css");
 
-  assert.match(cards, /\.cardBox\s*\{[^}]*background-color:\s*var\(--harbor-timber-900\)/su);
+  assert.match(cards, /\.cardScalable\s*\{[^}]*box-shadow:/su);
+  assert.doesNotMatch(cards, /\.cardScalable\s*\{[^}]*(?:border|transform|overflow)\s*:/su);
   assert.match(cards, /\.cardText\s*\{[^}]*background-color:\s*var\(--harbor-map-paper\)/su);
   assert.match(cards, /\.cardText\s*\{[^}]*color:\s*var\(--harbor-map-ink\)/su);
   assert.match(cards, /\.cardImageContainer\s*\{/u);
-  assert.doesNotMatch(cards, /\.cardImageContainer\s*\{[^}]*assets\/cartography/su);
+  assert.doesNotMatch(cards, /\.cardImageContainer\s*\{[^}]*(?:background-size|background-position|assets\/cartography)/su);
 });
 
 test("release-candidate documentation describes the new hierarchy without claiming stable validation", async () => {

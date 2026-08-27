@@ -55,7 +55,7 @@ for (const fixture of ["login", "dashboard", "states"]) {
   });
 }
 
-test("player keeps every essential control visible and clickable", async ({
+test("player keeps native geometry and every essential control visible", async ({
   page,
 }, testInfo) => {
   await page.goto(fixtureUrl("player"));
@@ -70,14 +70,18 @@ test("player keeps every essential control visible and clickable", async ({
   }
 
   const play = page.locator("[data-player-primary]");
-  await play.click();
   await play.focus();
   await expect(play).toBeFocused();
 
-  await expect(page).toHaveScreenshot(`player-${testInfo.project.name}.png`, {
-    animations: "disabled",
-    fullPage: true,
+  const playerStyle = await page.locator(".videoPlayerContainer").evaluate((element) => {
+    const style = getComputedStyle(element);
+    return {
+      backgroundColor: style.backgroundColor,
+      color: style.color,
+    };
   });
+  expect(playerStyle.backgroundColor).toBe("rgb(0, 0, 0)");
+  expect(playerStyle.color).not.toBe("rgb(0, 0, 0)");
 });
 
 test("reducedMotion disables decorative loading animation", async ({ page }) => {

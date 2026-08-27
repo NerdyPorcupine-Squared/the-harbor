@@ -48,27 +48,30 @@ test("fixtures cover required system surfaces with sanitized content", async () 
   }
 });
 
-test("responsive layer declares all ranges and safe-area behavior", async () => {
+test("responsive layer limits itself to touch-target safeguards", async () => {
   const css = await readRepositoryFile("src/css/responsive.css");
 
   assert.match(css, /width <= 599px/u);
-  assert.match(css, /600px <= width <= 1023px/u);
-  assert.match(css, /width >= 1024px/u);
-  assert.match(css, /width >= 1600px/u);
-  assert.match(css, /env\(safe-area-inset-/u);
   assert.match(css, /@media\s*\(pointer:\s*coarse\)/u);
+  assert.match(css, /min-width:\s*2\.5rem/u);
+  assert.match(css, /min-height:\s*2\.5rem/u);
+  assert.doesNotMatch(css, /libraryPage|searchPage|homeSectionsContainer|itemDetailPage/u);
+  assert.doesNotMatch(css, /env\(safe-area-inset-/u);
   assert.doesNotMatch(css, /\b(left|right|margin-left|margin-right|padding-left|padding-right)\s*:/u);
 });
 
-test("player styles preserve visible controls and minimum hit targets", async () => {
+test("player presentation preserves controls without replacing OSD geometry", async () => {
   const css = await readRepositoryFile("src/css/pages/player.css");
 
   assert.doesNotMatch(css, /display:\s*none/u);
   assert.doesNotMatch(css, /pointer-events:\s*none/u);
+  assert.doesNotMatch(css, /\.videoPlayerContainer\s*\{[^}]*(?:position|display|min-height|height|width|padding|transform)\s*:/su);
+  assert.doesNotMatch(css, /\.videoOsdBottom\s*\{[^}]*(?:position|inset|padding|transform)\s*:/su);
   assert.match(css, /\.playerButton/u);
   assert.match(css, /min-width:\s*2\.5rem/u);
   assert.match(css, /min-height:\s*2\.5rem/u);
   assert.match(css, /\.slider/u);
+  assert.match(css, /accent-color/u);
 });
 
 test("browser coverage verifies media preferences, zoom, focus, and controls", async () => {

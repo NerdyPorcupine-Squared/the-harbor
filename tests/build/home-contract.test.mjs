@@ -21,40 +21,31 @@ test("imports the optional home and Media Bar layers into Core", async () => {
   );
 
   assert.ok(homeIndex > 0, "home.css must be imported");
-  assert.ok(mediaBarIndex > homeIndex, "Media Bar overrides must follow home.css");
+  assert.ok(mediaBarIndex > homeIndex, "Media Bar presentation follows home.css");
 });
 
-test("keeps Media Bar selectors scoped and displacement presence-dependent", async () => {
+test("keeps Media Bar selectors scoped while leaving plugin geometry untouched", async () => {
   const css = await readRepositoryFile(
     "src/css/integrations/media-bar-enhanced.css",
   );
 
   for (const family of [
-    "slide",
     "backdrop",
     "video-backdrop",
-    "loading",
-    "progress",
+    "backdrop-overlay",
+    "logo-title-fallback",
+    "play-button",
     "arrow",
-    "pause",
-    "mute",
-    "dot",
+    "pause-button",
+    "mute-button",
   ]) {
     assert.match(css, new RegExp(`#slides-container[^\\{]*\\.${family}`, "u"));
   }
 
-  assert.match(
-    css,
-    /body:has\(#slides-container\)[^{]*\.homeSectionsContainer\s*\{/u,
-  );
-  assert.doesNotMatch(
-    css.replace(
-      /body:has\(#slides-container\)[^{]*\.homeSectionsContainer\s*\{[^}]*\}/gu,
-      "",
-    ),
-    /\.homeSectionsContainer\s*\{[^}]*margin-block-start/gu,
-    "hero displacement must never affect the plugin-absent home page",
-  );
+  assert.doesNotMatch(css, /!important/u);
+  assert.doesNotMatch(css, /homeSectionsContainer/u);
+  assert.doesNotMatch(css, /#slides-container\s*\{[^}]*(?:position|width|height|inset|overflow|transform)\s*:/su);
+  assert.doesNotMatch(css, /\.video-backdrop\s*\{[^}]*(?:position|width|height|inset|transform|object-fit|background-size)\s*:/su);
 });
 
 test("fixtures are local, sanitized, and represent both home modes", async () => {
@@ -105,23 +96,24 @@ test("fixtures are local, sanitized, and represent both home modes", async () =>
   }
 });
 
-test("visual specs assert layout and interaction geometry", async () => {
+test("visual specs assert real card geometry and plugin-owned Media Bar geometry", async () => {
   const homeSpec = await readRepositoryFile("tests/visual/home.spec.mjs");
   const mediaBarSpec = await readRepositoryFile("tests/visual/media-bar.spec.mjs");
+  const runtimeCardSpec = await readRepositoryFile("tests/visual/runtime-cards.spec.mjs");
 
   assert.match(homeSpec, /scrollWidth/u);
-  assert.match(homeSpec, /toBeLessThanOrEqual\(500\)/u);
   assert.match(homeSpec, /cardScalable/u);
   assert.match(homeSpec, /cardImageContainer/u);
-  assert.match(homeSpec, /aspectRatio/u);
   assert.doesNotMatch(homeSpec, /toHaveScreenshot/u);
 
-  assert.match(mediaBarSpec, /58/u);
-  assert.match(mediaBarSpec, /67/u);
-  assert.match(mediaBarSpec, /48/u);
+  assert.match(runtimeCardSpec, /backgroundSize/u);
+  assert.match(runtimeCardSpec, /backgroundPosition/u);
+  assert.match(runtimeCardSpec, /aspectRatio/u);
+  assert.match(runtimeCardSpec, /boundingBox/u);
+
+  assert.match(mediaBarSpec, /pluginHeroHeightSvh/u);
+  assert.match(mediaBarSpec, /pluginRowTopSvh/u);
   assert.match(mediaBarSpec, /video-backdrop/u);
-  assert.match(mediaBarSpec, /rowOffsetFromHeroBottom/u);
-  assert.match(mediaBarSpec, /boundingBox/u);
   assert.match(mediaBarSpec, /toBeEnabled/u);
   assert.match(mediaBarSpec, /toBeFocused/u);
   assert.doesNotMatch(mediaBarSpec, /toHaveScreenshot/u);

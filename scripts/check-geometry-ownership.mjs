@@ -2,21 +2,81 @@ import { readdir, readFile } from "node:fs/promises";
 import { extname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
-const PROTECTED_CARD_SELECTOR = /\.(?:card|cardBox|cardScalable|cardContent|cardImageContainer|cardPadder(?:[\w-]+)?)\b/u;
-const FORBIDDEN_CARD_PROPERTIES = new Set([
-  "aspect-ratio",
+const CARD_PROTECTED_CLASSES = new Set([
+  "card",
+  "cardBox",
+  "cardScalable",
+  "cardContent",
+  "cardImageContainer",
+]);
+
+const LAYOUT_PROTECTED_CLASSES = new Set([
+  "homeSectionsContainer",
+  "homeSection",
+  "itemsContainer",
+  "scrollSlider",
+  "verticalSection",
+  "libraryPage",
+  "libraryToolbar",
+  "libraryGrid",
+  "searchPage",
+  "searchForm",
+  "searchState",
+  "searchResults",
+  "itemBackdrop",
+  "detailPageWrapperContainer",
+  "detailPagePrimaryContainer",
+  "detailPagePrimaryContent",
+  "detailPageSecondaryContainer",
+  "detailPageContent",
+  "mainDetailButtons",
+  "videoPlayerContainer",
+  "videoSurface",
+  "videoOsdBottom",
+  "videoOsdTop",
+  "osdControls",
+  "skinHeader",
+  "headerTabs",
+  "mainDrawer",
+  "drawerContent",
+]);
+
+const MEDIA_LAYOUT_CLASSES = new Set([
+  "slide",
+  "backdrop-container",
+  "backdrop",
+  "video-backdrop",
+  "backdrop-overlay",
+  "gradient-overlay",
+  "logo-container",
+  "info-container",
+  "genre",
+  "plot-container",
+  "button-container",
+]);
+
+const STRUCTURAL_PROPERTIES = new Set([
+  "display",
+  "position",
+  "z-index",
+  "inset",
+  "inset-inline",
+  "inset-block",
+  "inset-inline-start",
+  "inset-inline-end",
+  "inset-block-start",
+  "inset-block-end",
+  "top",
+  "right",
+  "bottom",
+  "left",
   "width",
   "height",
   "min-width",
   "min-height",
   "max-width",
   "max-height",
-  "position",
-  "inset",
-  "top",
-  "right",
-  "bottom",
-  "left",
+  "aspect-ratio",
   "transform",
   "overflow",
   "overflow-x",
@@ -26,6 +86,40 @@ const FORBIDDEN_CARD_PROPERTIES = new Set([
   "padding-right",
   "padding-bottom",
   "padding-left",
+  "padding-inline",
+  "padding-block",
+  "padding-inline-start",
+  "padding-inline-end",
+  "padding-block-start",
+  "padding-block-end",
+  "margin",
+  "margin-top",
+  "margin-right",
+  "margin-bottom",
+  "margin-left",
+  "margin-inline",
+  "margin-block",
+  "margin-inline-start",
+  "margin-inline-end",
+  "margin-block-start",
+  "margin-block-end",
+  "grid-template-columns",
+  "grid-template-rows",
+  "grid-column",
+  "grid-row",
+  "flex",
+  "flex-basis",
+  "flex-grow",
+  "flex-shrink",
+  "flex-direction",
+  "flex-wrap",
+  "align-items",
+  "justify-content",
+  "place-items",
+  "gap",
+]);
+
+const CARD_EXTRA_PROPERTIES = new Set([
   "background",
   "background-image",
   "background-size",
@@ -36,6 +130,13 @@ const FORBIDDEN_CARD_PROPERTIES = new Set([
   "border-right-width",
   "border-bottom-width",
   "border-left-width",
+]);
+
+const ARTWORK_MECHANIC_PROPERTIES = new Set([
+  "background",
+  "background-image",
+  "background-size",
+  "background-position",
 ]);
 
 function stripComments(css) {
@@ -69,21 +170,77 @@ function declarationProperties(body) {
   return properties;
 }
 
+function classNames(selector) {
+  return [...selector.matchAll(/\.([a-z0-9_-]+)/giu)].map((match) => match[1]);
+}
+
+function targetsAnyClass(selector, classSet) {
+  return classNames(selector).some((className) => classSet.has(className));
+}
+
+function targetsPadder(selector) {
+  return classNames(selector).some((className) => className === "cardPadder" || className.startsWith("cardPadder-"));
+}
+
+function targetsMediaLayout(selector) {
+  for (const part of selector.split(",")) {
+    const lastRoot = part.lastIndexOf("#slides-container");
+    if (lastRoot < 0) continue;
+
+    const afterRoot = part.slice(lastRoot + "#slides-container".length).trim();
+    if (!afterRoot) return true;
+    if (targetsAnyClass(afterRoot, MEDIA_LAYOUT_CLASSES)) return true;
+  }
+
+  return false;
+}
+
+function targetsDetailsRoot(selector) {
+  return /#itemDetailPage(?:\b|(?=[\s:>+~.#[]))/u.test(selector);
+}
+
+function targetsArtworkMechanics(selector) {
+  const classes = new Set(classNames(selector));
+  return (
+    classes.has("cardImageContainer") ||
+    classes.has("itemBackdrop") ||
+    classes.has("videoSurface") ||
+    classes.has("backdrop") ||
+    classes.has("video-backdrop")
+  );
+}
+
 export function checkGeometryOwnershipText(css, displayPath = "<css>") {
   const errors = [];
 
   for (const { selector, body } of innermostRules(css)) {
-    if (!PROTECTED_CARD_SELECTOR.test(selector)) continue;
+    const isCard = targetsAnyClass(selector, CARD_PROTECTED_CLASSES) || targetsPadder(selector);
+    const isLayout =
+      targetsAnyClass(selector, LAYOUT_PROTECTED_CLASSES) ||
+      targetsDetailsRoot(selector) ||
+      targetsMediaLayout(selector);
+    if (!isCard && !isLayout) continue;
 
     for (const property of declarationProperties(body)) {
-      if (!FORBIDDEN_CARD_PROPERTIES.has(property)) continue;
-      errors.push(
-        `${displayPath}: ${selector} must not set Jellyfin-owned card geometry property ${property}`,
-      );
+      if (STRUCTURAL_PROPERTIES.has(property)) {
+        errors.push(
+          `${displayPath}: ${selector} must not set Jellyfin-owned structural property ${property}`,
+        );
+      }
+      if (isCard && CARD_EXTRA_PROPERTIES.has(property)) {
+        errors.push(
+          `${displayPath}: ${selector} must not set Jellyfin-owned card property ${property}`,
+        );
+      }
+      if (targetsArtworkMechanics(selector) && ARTWORK_MECHANIC_PROPERTIES.has(property)) {
+        errors.push(
+          `${displayPath}: ${selector} must not replace Jellyfin/plugin artwork mechanics with ${property}`,
+        );
+      }
     }
   }
 
-  return errors;
+  return [...new Set(errors)];
 }
 
 async function findCssFiles(directoryPath) {

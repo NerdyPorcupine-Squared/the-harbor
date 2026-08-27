@@ -1,42 +1,6 @@
-.searchPage {
-  min-width: 0;
-  padding:
-    var(--harbor-space-6)
-    max(var(--harbor-space-4), env(safe-area-inset-right))
-    max(var(--harbor-space-8), env(safe-area-inset-bottom))
-    max(var(--harbor-space-4), env(safe-area-inset-left));
-}
-
-.searchForm {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--harbor-space-2);
-  width: min(100%, 48rem);
-  margin-block-end: var(--harbor-space-6);
-}
-
-.searchForm .emby-input {
-  min-width: min(100%, 15rem);
-  flex: 1 1 20rem;
-}
-
-.searchState {
-  min-width: 0;
-  margin-block-end: var(--harbor-space-8);
-}
-
-.searchResults {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(10rem, 100%), 15rem));
-  gap: var(--harbor-space-4);
-  min-width: 0;
-}
-
 .searchMessage {
-  width: min(100%, 40rem);
   border: var(--harbor-papyrus-border);
   border-radius: var(--harbor-radius-md);
-  padding: var(--harbor-space-6);
   background-color: var(--harbor-parchment-100);
   background-image: var(--harbor-papyrus-image);
   background-repeat: var(--harbor-papyrus-repeat);
@@ -51,26 +15,8 @@
 }
 
 .searchLoading {
-  display: inline-grid;
-  width: 2.5rem;
-  height: 2.5rem;
-  place-items: center;
-  border: 0.2rem solid rgb(42 33 24 / 22%);
+  border-color: rgb(42 33 24 / 22%);
   border-block-start-color: var(--harbor-ink-900);
-  border-radius: 50%;
-  animation: harbor-search-loading 800ms linear infinite;
-}
-
-@keyframes harbor-search-loading {
-  to {
-    transform: rotate(1turn);
-  }
-}
-
-@media (width <= 599px) {
-  .searchResults {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
