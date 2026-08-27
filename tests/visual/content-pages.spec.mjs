@@ -51,10 +51,17 @@ test("library supports mixed media and interaction states", async ({ page }, tes
   await expectNoHorizontalOverflow(page);
   await expectMobileTargets(page, testInfo.project.name);
 
-  const selectedBorder = await page.locator(".card.selected .cardScalable").evaluate(
-    (element) => getComputedStyle(element).borderColor,
+  const selectedFrame = await page.locator(".card.selected .cardScalable").evaluate(
+    (element) => {
+      const style = getComputedStyle(element);
+      return {
+        borderStyle: style.borderStyle,
+        boxShadow: style.boxShadow,
+      };
+    },
   );
-  expect(selectedBorder).toBe("rgba(184, 148, 75, 0.78)");
+  expect(selectedFrame.borderStyle).toBe("none");
+  expect(selectedFrame.boxShadow).toContain("184, 148, 75");
 
   const disabledOpacity = await page.locator('.card[aria-disabled="true"]').evaluate(
     (element) => Number.parseFloat(getComputedStyle(element).opacity),

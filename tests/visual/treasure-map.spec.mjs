@@ -14,12 +14,13 @@ async function computed(page, selector) {
     return {
       backgroundColor: style.backgroundColor,
       backgroundImage: style.backgroundImage,
+      boxShadow: style.boxShadow,
       color: style.color,
     };
   });
 }
 
-test("home browsing is an aged map with framed media cards", async ({ page }, testInfo) => {
+test("home browsing is an aged map with non-sizing framed media cards", async ({ page }, testInfo) => {
   await page.goto(fixtureUrl("home-without-media-bar"));
   const surface = await computed(page, ".homeSectionsContainer");
 
@@ -33,9 +34,9 @@ test("home browsing is an aged map with framed media cards", async ({ page }, te
     expect(surface.backgroundImage).toContain("route.svg");
   }
 
-  const card = await computed(page, ".cardBox");
+  const frame = await computed(page, ".cardScalable");
   const label = await computed(page, ".cardText");
-  expect(card.backgroundColor).toBe("rgb(33, 21, 15)");
+  expect(frame.boxShadow).toContain("184, 148, 75");
   expect(label.backgroundColor).toBe("rgb(234, 217, 174)");
   expect(label.color).toBe("rgb(58, 45, 33)");
 });
@@ -58,23 +59,21 @@ test("library and search use the map canvas without covering media art", async (
   }
 });
 
-test("details transition from cinematic art into map browsing content", async ({ page }, testInfo) => {
+test("details transition from cinematic art into parchment browsing content", async ({ page }) => {
   await page.goto(fixtureUrl("details"));
   const backdrop = await computed(page, "#itemDetailPage .itemBackdrop");
-  const content = await computed(page, ".detailPageContent");
+  const secondary = await computed(page, ".detailPageSecondaryContainer");
   const personArt = await computed(page, "#castCollapsible .cardImageContainer");
   const personLabel = await computed(page, "#castCollapsible .cardText");
 
   expect(backdrop.backgroundImage).not.toContain("cartography");
-  expect(content.backgroundImage).toContain("chart-grid.svg");
+  expect(secondary.backgroundColor).toBe("rgb(234, 217, 174)");
+  expect(secondary.color).toBe("rgb(58, 45, 33)");
   expect(personArt.backgroundImage).not.toContain("cartography");
   expect(personLabel.color).toBe("rgb(58, 45, 33)");
-  if (testInfo.project.name === "desktop") {
-    expect(content.backgroundImage).toContain("coastline.svg");
-  }
 });
 
-test("Media Bar stays cinematic while the first row returns to the map", async ({ page }, testInfo) => {
+test("Media Bar stays cinematic while plugin geometry remains authoritative", async ({ page }, testInfo) => {
   await page.goto(fixtureUrl("home-with-media-bar"));
   const hero = await computed(page, "#slides-container");
   const row = await computed(page, ".homeSectionsContainer");
@@ -88,13 +87,16 @@ test("Media Bar stays cinematic while the first row returns to the map", async (
   const viewport = page.viewportSize();
   const heroBox = await page.locator("#slides-container").boundingBox();
   expect(heroBox).not.toBeNull();
-  const svh = (heroBox.height / viewport.height) * 100;
-  if (testInfo.project.name === "desktop") {
-    expect(svh).toBeGreaterThanOrEqual(58);
-    expect(svh).toBeLessThanOrEqual(67);
-  } else {
-    expect(svh).toBeLessThanOrEqual(48);
-  }
+  const pluginHeroHeightSvh = (heroBox.height / viewport.height) * 100;
+  expect(pluginHeroHeightSvh).toBeGreaterThanOrEqual(89);
+  expect(pluginHeroHeightSvh).toBeLessThanOrEqual(91);
+
+  const pluginRowTop = await page.locator(".homeSectionsContainer").evaluate((element) =>
+    Number.parseFloat(getComputedStyle(element).top),
+  );
+  const pluginRowTopSvh = (pluginRowTop / viewport.height) * 100;
+  expect(pluginRowTopSvh).toBeGreaterThanOrEqual(64);
+  expect(pluginRowTopSvh).toBeLessThanOrEqual(66);
 });
 
 test("player never receives cartography", async ({ page }) => {
