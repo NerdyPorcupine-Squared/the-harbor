@@ -29,9 +29,11 @@
 }
 
 body:has(#slides-container) .homeSectionsContainer {
-  border-radius: var(--harbor-radius-lg) var(--harbor-radius-lg) 0 0;
+  border-radius: 0.2rem 0.2rem 0 0;
   box-shadow:
-    0 -1.5rem 2.75rem rgb(7 19 28 / 46%),
+    0 -4.5rem 5.5rem -3.75rem rgb(234 217 174 / 64%),
+    0 -2rem 3.2rem -2.25rem rgb(7 19 28 / 88%),
+    inset 0 0.125rem 0 rgb(242 229 194 / 28%),
     var(--harbor-papyrus-edge);
 }
 

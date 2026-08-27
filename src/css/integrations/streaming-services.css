@@ -1,0 +1,64 @@
+#homelabStreamingHub {
+  color: var(--harbor-map-ink);
+}
+
+#homelabStreamingHub :where(.stream-title, .stream-header) {
+  color: var(--harbor-map-ink) !important;
+  font-family: var(--harbor-font-display);
+  letter-spacing: 0.035em;
+  text-shadow: none !important;
+}
+
+#homelabStreamingHub .stream-card {
+  border-color: rgb(184 148 75 / 54%) !important;
+  background-color: var(--harbor-navy-900) !important;
+  background-image:
+    linear-gradient(155deg, rgb(12 29 41 / 94%), rgb(7 19 28 / 98%)),
+    url("./assets/parchment/fibers.svg") !important;
+  color: var(--harbor-parchment-100) !important;
+  box-shadow:
+    inset 0 0 0 1px rgb(234 217 174 / 6%),
+    0 0.55rem 1.25rem rgb(42 33 24 / 22%) !important;
+}
+
+#homelabStreamingHub .stream-card:hover {
+  border-color: var(--harbor-brass-300) !important;
+  box-shadow:
+    inset 0 0 0 1px rgb(234 217 174 / 10%),
+    0 0.75rem 1.6rem rgb(42 33 24 / 28%),
+    0 0 0 1px rgb(184 148 75 / 18%) !important;
+}
+
+#homelabStreamingHub .stream-card:focus-visible {
+  outline: 0.15rem solid var(--harbor-focus) !important;
+  outline-offset: 0.16rem !important;
+  border-color: var(--harbor-brass-300) !important;
+}
+
+#homelabStreamingHub .service-logo {
+  opacity: 1 !important;
+  filter: drop-shadow(0 0.2rem 0.4rem rgb(0 0 0 / 42%));
+}
+
+#homelabStreamingHub .open-label {
+  border-color: rgb(184 148 75 / 34%) !important;
+  background-color: rgb(234 217 174 / 10%) !important;
+  color: var(--harbor-parchment-200) !important;
+  text-shadow: none !important;
+}
+
+#homelabStreamingHub .stream-card:hover .open-label,
+#homelabStreamingHub .stream-card:focus-visible .open-label {
+  border-color: rgb(211 184 115 / 54%) !important;
+  background-color: rgb(184 148 75 / 18%) !important;
+  color: var(--harbor-parchment-100) !important;
+}
+
+@media (forced-colors: active) {
+  #homelabStreamingHub .stream-card,
+  #homelabStreamingHub .open-label {
+    border-color: ButtonText !important;
+    background: Canvas !important;
+    color: CanvasText !important;
+  }
+}
