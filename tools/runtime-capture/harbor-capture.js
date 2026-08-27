@@ -25,7 +25,7 @@
   const ID_LIKE = /(?:\b[0-9a-f]{24,}\b|\b[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}\b)/gi;
   const PRIVATE_ADDRESS = /\b(?:localhost|127(?:\.\d{1,3}){3}|10(?:\.\d{1,3}){3}|192\.168(?:\.\d{1,3}){2}|172\.(?:1[6-9]|2\d|3[01])(?:\.\d{1,3}){2})(?::\d+)?\b/gi;
   const EMAIL = /\b[\w.+-]+@[\w.-]+\.[a-z]{2,}\b/gi;
-  const URL = /(?:https?:)?\/\/[^\s"')]+/gi;
+  const URL_PATTERN = /(?:https?:)?\/\/[^\s"')]+/gi;
   const CSS_URL = /url\((?:"[^"]*"|'[^']*'|[^)]*)\)/gi;
 
   function redactIdentifiers(value) {
@@ -37,7 +37,7 @@
 
   function sanitizeUrl(value) {
     if (!value) return value;
-    return redactIdentifiers(String(value).replace(URL, REDACTED_URL));
+    return redactIdentifiers(String(value).replace(URL_PATTERN, REDACTED_URL));
   }
 
   function sanitizeStyle(value) {
@@ -221,10 +221,15 @@
     const safeLabel = String(label).toLowerCase().replace(/[^a-z0-9-]+/g, '-').replace(/^-|-$/g, '') || 'capture';
     const blob = new Blob([`${JSON.stringify(payload, null, 2)}\n`], { type: 'application/json' });
     const link = document.createElement('a');
-    link.href = URL.createObjectURL(blob);
+    const browserUrl = globalThis.URL;
+    if (typeof browserUrl?.createObjectURL !== 'function') {
+      throw new Error('HarborCapture.download requires the browser URL.createObjectURL API.');
+    }
+    const objectUrl = browserUrl.createObjectURL(blob);
+    link.href = objectUrl;
     link.download = `harbor-${safeLabel}.json`;
     link.click();
-    setTimeout(() => URL.revokeObjectURL(link.href), 1000);
+    setTimeout(() => browserUrl.revokeObjectURL?.(objectUrl), 1000);
     return payload;
   }
 

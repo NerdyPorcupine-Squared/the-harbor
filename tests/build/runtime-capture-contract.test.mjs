@@ -23,6 +23,12 @@ test('capture helper exposes local-only browser capture API', () => {
   assert.match(source, /mediaBarEnhancedDetected/u);
 });
 
+test('capture downloader cannot shadow the native browser URL API', () => {
+  assert.doesNotMatch(source, /\bconst\s+URL\s*=/u);
+  assert.match(source, /globalThis\.URL/u);
+  assert.match(source, /createObjectURL/u);
+});
+
 test('capture helper redacts private addresses, URLs, ids, email and CSS artwork URLs', () => {
   const capture = loadCapture();
   const privateHost = ['192', '168', '1', '64'].join('.');
