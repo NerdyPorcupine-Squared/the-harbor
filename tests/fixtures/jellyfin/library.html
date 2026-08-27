@@ -16,8 +16,8 @@
     </style>
     <link rel="stylesheet" href="../../../theme.css">
     <style>
-      .fixture-header { min-height: 4.5rem; padding: 0.75rem 1rem; }
-      .fixture-header h1 { margin: 0; }
+      .fixture-header { min-height: 4.5rem; padding: 0.75rem 1rem; display: flex; align-items: center; gap: 1rem; }
+      .fixture-tabs { display: flex; gap: 0.4rem; }
       .fixture-label { display: grid; gap: 0.25rem; }
       .art-one { background: radial-gradient(circle at 68% 25%, #d3b873 0 8%, transparent 9%), linear-gradient(155deg, #355c70 0 45%, #173647 46% 61%, #07131c 62%); }
       .art-two { background: linear-gradient(35deg, transparent 40%, rgb(184 148 75 / 62%) 41% 45%, transparent 46%), linear-gradient(145deg, #43685f, #0c1d29); }
@@ -26,7 +26,14 @@
   </head>
   <body class="skinBody">
     <div class="backgroundContainer"></div>
-    <header class="skinHeader fixture-header"><h1>The Harbor Library</h1></header>
+    <header class="skinHeader fixture-header">
+      <div class="pageTitleWithDefaultLogo"><span>Jellyfin</span></div>
+      <nav class="fixture-tabs" aria-label="Library views">
+        <button class="emby-tab-button" type="button" aria-selected="false">Suggestions</button>
+        <button class="emby-tab-button emby-tab-button-active" type="button" aria-selected="true">Movies</button>
+        <button class="emby-tab-button" type="button" aria-selected="false">TV Shows</button>
+      </nav>
+    </header>
     <main class="libraryPage mainAnimatedPage">
       <h2 class="sectionTitle">Chart Room Collection</h2>
       <form class="libraryToolbar" aria-label="Library controls">

@@ -14,8 +14,11 @@ async function computed(page, selector) {
     return {
       backgroundColor: style.backgroundColor,
       backgroundImage: style.backgroundImage,
+      borderBottomColor: style.borderBottomColor,
+      borderColor: style.borderColor,
       boxShadow: style.boxShadow,
       color: style.color,
+      outlineColor: style.outlineColor,
     };
   });
 }
@@ -59,15 +62,57 @@ test("library and search use the map canvas without covering media art", async (
   }
 });
 
-test("details transition from cinematic art into parchment browsing content", async ({ page }) => {
+test("ElganFlix branding stays in the app header while selected library tabs use Harbor brass", async ({ page }) => {
+  await page.goto(fixtureUrl("library"));
+
+  const wordmark = await page.locator(".pageTitleWithDefaultLogo").evaluate(
+    (element) => getComputedStyle(element, "::after").content,
+  );
+  expect(wordmark).toContain("ElganFlix");
+
+  const active = await computed(page, ".emby-tab-button-active");
+  expect(active.backgroundColor).not.toContain("229, 9, 20");
+  expect(active.color).toBe("rgb(242, 213, 138)");
+  expect(active.borderBottomColor).toBe("rgb(184, 148, 75)");
+});
+
+test("injected Streaming Services inherit Harbor presentation over legacy red styling", async ({ page }) => {
+  await page.goto(fixtureUrl("streaming-services"));
+
+  const surface = await computed(page, ".homeSectionsContainer");
+  const card = await computed(page, ".stream-card");
+  const label = await computed(page, ".open-label");
+
+  expect(surface.backgroundImage).toContain("chart-grid.svg");
+  expect(card.backgroundColor).toBe("rgb(12, 29, 41)");
+  expect(card.borderColor).toContain("184, 148, 75");
+  expect(card.borderColor).not.toContain("229, 9, 20");
+  expect(label.color).toBe("rgb(216, 189, 130)");
+
+  const firstCard = page.locator(".stream-card").first();
+  await firstCard.focus();
+  await expect(firstCard).toBeFocused();
+  const focused = await computed(page, ".stream-card:focus");
+  expect(focused.outlineColor).toBe("rgb(242, 213, 138)");
+});
+
+test("details transition from captain dossier into parchment browsing content", async ({ page }) => {
   await page.goto(fixtureUrl("details"));
   const backdrop = await computed(page, "#itemDetailPage .itemBackdrop");
+  const primary = await computed(page, ".detailPagePrimaryContent");
+  const overview = await computed(page, ".overview");
+  const metadata = await computed(page, ".mediaInfoItem");
   const secondary = await computed(page, ".detailPageSecondaryContainer");
   const personArt = await computed(page, "#castCollapsible .cardImageContainer");
   const personLabel = await computed(page, "#castCollapsible .cardText");
 
   expect(backdrop.backgroundImage).not.toContain("cartography");
+  expect(primary.backgroundImage).toContain("route.svg");
+  expect(overview.backgroundImage).toContain("flourish.svg");
+  expect(overview.boxShadow).not.toBe("none");
+  expect(metadata.backgroundColor).toContain("184, 148, 75");
   expect(secondary.backgroundColor).toBe("rgb(234, 217, 174)");
+  expect(secondary.backgroundImage).toContain("chart-grid.svg");
   expect(secondary.color).toBe("rgb(58, 45, 33)");
   expect(personArt.backgroundImage).not.toContain("cartography");
   expect(personLabel.color).toBe("rgb(58, 45, 33)");
@@ -79,7 +124,9 @@ test("Media Bar stays cinematic while plugin geometry remains authoritative", as
   const row = await computed(page, ".homeSectionsContainer");
 
   expect(hero.backgroundImage).not.toContain("cartography");
+  expect(hero.boxShadow).not.toBe("none");
   expect(row.backgroundImage).toContain("chart-grid.svg");
+  expect(row.boxShadow).not.toBe("none");
   if (testInfo.project.name === "desktop") {
     expect(row.backgroundImage).toContain("coastline.svg");
   }
@@ -99,7 +146,7 @@ test("Media Bar stays cinematic while plugin geometry remains authoritative", as
   expect(pluginRowTopSvh).toBeLessThanOrEqual(66);
 });
 
-test("player never receives cartography", async ({ page }) => {
+test("player never receives cartography or ElganFlix pseudo branding", async ({ page }) => {
   await page.goto(fixtureUrl("player"));
   for (const selector of [".videoPlayerContainer", ".videoSurface", ".videoOsdBottom"]) {
     const style = await computed(page, selector);
@@ -107,6 +154,11 @@ test("player never receives cartography", async ({ page }) => {
     expect(style.backgroundImage).not.toContain("coastline.svg");
     expect(style.backgroundImage).not.toContain("chart-grid.svg");
   }
+
+  const osdBrand = await page.locator(".osdHeader .pageTitleWithDefaultLogo").evaluate(
+    (element) => getComputedStyle(element, "::after").content,
+  );
+  expect(osdBrand).toBe("none");
 });
 
 test("forced colors removes browsing decoration without removing content", async ({ page }) => {

@@ -48,7 +48,10 @@ test("details read as a captain dossier without taking artwork geometry", async 
   assert.match(details, /#itemDetailPage\s+\.overview/su);
   assert.match(details, /outline|box-shadow/u);
   assert.doesNotMatch(details, /\.itemBackdrop\s*\{[^}]*background-image/su);
-  assert.doesNotMatch(details, /\.detailPagePrimaryContent\s*\{[^}]*(?:padding|margin|position|height|width)\s*:/su);
+  assert.doesNotMatch(
+    details,
+    /\.detailPagePrimaryContent\s*\{[^}]*(?:^|\n)\s*(?:padding|margin|position|height|width)\s*:/msu,
+  );
 });
 
 test("home hero blending stays cosmetic and plugin geometry stays external", async () => {

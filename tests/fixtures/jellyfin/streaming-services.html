@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Harbor Streaming Services fixture</title>
+  <link rel="stylesheet" href="../../../theme.css">
+  <style>
+    * { box-sizing: border-box; }
+    #homelabStreamingHub .stream-row { display: grid; grid-template-columns: repeat(2, minmax(10rem, 1fr)); gap: 1rem; }
+    #homelabStreamingHub .stream-card { min-height: 7rem; border: 1px solid rgb(229 9 20 / 42%); background: #090b10; color: white; display: flex; align-items: center; justify-content: space-between; padding: 1rem; text-decoration: none; }
+    #homelabStreamingHub .open-label { border: 1px solid rgb(229 9 20 / 34%); padding: 0.4rem 0.6rem; }
+  </style>
+</head>
+<body class="skinBody">
+  <div class="backgroundContainer"></div>
+  <main class="mainAnimatedPage">
+    <div class="homeSectionsContainer">
+      <section id="homelabStreamingHub" class="homeSection" aria-labelledby="stream-heading">
+        <div class="stream-header"><h2 class="stream-title sectionTitle" id="stream-heading">Streaming Services</h2></div>
+        <div class="stream-row">
+          <a class="stream-card" href="#one"><span class="service-logo">Service One</span><span class="open-label">Open</span></a>
+          <a class="stream-card" href="#two"><span class="service-logo">Service Two</span><span class="open-label">Open</span></a>
+        </div>
+      </section>
+    </div>
+  </main>
+</body>
+</html>
