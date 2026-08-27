@@ -1,65 +1,33 @@
 .card {
-  min-width: 0;
   color: var(--harbor-map-ink);
 }
 
-.cardBox {
-  position: relative;
-  overflow: visible;
-  border: 0;
-  border-radius: 0;
-  padding: 0;
-  background-color: var(--harbor-timber-900);
-  box-shadow: none;
-}
-
 .cardScalable {
-  position: relative;
-  overflow: hidden;
-  border: 1px solid rgb(184 148 75 / 44%);
   border-radius: var(--harbor-radius-md);
-  background-color: var(--harbor-timber-900);
-  box-shadow: 0 0.35rem 1rem rgb(42 33 24 / 28%);
-  transition:
-    border-color var(--harbor-motion-duration-fast) var(--harbor-motion-easing-standard),
-    box-shadow var(--harbor-motion-duration-fast) var(--harbor-motion-easing-standard),
-    transform var(--harbor-motion-duration-fast) var(--harbor-motion-easing-standard);
+  box-shadow:
+    0 0 0 1px rgb(184 148 75 / 44%),
+    0 0.35rem 1rem rgb(42 33 24 / 28%);
+  transition: box-shadow var(--harbor-motion-duration-fast) var(--harbor-motion-easing-standard);
 }
 
 :where(.card:focus-within, .card.selected) .cardScalable {
-  border-color: rgb(184 148 75 / 78%);
-  box-shadow: 0 0 0 1px rgb(184 148 75 / 18%), 0 0.6rem 1.25rem rgb(0 0 0 / 34%);
+  box-shadow:
+    0 0 0 2px rgb(184 148 75 / 78%),
+    0 0.6rem 1.25rem rgb(0 0 0 / 34%);
 }
 
 .card:hover .cardScalable {
-  box-shadow: 0 0.6rem 1.25rem rgb(42 33 24 / 36%);
-  transform: translateY(-0.125rem);
-}
-
-.cardImageContainer,
-.cardContent,
-.cardImage,
-.blurhash-canvas,
-.cardPadder {
-  border-radius: calc(var(--harbor-radius-md) - 1px);
+  box-shadow:
+    0 0 0 1px rgb(184 148 75 / 72%),
+    0 0.6rem 1.25rem rgb(42 33 24 / 36%);
 }
 
 .cardImageContainer {
-  overflow: hidden;
   background-color: var(--harbor-navy-900);
-  background-position: center;
-  background-size: cover;
 }
 
 .cardOverlayContainer {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: flex-end;
-  justify-content: flex-end;
-  gap: var(--harbor-space-2);
-  padding: var(--harbor-space-2);
-  background: linear-gradient(180deg, transparent 48%, rgb(7 19 28 / 78%));
+  background-image: linear-gradient(180deg, transparent 48%, rgb(7 19 28 / 78%));
   opacity: 0.84;
   transition: opacity var(--harbor-motion-duration-fast) var(--harbor-motion-easing-standard);
 }
@@ -78,13 +46,6 @@
 }
 
 .playedIndicator {
-  position: absolute;
-  inset-block-start: var(--harbor-space-2);
-  inset-inline-end: var(--harbor-space-2);
-  display: grid;
-  width: 1.75rem;
-  height: 1.75rem;
-  place-items: center;
   border: 1px solid var(--harbor-brass-300);
   border-radius: 50%;
   background-color: rgb(7 19 28 / 88%);
@@ -92,24 +53,17 @@
 }
 
 .cardText {
-  padding: var(--harbor-space-2) var(--harbor-space-3) 0;
-  overflow: hidden;
   background-color: var(--harbor-map-paper);
   color: var(--harbor-map-ink);
   font-family: var(--harbor-font-display);
-  text-overflow: ellipsis;
-  white-space: nowrap;
 }
 
 .cardText-secondary {
-  padding: var(--harbor-space-1) var(--harbor-space-3) var(--harbor-space-2);
   background-color: var(--harbor-map-paper);
   color: rgb(58 45 33 / 78%);
   font-family: var(--harbor-font-body);
-  font-size: 0.875rem;
 }
 
 .card[aria-disabled="true"] {
   opacity: 0.5;
-  pointer-events: none;
 }

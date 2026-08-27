@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "source": "sanitized real-server runtime capture",
+  "jellyfinVersion": "10.11.11",
+  "captureEnvironment": {
+    "browserEngine": "Chromium",
+    "viewport": {
+      "width": 1365,
+      "height": 911,
+      "devicePixelRatio": 1
+    },
+    "mediaBarEnhancedDetected": true,
+    "note": "Computed presentation values may include non-Harbor custom styling. DOM hierarchy and artwork geometry are authoritative; colors, fonts, borders, and shadows are not treated as vanilla defaults."
+  },
+  "cards": {
+    "portrait": {
+      "rootClass": "card overflowPortraitCard card-hoverable card-withuserdata",
+      "padderClass": "cardPadder cardPadder-overflowPortrait lazy-hidden-children",
+      "imageClass": "cardImageContainer coveredImage cardContent itemAction lazy blurhashed lazy-image-fadein-fast",
+      "nativeGeometry": {
+        "width": 160.453,
+        "padderPaddingBottom": 240.672,
+        "imageWidth": 160.453,
+        "imageHeight": 240.672
+      },
+      "artwork": {
+        "owner": "cardImageContainer inline background-image",
+        "backgroundSize": "cover",
+        "backgroundPosition": "50% 50%"
+      }
+    },
+    "backdrop": {
+      "rootClass": "card overflowBackdropCard card-hoverable card-withuserdata",
+      "padderClass": "cardPadder cardPadder-overflowBackdrop lazy-hidden-children",
+      "imageClass": "cardImageContainer cardContent itemAction lazy blurhashed lazy-image-fadein-fast",
+      "nativeGeometry": {
+        "width": 232.891,
+        "padderPaddingBottom": 131,
+        "imageWidth": 232.891,
+        "imageHeight": 131
+      },
+      "artwork": {
+        "owner": "cardImageContainer inline background-image",
+        "backgroundSize": "cover",
+        "backgroundPosition": "50% 50%"
+      }
+    }
+  }
+}

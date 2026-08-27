@@ -45,10 +45,13 @@
     background-image: none;
   }
 
+  .cardScalable {
+    outline: 1px solid CanvasText;
+  }
+
   :where(
     .skinHeader,
     .mainDrawer,
-    .cardScalable,
     .button-flat,
     .button-submit,
     .emby-input,
@@ -108,9 +111,5 @@
     #slides-container .slide
   ) {
     animation: none;
-  }
-
-  .card:hover .cardScalable {
-    transform: none;
   }
 }

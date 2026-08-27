@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Jellyfin 10.11.11 runtime card probe</title>
+  <style>
+    * { box-sizing: border-box; }
+    html, body { margin: 0; min-height: 100%; background: #101010; color: #fff; }
+    .probeGrid { display: flex; flex-wrap: wrap; gap: 2rem; align-items: flex-start; padding: 2rem; }
+    .portraitProbe { width: 160.453px; }
+    .backdropProbe { width: 232.891px; }
+    .card, .cardBox { width: 100%; }
+    .cardScalable { position: relative; width: 100%; overflow: hidden; }
+    .cardPadder { position: relative; width: 100%; height: 0; }
+    .cardPadder-overflowPortrait { padding-bottom: 150%; }
+    .cardPadder-overflowBackdrop { padding-bottom: 56.25%; }
+    .cardContent,
+    .cardImageContainer,
+    .blurhash-canvas,
+    .cardOverlayContainer { position: absolute; inset: 0; width: 100%; height: 100%; }
+    .cardImageContainer { display: flex; background-repeat: no-repeat; background-position: 50% 50%; background-size: cover; }
+    .blurhash-canvas { opacity: 0; }
+    .cardOverlayContainer { pointer-events: none; }
+  </style>
+  <link rel="stylesheet" href="../../../../theme.css">
+</head>
+<body>
+  <main class="probeGrid">
+    <section class="portraitProbe" data-probe="portrait">
+      <div class="card overflowPortraitCard card-hoverable card-withuserdata" data-type="Movie" data-mediatype="Video">
+        <div class="cardBox cardBox-bottompadded">
+          <div class="cardScalable">
+            <div class="cardPadder cardPadder-overflowPortrait lazy-hidden-children"></div>
+            <canvas aria-hidden="true" width="20" height="20" class="blurhash-canvas lazy-hidden"></canvas>
+            <a class="cardImageContainer coveredImage cardContent itemAction lazy blurhashed lazy-image-fadein-fast" role="img" style="background-image: linear-gradient(135deg, rgb(63 90 112), rgb(18 30 42));"></a>
+            <div class="cardOverlayContainer itemAction"></div>
+          </div>
+          <div class="cardText cardTextCentered cardText-first">Runtime portrait</div>
+          <div class="cardText cardTextCentered cardText-secondary">Movie</div>
+        </div>
+      </div>
+    </section>
+    <section class="backdropProbe" data-probe="backdrop">
+      <div class="card overflowBackdropCard card-hoverable card-withuserdata" data-type="Episode" data-mediatype="Video">
+        <div class="cardBox cardBox-bottompadded">
+          <div class="cardScalable">
+            <div class="cardPadder cardPadder-overflowBackdrop lazy-hidden-children"></div>
+            <canvas aria-hidden="true" width="20" height="20" class="blurhash-canvas lazy-hidden"></canvas>
+            <a class="cardImageContainer cardContent itemAction lazy blurhashed lazy-image-fadein-fast" role="img" style="background-image: linear-gradient(135deg, rgb(98 76 49), rgb(24 31 39));"></a>
+            <div class="cardOverlayContainer itemAction"></div>
+          </div>
+          <div class="cardText cardTextCentered cardText-first">Runtime backdrop</div>
+          <div class="cardText cardTextCentered cardText-secondary">Episode</div>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

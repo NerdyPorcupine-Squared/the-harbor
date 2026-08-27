@@ -9,12 +9,13 @@
   "scripts": {
     "build:css": "node scripts/build-css.mjs",
     "lint:css": "node scripts/check-css.mjs",
+    "lint:geometry": "node scripts/check-geometry-ownership.mjs",
     "format:check": "node scripts/check-css.mjs --format",
     "test:build": "node scripts/run-build-tests.mjs",
     "test:visual": "playwright test",
     "test:visual:update": "playwright test --update-snapshots",
     "check:publication": "node scripts/check-publication.mjs",
-    "verify:core": "npm run lint:css && npm run format:check && npm run test:build",
+    "verify:core": "npm run lint:css && npm run lint:geometry && npm run format:check && npm run test:build",
     "verify:release": "npm run verify:core && npm run check:publication && npm run test:visual"
   },
   "devDependencies": {

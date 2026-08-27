@@ -16,31 +16,43 @@ async function readRepositoryFile(path) {
 test("does not replace Jellyfin card aspect-ratio geometry", async () => {
   const cards = await readRepositoryFile("src/css/components/cards.css");
 
-  const imageBlock = cards.match(/\.cardImageContainer\s*\{([^}]*)\}/su)?.[1] ?? "";
   assert.doesNotMatch(
-    imageBlock,
-    /aspect-ratio\s*:/u,
-    "Jellyfin 10.11.11 owns card ratios through .cardPadder-*; Harbor must not add a second ratio to .cardImageContainer",
-  );
-  assert.match(
     cards,
-    /\.cardScalable\s*\{/u,
-    "visual framing belongs on Jellyfin's scalable media box instead of changing image geometry",
+    /\.cardImageContainer\s*\{[^}]*aspect-ratio\s*:/su,
+    "Jellyfin 10.11.11 owns card ratios through .cardPadder-*",
+  );
+  assert.doesNotMatch(
+    cards,
+    /\.cardImageContainer\s*\{[^}]*background-size\s*:/su,
+    "Jellyfin owns artwork sizing and Harbor must not restate it",
+  );
+  assert.doesNotMatch(
+    cards,
+    /\.cardPadder[^,{]*\{[^}]*(?:padding|height|aspect-ratio)\s*:/su,
+    "Harbor must not alter Jellyfin's padding-based card ratio owner",
   );
 });
 
-test("fixtures model Jellyfin 10.11.11 card structure", async () => {
-  for (const path of [
-    "tests/fixtures/jellyfin/home-without-media-bar.html",
-    "tests/fixtures/jellyfin/home-with-media-bar.html",
-    "tests/fixtures/jellyfin/library.html",
-  ]) {
-    const fixture = await readRepositoryFile(path);
-    assert.match(fixture, /class="[^"]*\bcardScalable\b/u, `${path}: cardScalable`);
-    assert.match(fixture, /class="[^"]*\bcardPadder(?:-portrait|-overflowPortrait|-backdrop|-square)\b/u, `${path}: cardPadder shape`);
-    assert.match(fixture, /class="[^"]*\bcardContent\b/u, `${path}: cardContent`);
-    assert.match(fixture, /class="[^"]*\bcardImageContainer\b/u, `${path}: cardImageContainer`);
+test("versioned fixtures preserve captured Jellyfin 10.11.11 card structure", async () => {
+  const portrait = await readRepositoryFile(
+    "tests/fixtures/jf-10.11.11/cards/portrait.html",
+  );
+  const backdrop = await readRepositoryFile(
+    "tests/fixtures/jf-10.11.11/cards/backdrop.html",
+  );
+
+  for (const fixture of [portrait, backdrop]) {
+    assert.match(fixture, /class="[^"]*\bcardScalable\b/u);
+    assert.match(fixture, /class="[^"]*\bcardPadder\b/u);
+    assert.match(fixture, /class="[^"]*\bcardContent\b/u);
+    assert.match(fixture, /class="[^"]*\bcardImageContainer\b/u);
+    assert.match(fixture, /background-image: url\("\[REDACTED_URL\]"\)/u);
   }
+
+  assert.match(portrait, /cardPadder-overflowPortrait/u);
+  assert.match(portrait, /overflowPortraitCard/u);
+  assert.match(backdrop, /cardPadder-overflowBackdrop/u);
+  assert.match(backdrop, /overflowBackdropCard/u);
 });
 
 test("details styling is rooted in the real Jellyfin 10.11.11 detail page", async () => {
