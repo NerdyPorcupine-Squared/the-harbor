@@ -82,6 +82,21 @@ test("Harbor never resizes or reflows Media Bar controls", async () => {
   assert.deepEqual(offending, []);
 });
 
+test("Harbor does not stack the same hero gradient across both plugin overlay layers", async () => {
+  const css = await readRepositoryFile(
+    "src/css/integrations/media-bar-enhanced.css",
+  );
+
+  assert.doesNotMatch(
+    css,
+    /#slides-container \.backdrop-overlay\s*,\s*#slides-container \.gradient-overlay\s*\{[^}]*background-image\s*:/su,
+  );
+  assert.match(
+    css,
+    /#slides-container \.gradient-overlay\s*\{[^}]*background-image\s*:/su,
+  );
+});
+
 test("fixtures are local, sanitized, and represent both home modes", async () => {
   const absent = await readRepositoryFile(
     "tests/fixtures/jellyfin/home-without-media-bar.html",
