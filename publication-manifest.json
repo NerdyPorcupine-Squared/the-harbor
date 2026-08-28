@@ -22,6 +22,7 @@
     "assets/parchment/fibers.svg",
     "assets/parchment/mottle.svg",
     "docs/compatibility.md",
+    "docs/release/core-v1-rc-process.md",
     "docs/testing/core-manual-matrix.md",
     "docs/testing/media-bar-v3-validation-profile.md",
     "docs/testing/runtime-capture.md",
