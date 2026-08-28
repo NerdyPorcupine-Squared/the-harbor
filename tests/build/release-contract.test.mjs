@@ -60,6 +60,7 @@ test("compatibility docs separate automated and real-server evidence", async () 
   assert.match(compatibility, /Chrome\/Edge Jellyfin Web and Jellyfin Media Player/iu);
   assert.doesNotMatch(compatibility, /real-server validated/iu);
   assert.match(matrix, /placeholder/iu);
+  assert.match(matrix, /GitHub issue validation ledger/iu);
   assert.match(matrix, /Media Bar Enhanced/u);
   assert.match(matrix, /Desktop/u);
   assert.match(matrix, /Mobile/u);
