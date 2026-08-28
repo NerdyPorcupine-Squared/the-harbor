@@ -14,7 +14,10 @@
   background-color: transparent;
 }
 
-#slides-container .backdrop-overlay,
+#slides-container .backdrop-overlay {
+  pointer-events: none;
+}
+
 #slides-container .gradient-overlay {
   background-image:
     radial-gradient(circle at 72% 22%, transparent 0 28%, rgb(7 19 28 / 12%) 68%, rgb(7 19 28 / 54%)),
