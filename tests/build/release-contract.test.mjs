@@ -53,7 +53,10 @@ test("compatibility docs separate automated and real-server evidence", async () 
 
   assert.match(compatibility, /fixture/iu);
   assert.match(compatibility, /Chromium/u);
-  assert.match(compatibility, /not yet.*real.*server/isu);
+  assert.match(compatibility, /Real Jellyfin 10\.11\.11 testing has already disproved/iu);
+  assert.match(compatibility, /active recovery evidence, not release validation/iu);
+  assert.match(compatibility, /Chrome\/Edge Jellyfin Web and Jellyfin Media Player/iu);
+  assert.doesNotMatch(compatibility, /real-server validated/iu);
   assert.match(matrix, /placeholder/iu);
   assert.match(matrix, /Media Bar Enhanced/u);
   assert.match(matrix, /Desktop/u);
