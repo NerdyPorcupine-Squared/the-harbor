@@ -41,26 +41,19 @@
 }
 
 #slides-container :where(.play-button, .trailer-button, .detail-button, .favorite-button) {
-  min-width: 2.5rem;
-  min-height: 2.5rem;
-  border: 1px solid rgb(211 184 115 / 58%);
+  border-color: rgb(211 184 115 / 58%);
   background-color: rgb(234 217 174 / 94%);
   color: var(--harbor-ink-900);
-  box-shadow: 0 0.4rem 1rem rgb(0 0 0 / 28%);
-}
-
-#slides-container :where(.play-button, .trailer-button) {
-  border-radius: var(--harbor-radius-sm);
-}
-
-#slides-container :where(.detail-button, .favorite-button) {
-  border-radius: 50%;
+  box-shadow:
+    inset 0 0 0 1px rgb(211 184 115 / 58%),
+    0 0.4rem 1rem rgb(0 0 0 / 28%);
 }
 
 #slides-container :where(.play-button, .trailer-button, .detail-button, .favorite-button):hover {
   border-color: var(--harbor-brass-300);
   background-color: var(--harbor-parchment-100);
   box-shadow:
+    inset 0 0 0 1px var(--harbor-brass-300),
     0 0.4rem 1rem rgb(0 0 0 / 32%),
     0 0 0 1px rgb(184 148 75 / 22%);
 }
@@ -82,22 +75,17 @@
 #slides-container .mute,
 #slides-container .mute-button,
 #slides-container .dot {
-  min-width: 2.5rem;
-  min-height: 2.5rem;
   color: var(--harbor-parchment-100);
 }
 
 #slides-container .arrow,
 #slides-container .pause-button,
 #slides-container .mute-button {
-  border: 1px solid rgb(211 184 115 / 42%);
+  border-color: rgb(211 184 115 / 42%);
   background-color: rgb(7 19 28 / 62%);
-  box-shadow: 0 0.3rem 0.8rem rgb(0 0 0 / 26%);
-}
-
-#slides-container .pause-button,
-#slides-container .mute-button {
-  border-radius: 50%;
+  box-shadow:
+    inset 0 0 0 1px rgb(211 184 115 / 42%),
+    0 0.3rem 0.8rem rgb(0 0 0 / 26%);
 }
 
 #slides-container .dot.active {
