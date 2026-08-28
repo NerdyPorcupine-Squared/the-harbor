@@ -4,7 +4,9 @@
   const REDACTED_TEXT = '[REDACTED_TEXT]';
   const REDACTED_URL = '[REDACTED_URL]';
   const REDACTED_ID = '[REDACTED_ID]';
-  const SCHEMA_VERSION = 1;
+  const INLINE_STYLE = '[INLINE_STYLE]';
+  const UNPARSEABLE_STYLESHEET = '[UNPARSEABLE_STYLESHEET]';
+  const SCHEMA_VERSION = 2;
   const MAX_ELEMENTS = 120;
   const MAX_RULES = 180;
 
@@ -63,6 +65,63 @@
       return REDACTED_TEXT;
     }
     return redactIdentifiers(value);
+  }
+
+  function sanitizeStylesheetPath(href) {
+    if (!href) return INLINE_STYLE;
+    try {
+      const base = globalThis.location?.href ?? 'https://invalid.local/';
+      const parsed = new URL(String(href), base);
+      return redactIdentifiers(parsed.pathname || '/');
+    } catch {
+      return UNPARSEABLE_STYLESHEET;
+    }
+  }
+
+  function ownerNodeHint(sheet) {
+    const owner = sheet?.ownerNode;
+    if (!owner) return '';
+    const pieces = [
+      owner.id,
+      typeof owner.className === 'string' ? owner.className : '',
+      owner.getAttribute?.('data-plugin'),
+      owner.getAttribute?.('data-name'),
+      owner.getAttribute?.('id'),
+      owner.getAttribute?.('class')
+    ];
+    return pieces.filter(Boolean).join(' ').toLowerCase();
+  }
+
+  function classifyStylesheetSource(sheet) {
+    const href = String(sheet?.href ?? '').toLowerCase();
+    const hint = ownerNodeHint(sheet);
+    const value = `${href} ${hint}`;
+
+    if (
+      value.includes('the-harbor') ||
+      value.includes('harbor-theme') ||
+      value.includes('harborcustomcss')
+    ) return 'harbor';
+
+    if (
+      value.includes('media-bar') ||
+      value.includes('mediabarenhanced') ||
+      value.includes('media_bar_enhanced')
+    ) return 'media-bar';
+
+    if (href) {
+      try {
+        const base = globalThis.location?.href ?? 'https://invalid.local/';
+        const parsed = new URL(href, base);
+        const currentOrigin = globalThis.location?.origin;
+        if (
+          currentOrigin && parsed.origin === currentOrigin &&
+          (parsed.pathname.includes('/web/') || parsed.pathname.endsWith('.css'))
+        ) return 'jellyfin';
+      } catch { }
+    }
+
+    return 'unknown';
   }
 
   function sanitizedOuterHTML(element) {
@@ -130,16 +189,6 @@
     };
   }
 
-  function collectAncestors(element, limit = 8) {
-    const ancestors = [];
-    let current = element?.parentElement;
-    while (current && ancestors.length < limit) {
-      ancestors.push(elementSnapshot(current));
-      current = current.parentElement;
-    }
-    return ancestors;
-  }
-
   function walkCssRules(rules, visit) {
     for (const rule of [...(rules ?? [])]) {
       if (rule.selectorText && rule.style) visit(rule);
@@ -151,9 +200,12 @@
 
   function matchedRules(element) {
     const matches = [];
-    for (const sheet of [...(globalThis.document?.styleSheets ?? [])]) {
+    const sheets = [...(globalThis.document?.styleSheets ?? [])];
+    for (const [sourceIndex, sheet] of sheets.entries()) {
       let rules;
       try { rules = sheet.cssRules; } catch { continue; }
+      const sourceKind = classifyStylesheetSource(sheet);
+      const sourcePath = sanitizeStylesheetPath(sheet.href);
       walkCssRules(rules, (rule) => {
         if (matches.length >= MAX_RULES) return;
         try {
@@ -169,12 +221,41 @@
         matches.push({
           selector: rule.selectorText,
           declarations,
-          important: [...rule.style].filter((property) => rule.style.getPropertyPriority(property) === 'important')
+          important: [...rule.style].filter((property) => rule.style.getPropertyPriority(property) === 'important'),
+          sourceKind,
+          sourceIndex,
+          sourcePath
         });
       });
       if (matches.length >= MAX_RULES) break;
     }
     return matches;
+  }
+
+  function stylesheetSources() {
+    return [...(globalThis.document?.styleSheets ?? [])].map((sheet, sourceIndex) => {
+      let accessible = true;
+      try { void sheet.cssRules; } catch { accessible = false; }
+      return {
+        sourceKind: classifyStylesheetSource(sheet),
+        sourceIndex,
+        sourcePath: sanitizeStylesheetPath(sheet.href),
+        accessible
+      };
+    });
+  }
+
+  function collectAncestors(element, limit = 8) {
+    const ancestors = [];
+    let current = element?.parentElement;
+    while (current && ancestors.length < limit) {
+      ancestors.push({
+        ...elementSnapshot(current),
+        matchedRules: matchedRules(current)
+      });
+      current = current.parentElement;
+    }
+    return ancestors;
   }
 
   function jellyfinVersion() {
@@ -212,7 +293,8 @@
       outerHTML: sanitizedOuterHTML(element),
       ancestors: collectAncestors(element),
       elements: descendants.map(elementSnapshot),
-      matchedRules: matchedRules(element)
+      matchedRules: matchedRules(element),
+      stylesheetSources: stylesheetSources()
     };
   }
 
@@ -254,26 +336,46 @@
     return download(element, label);
   }
 
+  function visibleMatches(selectors) {
+    const list = Array.isArray(selectors) ? selectors : [selectors];
+    const matches = [];
+    const seen = new Set();
+    for (const selector of list) {
+      for (const element of [...document.querySelectorAll(selector)]) {
+        if (seen.has(element)) continue;
+        const rect = element.getBoundingClientRect();
+        const style = getComputedStyle(element);
+        if (rect.width <= 0 || rect.height <= 0 || style.display === 'none' || style.visibility === 'hidden') continue;
+        seen.add(element);
+        matches.push({ selector, ...elementSnapshot(element) });
+      }
+    }
+    return matches;
+  }
+
   function closest(element, selector) {
     return element?.closest?.(selector) ?? null;
   }
 
   const api = Object.freeze({
-    version: '1.0.0',
+    version: '1.1.0',
     capture,
     download,
     captureSelector,
     downloadSelector,
+    visibleMatches,
     closest,
     sanitizeUrl,
     sanitizeStyle,
     sanitizeText,
     sanitizeAttribute,
+    sanitizeStylesheetPath,
+    classifyStylesheetSource,
     sanitizedOuterHTML
   });
 
   globalThis.HarborCapture = api;
   if (globalThis.console?.info) {
-    console.info('HarborCapture 1.0.0 loaded. Captures are sanitized locally and make no network requests.');
+    console.info('HarborCapture 1.1.0 loaded. Captures are sanitized locally and make no network requests.');
   }
 })();
