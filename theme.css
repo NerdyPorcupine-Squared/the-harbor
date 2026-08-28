@@ -263,29 +263,25 @@ body:has(#slides-container) .homeSectionsContainer {
   --harbor-brand-signal: #e50914;
 }
 
-.headerLogo img,
-.headerLogo-withBackground img,
-.logoImage,
-.headerLogo svg {
-  display: none !important;
+/* Preserve Jellyfin header geometry while visually replacing stock branding. */
+.skinHeader .headerLogo img,
+.skinHeader .headerLogo-withBackground img,
+.skinHeader .logoImage,
+.skinHeader .headerLogo svg {
+  opacity: 0 !important;
 }
 
-.headerLogo::after,
-.headerLogo-withBackground::after {
-  display: none !important;
+.skinHeader .headerLogo::after,
+.skinHeader .headerLogo-withBackground::after {
+  content: none !important;
+  opacity: 0 !important;
 }
 
-:not(.osdHeader) .pageTitle,
-:not(.osdHeader) .pageTitleWithDefaultLogo,
-:not(.osdHeader) .pageTitleWithLogo {
-  display: inline-flex !important;
-  visibility: visible !important;
-  align-items: center !important;
-  justify-content: flex-start !important;
-  min-width: max-content !important;
-  min-height: 2.375rem !important;
-  overflow: visible !important;
-  background: none !important;
+.skinHeader .pageTitle,
+.skinHeader .pageTitleWithDefaultLogo,
+.skinHeader .pageTitleWithLogo {
+  background-image: none !important;
+  color: transparent !important;
   font-size: 0 !important;
   line-height: 1 !important;
   animation: none !important;
@@ -294,66 +290,37 @@ body:has(#slides-container) .homeSectionsContainer {
   box-shadow: none !important;
 }
 
-:not(.osdHeader) .pageTitle > *,
-:not(.osdHeader) .pageTitleWithDefaultLogo > *,
-:not(.osdHeader) .pageTitleWithLogo > * {
-  display: none !important;
+.skinHeader .pageTitle > *,
+.skinHeader .pageTitleWithDefaultLogo > *,
+.skinHeader .pageTitleWithLogo > * {
+  color: transparent !important;
+  font-size: 0 !important;
+  opacity: 0 !important;
 }
 
-:not(.osdHeader) .pageTitle::before,
-:not(.osdHeader) .pageTitleWithDefaultLogo::before,
-:not(.osdHeader) .pageTitleWithLogo::before {
-  content: "" !important;
-  display: inline-block !important;
-  width: 0 !important;
-  height: 0 !important;
-  border-block: 0.4375rem solid transparent !important;
-  border-inline-start: 0.75rem solid var(--harbor-brand-signal) !important;
-  margin-inline-end: 0.5625rem !important;
-  filter: drop-shadow(0 0 0.42rem rgb(229 9 20 / 34%)) !important;
+.skinHeader .pageTitle::before,
+.skinHeader .pageTitleWithDefaultLogo::before,
+.skinHeader .pageTitleWithLogo::before {
+  content: "▶" !important;
+  color: var(--harbor-brand-signal) !important;
+  font-family: Arial, sans-serif;
+  font-size: 0.86rem !important;
+  font-weight: 700 !important;
+  line-height: 1 !important;
+  text-shadow: 0 0 0.42rem rgb(229 9 20 / 34%);
 }
 
-:not(.osdHeader) .pageTitle::after,
-:not(.osdHeader) .pageTitleWithDefaultLogo::after,
-:not(.osdHeader) .pageTitleWithLogo::after {
-  content: "ElganFlix" !important;
-  display: inline-block !important;
+.skinHeader .pageTitle::after,
+.skinHeader .pageTitleWithDefaultLogo::after,
+.skinHeader .pageTitleWithLogo::after {
+  content: "  ElganFlix" !important;
   color: var(--harbor-parchment-100) !important;
   font-family: var(--harbor-font-display);
   font-size: 1.125rem !important;
   font-weight: 700 !important;
   letter-spacing: 0.06em !important;
-  white-space: nowrap !important;
+  white-space: pre !important;
   text-shadow: 0 0.125rem 0.5rem rgb(0 0 0 / 58%) !important;
-}
-
-.osdHeader .pageTitle,
-.osdHeader .pageTitleWithDefaultLogo,
-.osdHeader .pageTitleWithLogo {
-  display: flex !important;
-  visibility: visible !important;
-  min-width: unset !important;
-  min-height: unset !important;
-  background: unset !important;
-  font-size: unset !important;
-  animation: none !important;
-  filter: none !important;
-}
-
-.osdHeader .pageTitle > *,
-.osdHeader .pageTitleWithDefaultLogo > *,
-.osdHeader .pageTitleWithLogo > * {
-  display: unset !important;
-}
-
-.osdHeader .pageTitle::before,
-.osdHeader .pageTitle::after,
-.osdHeader .pageTitleWithDefaultLogo::before,
-.osdHeader .pageTitleWithDefaultLogo::after,
-.osdHeader .pageTitleWithLogo::before,
-.osdHeader .pageTitleWithLogo::after {
-  content: none !important;
-  display: none !important;
 }
 
 .skinHeader {
@@ -362,7 +329,7 @@ body:has(#slides-container) .homeSectionsContainer {
   border-block-end-color: rgb(184 148 75 / 28%);
 }
 
-.headerUserButton {
+.skinHeader .headerUserButton {
   border: 1px solid rgb(184 148 75 / 44%) !important;
   border-radius: 50% !important;
   box-shadow: 0 0 0 transparent;
@@ -371,12 +338,12 @@ body:has(#slides-container) .homeSectionsContainer {
     box-shadow var(--harbor-motion-duration-fast) var(--harbor-motion-easing-standard);
 }
 
-.headerUserButton:hover {
+.skinHeader .headerUserButton:hover {
   border-color: var(--harbor-brass-300) !important;
   box-shadow: 0 0 0.875rem rgb(184 148 75 / 24%);
 }
 
-.headerUserButton:focus-visible {
+.skinHeader .headerUserButton:focus-visible {
   outline: 0.125rem solid var(--harbor-focus);
   outline-offset: 0.125rem;
 }
