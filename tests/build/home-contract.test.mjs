@@ -24,6 +24,16 @@ test("imports the optional home and Media Bar layers into Core", async () => {
   assert.ok(mediaBarIndex > homeIndex, "Media Bar presentation follows home.css");
 });
 
+test("home row headings read as headings instead of raised parchment plaques", async () => {
+  const css = await readRepositoryFile("src/css/pages/home.css");
+  const block = css.match(/\.homeSection \.sectionTitle\s*\{([^}]*)\}/su)?.[1] ?? "";
+
+  assert.match(block, /border:\s*0/u);
+  assert.match(block, /padding:\s*0/u);
+  assert.match(block, /background:\s*none/u);
+  assert.match(block, /box-shadow:\s*none/u);
+});
+
 test("keeps Media Bar selectors scoped while leaving plugin geometry untouched", async () => {
   const css = await readRepositoryFile(
     "src/css/integrations/media-bar-enhanced.css",
