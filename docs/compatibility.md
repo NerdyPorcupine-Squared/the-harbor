@@ -21,7 +21,7 @@ These fixture results are not proof that a real Jellyfin header, details page, o
 
 ## Real-server evidence
 
-Real Jellyfin 10.11.11 testing disproved several earlier fixture assumptions. The initial V3 diagnostic baseline showed:
+Real Jellyfin 10.11.11 testing has already disproved several earlier fixture assumptions. The initial V3 diagnostic baseline showed:
 
 - playback entering the player/OSD state while Harbor papyrus/cartography obscured the video surface;
 - Media Bar presenting a mostly black hero and malformed/oversized control presentation;
