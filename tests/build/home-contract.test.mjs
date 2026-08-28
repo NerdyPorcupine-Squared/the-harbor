@@ -48,6 +48,40 @@ test("keeps Media Bar selectors scoped while leaving plugin geometry untouched",
   assert.doesNotMatch(css, /\.video-backdrop\s*\{[^}]*(?:position|width|height|inset|transform|object-fit|background-size)\s*:/su);
 });
 
+test("Harbor never resizes or reflows Media Bar controls", async () => {
+  const css = await readRepositoryFile(
+    "src/css/integrations/media-bar-enhanced.css",
+  );
+  const protectedFamilies = [
+    ".play-button",
+    ".trailer-button",
+    ".detail-button",
+    ".favorite-button",
+    ".arrow",
+    ".pause-button",
+    ".mute-button",
+    ".dot",
+  ];
+  const structuralProperty = /^(?:min-|max-)?(?:width|height)$|^(?:padding|margin)(?:-(?:top|right|bottom|left|inline|block)(?:-(?:start|end))?)?$|^(?:position|top|right|bottom|left|inset|transform|display|gap|box-sizing|border|border-width)$/u;
+  const offending = [];
+
+  for (const match of css.matchAll(/([^{}]+)\{([^{}]*)\}/gu)) {
+    const selector = match[1].trim();
+    if (!protectedFamilies.some((family) => selector.includes(family))) continue;
+
+    for (const declaration of match[2].split(";")) {
+      const colon = declaration.indexOf(":");
+      if (colon < 0) continue;
+      const property = declaration.slice(0, colon).trim().toLowerCase();
+      if (structuralProperty.test(property)) {
+        offending.push(`${selector}: ${property}`);
+      }
+    }
+  }
+
+  assert.deepEqual(offending, []);
+});
+
 test("fixtures are local, sanitized, and represent both home modes", async () => {
   const absent = await readRepositoryFile(
     "tests/fixtures/jellyfin/home-without-media-bar.html",
