@@ -23,7 +23,7 @@ test("Core imports Harbor header polish and Streaming Services presentation", as
   assert.match(branding, /\.skinHeader/u);
   assert.match(branding, /\.headerUserButton/u);
   assert.doesNotMatch(branding, /\.pageTitle(?:WithDefaultLogo|WithLogo)?\s*::(?:before|after)/u);
-  assert.doesNotMatch(branding, /content:\s*"[^\"]+"/u);
+  assert.doesNotMatch(branding, /content:\s*"[^"]+"/u);
   assert.doesNotMatch(branding, /:not\(\.osdHeader\)|\.osdHeader/u);
   assert.match(streaming, /#homelabStreamingHub/u);
   assert.match(streaming, /\.stream-card/u);
