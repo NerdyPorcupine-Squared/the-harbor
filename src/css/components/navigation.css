@@ -2,7 +2,7 @@
   border-block-end: 1px solid rgb(184 148 75 / 34%);
 }
 
-.emby-tab-button {
+.skinHeader .headerTabs .emby-tab-button {
   min-width: 2.5rem;
   min-height: 2.5rem;
   border-block-end: 0.125rem solid transparent;
@@ -15,17 +15,17 @@
     box-shadow var(--harbor-motion-duration-fast) var(--harbor-motion-easing-standard);
 }
 
-.emby-tab-button:hover {
+.skinHeader .headerTabs .emby-tab-button:hover {
   background-color: rgb(234 217 174 / 8%);
   color: var(--harbor-parchment-100);
 }
 
-.emby-tab-button:active {
+.skinHeader .headerTabs .emby-tab-button:active {
   background-color: rgb(184 148 75 / 14%);
 }
 
-.emby-tab-button.emby-tab-button-active,
-.emby-tab-button[aria-selected="true"] {
+.skinHeader .headerTabs .emby-tab-button.emby-tab-button-active,
+.skinHeader .headerTabs .emby-tab-button[aria-selected="true"] {
   border-block-end-color: var(--harbor-brass-500) !important;
   background-color: rgb(12 29 41 / 88%) !important;
   color: var(--harbor-focus) !important;
