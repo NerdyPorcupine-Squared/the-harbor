@@ -1,6 +1,10 @@
 # Harbor Core manual matrix
 
-This file is a placeholder-only checklist for the repository owner. Do not add server addresses, account names, library names, media titles, screenshots, tokens, plugin inventories, logs, or machine paths.
+This file is a placeholder-only checklist for the repository owner. It is reference material for an immutable release candidate and must not be edited to record live certification results on the frozen candidate branch.
+
+Record the candidate SHA and actual outcomes in that candidate's GitHub issue validation ledger as defined by `docs/release/core-v1-rc-process.md`.
+
+Do not add server addresses, account names, library names, media titles, screenshots, tokens, plugin inventories, logs, or machine paths to either this template or the validation ledger.
 
 Candidate commit: `COMMIT_SHA`
 
@@ -36,9 +40,9 @@ Result values: `Not run`, `Needs change`, or `Acceptable`.
 
 ## Optional absent-plugin check
 
-The Media Bar-absent layout is covered by fixtures and Chromium. If the owner also tests Core with Media Bar Enhanced disabled, record only the sanitized result here — Result: `Not run`.
+The Media Bar-absent layout is covered by fixtures and Chromium. If the owner also tests Core with Media Bar Enhanced disabled, record the sanitized outcome in the candidate's validation ledger rather than editing this file.
 
-## Feedback template
+## Validation ledger entry template
 
 - Matrix row:
 - Result:
