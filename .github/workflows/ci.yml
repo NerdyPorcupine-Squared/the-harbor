@@ -5,7 +5,7 @@ on:
   pull_request:
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   core:
@@ -35,6 +35,19 @@ jobs:
 
       - name: Test Chromium
         run: npm run test:visual
+
+      - name: Sync generated candidate
+        if: github.event_name == 'push' && github.actor != 'github-actions[bot]'
+        shell: pwsh
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git diff --quiet -- theme.css
+          if ($LASTEXITCODE -ne 0) {
+            git add theme.css
+            git commit -m "build: sync generated runtime recovery css"
+            git push origin "HEAD:${{ github.ref_name }}"
+          }
 
       - name: Upload generated candidate
         if: always()
