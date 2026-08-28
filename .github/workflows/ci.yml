@@ -7,6 +7,10 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: harbor-ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   core:
     runs-on: windows-latest
@@ -42,7 +46,7 @@ jobs:
         run: |
           git diff --exit-code -- theme.css
           if ($LASTEXITCODE -ne 0) {
-            Write-Error "Release branches must commit generated theme.css before candidate validation. Run npm run build:css locally, commit theme.css, and push again."
+            Write-Error "Generated theme.css drifted on a release branch. Regenerate and commit it before freezing the candidate."
             exit 1
           }
 
