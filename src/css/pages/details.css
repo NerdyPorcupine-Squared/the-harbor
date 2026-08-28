@@ -79,11 +79,13 @@
 
 #itemDetailPage .detailPagePrimaryContent .sectionTitle {
   border-block-end: 1px solid rgb(184 148 75 / 30%);
+  background-color: transparent;
   background-image: linear-gradient(90deg, var(--harbor-brass-500), transparent 42%);
   background-repeat: no-repeat;
   background-position: left bottom;
   background-size: 9rem 0.125rem;
   color: var(--harbor-brass-300);
+  box-shadow: none;
   font-family: var(--harbor-font-display);
   letter-spacing: 0.045em;
   text-shadow: 0 0.125rem 0.4rem rgb(0 0 0 / 48%);
