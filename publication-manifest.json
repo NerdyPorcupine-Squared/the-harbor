@@ -140,6 +140,7 @@
     "tests/visual/snapshots/win32/shared-components-mobile.png",
     "tests/visual/snapshots/win32/states-desktop.png",
     "tests/visual/snapshots/win32/states-mobile.png",
+    "tests/visual/streaming-services-adapter.spec.mjs",
     "tests/visual/system-pages.spec.mjs",
     "tests/visual/treasure-map.spec.mjs",
     "theme.css",
