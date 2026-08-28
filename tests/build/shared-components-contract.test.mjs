@@ -14,12 +14,55 @@ async function readRepositoryFile(path) {
 }
 
 function declarationBlock(css, selector) {
-  const index = css.indexOf(`${selector} {`);
-  assert.ok(index >= 0, `${selector} declaration block exists`);
-  const start = css.indexOf("{", index) + 1;
-  const end = css.indexOf("}", start);
-  return css.slice(start, end);
+  const escapedSelector = selector.replace(/[.*+?^${}()|[\]\\]/gu, "\\$&");
+  const match = css.match(
+    new RegExp(`(?:^|\\})\\s*[^{}]*${escapedSelector}[^{}]*\\{([^{}]*)\\}`, "mu"),
+  );
+  return match?.[1] ?? "";
 }
+
+test("declares the public Playwright runner and visual test commands", async () => {
+  const packageJson = JSON.parse(await readRepositoryFile("package.json"));
+  assert.equal(packageJson.devDependencies?.playwright, "1.62.1");
+  assert.equal(packageJson.scripts?.["test:visual"], "playwright test");
+  assert.equal(packageJson.scripts?.["test:visual:update"], "playwright test --update-snapshots");
+});
+
+test("keeps the sanitized fixture local and representative of Jellyfin components", async () => {
+  const fixture = await readRepositoryFile("tests/fixtures/jellyfin/shared-components.html");
+  const requiredClasses = ["skinHeader", "headerTabs", "emby-tab-button", "mainDrawer", "card", "cardBox", "cardScalable", "cardPadder", "cardContent", "cardImageContainer", "cardOverlayContainer", "itemProgressBar", "itemProgressBarForeground", "button-flat", "button-submit", "emby-input", "emby-select", "emby-checkbox", "actionSheet", "dialog", "toast"];
+  for (const className of requiredClasses) assert.match(fixture, new RegExp(`class="[^"]*\\b${className}\\b`, "u"));
+  assert.match(fixture, /data-harbor-control/u);
+  assert.match(fixture, /data-harbor-focused/u);
+  assert.match(fixture, /data-harbor-parchment-control/u);
+  assert.match(fixture, /Voyage to Beacon Shoal/u);
+  assert.doesNotMatch(fixture, /https?:\/\//iu);
+  assert.doesNotMatch(fixture, /(?:jellyfin|plex|emby)\.(?:local|test)|@/iu);
+  assert.doesNotMatch(fixture, /<(?:img|video|audio|iframe|script)\b/iu);
+});
+
+test("configures deterministic file-backed desktop and mobile visual projects", async () => {
+  const config = await readRepositoryFile("playwright.config.mjs");
+  const spec = await readRepositoryFile("tests/visual/shared-components.spec.mjs");
+  assert.match(config, /name:\s*"desktop"/u);
+  assert.match(config, /viewport:\s*\{\s*width:\s*1440,\s*height:\s*900\s*\}/u);
+  assert.match(config, /name:\s*"mobile"/u);
+  assert.match(config, /viewport:\s*\{\s*width:\s*390,\s*height:\s*844\s*\}/u);
+  assert.match(config, /trace:\s*"on-first-retry"/u);
+  assert.match(config, /screenshot:\s*"only-on-failure"/u);
+  assert.match(config, /snapshotPathTemplate:\s*"\{testDir\}\/snapshots\/\{platform\}\/\{arg\}\{ext\}"/u);
+  assert.doesNotMatch(config, /webServer/u);
+  assert.match(spec, /pathToFileURL/u);
+  assert.match(spec, /scrollWidth/u);
+  assert.match(spec, /button:visible, input:visible, select:visible/u);
+  assert.match(spec, /outlineWidth/u);
+  assert.match(spec, /data-harbor-parchment-control/u);
+  assert.match(spec, /cardScalable/u);
+  assert.match(spec, /cardImageContainer/u);
+  assert.match(spec, /boundingBox/u);
+  assert.doesNotMatch(spec, /toHaveScreenshot/u);
+  assert.doesNotMatch(spec, /https?:\/\//iu);
+});
 
 test("imports every shared component layer into the release entrypoint", async () => {
   const indexCss = await readRepositoryFile("src/css/index.css");
@@ -70,19 +113,29 @@ test("real action sheets and dialogs own their parchment backgrounds", async () 
   for (const [selector, css] of [[".actionSheet", menus], [".dialog", dialogs]]) {
     const block = declarationBlock(css, selector);
     assert.match(block, /background-color:\s*var\(--harbor-parchment-100\)/u);
-    assert.match(block, /color:\s*var\(--harbor-ink-900\)/u);
+    assert.match(block, /background-image:\s*var\(--harbor-papyrus-image\)/u);
+    assert.match(block, /background-repeat:\s*var\(--harbor-papyrus-repeat\)/u);
+    assert.match(block, /background-size:\s*var\(--harbor-papyrus-size\)/u);
   }
-  assert.match(fixture, /class="actionSheet"/u);
-  assert.match(fixture, /class="dialog"/u);
-  assert.match(spec, /actionSheet/u);
-  assert.match(spec, /dialog/u);
+  assert.doesNotMatch(fixture, /class="[^"]*(?:actionSheet|dialog)[^"]*harbor-parchment-surface/u);
+  assert.match(spec, /\.actionSheet, \.dialog, \.sectionTitle, \.mediaInfoItem, \.harbor-metadata-panel/u);
+  assert.match(spec, /backgroundColor/u);
+  assert.match(spec, /backgroundImage/u);
+  assert.match(spec, /fibers\.svg/u);
+  assert.match(spec, /mottle\.svg/u);
 });
 
 test("keeps parchment ink dark and global focus and motion preferences accessible", async () => {
+  const menus = await readRepositoryFile("src/css/components/menus.css");
+  const dialogs = await readRepositoryFile("src/css/components/dialogs.css");
   const accessibility = await readRepositoryFile("src/css/accessibility.css");
-  const fixture = await readRepositoryFile("tests/fixtures/jellyfin/shared-components.html");
-  assert.match(accessibility, /:focus-visible/u);
-  assert.match(accessibility, /prefers-reduced-motion/u);
-  assert.match(accessibility, /forced-colors/u);
-  assert.match(fixture, /focus-probe/u);
+  assert.match(declarationBlock(menus, ".actionSheet"), /color:\s*var\(--harbor-ink-900\)/u);
+  assert.match(declarationBlock(dialogs, ".dialog"), /color:\s*var\(--harbor-ink-900\)/u);
+  assert.match(declarationBlock(dialogs, ".toast"), /color:\s*var\(--harbor-parchment-100\)/u);
+  assert.match(accessibility, /:focus-visible[^{]*\{[^}]*outline:\s*(?:0\.125rem|2px)/su);
+  assert.match(accessibility, /@media\s*\(forced-colors:\s*active\)/u);
+  assert.match(accessibility, /@media\s*\(prefers-reduced-motion:\s*reduce\)/u);
+  assert.match(accessibility, /transition:\s*none/u);
+  assert.match(accessibility, /\.hideForScreenReader\b/u);
+  assert.doesNotMatch(accessibility, /display:\s*none[^}]*prefers-reduced-motion/su);
 });
