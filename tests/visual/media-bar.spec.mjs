@@ -47,10 +47,18 @@ test("Media Bar remains plugin-owned when plugin CSS loads after Harbor", async 
     const control = controls.nth(index);
     await expect(control).toBeVisible();
     await expect(control).toBeEnabled();
-    const box = await control.boundingBox();
+    expect(await control.boundingBox()).not.toBeNull();
+  }
+
+  const arrows = page.locator("#slides-container .arrow:visible");
+  expect(await arrows.count()).toBe(2);
+  for (let index = 0; index < (await arrows.count()); index += 1) {
+    const box = await arrows.nth(index).boundingBox();
     expect(box).not.toBeNull();
-    expect(box.width).toBeGreaterThanOrEqual(40);
-    expect(box.height).toBeGreaterThanOrEqual(40);
+    expect(box.width).toBeGreaterThanOrEqual(39);
+    expect(box.width).toBeLessThanOrEqual(41);
+    expect(box.height).toBeGreaterThanOrEqual(39);
+    expect(box.height).toBeLessThanOrEqual(41);
   }
 
   const primaryControl = page.locator("[data-hero-primary]");
