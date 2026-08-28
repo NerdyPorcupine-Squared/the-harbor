@@ -62,13 +62,13 @@ test("library and search use the map canvas without covering media art", async (
   }
 });
 
-test("ElganFlix branding stays in the app header while selected library tabs use Harbor brass", async ({ page }) => {
+test("synthetic library fixture keeps native header content while selected tabs use Harbor brass", async ({ page }) => {
   await page.goto(fixtureUrl("library"));
 
-  const wordmark = await page.locator(".pageTitleWithDefaultLogo").evaluate(
+  const injectedWordmark = await page.locator(".pageTitleWithDefaultLogo").evaluate(
     (element) => getComputedStyle(element, "::after").content,
   );
-  expect(wordmark).toContain("ElganFlix");
+  expect(injectedWordmark).toBe("none");
 
   const active = await computed(page, ".emby-tab-button-active");
   expect(active.backgroundColor).not.toContain("229, 9, 20");
@@ -146,7 +146,7 @@ test("Media Bar stays cinematic while plugin geometry remains authoritative", as
   expect(pluginRowTopSvh).toBeLessThanOrEqual(66);
 });
 
-test("player never receives cartography or ElganFlix pseudo branding", async ({ page }) => {
+test("synthetic player fixture receives no cartography or browsing pseudo branding", async ({ page }) => {
   await page.goto(fixtureUrl("player"));
   for (const selector of [".videoPlayerContainer", ".videoSurface", ".videoOsdBottom"]) {
     const style = await computed(page, selector);
