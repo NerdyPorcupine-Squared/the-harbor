@@ -13,15 +13,17 @@ async function readRepositoryFile(path) {
   }
 }
 
-test("Core imports dedicated branding and Streaming Services presentation", async () => {
+test("Core imports Harbor header polish and Streaming Services presentation", async () => {
   const index = await readRepositoryFile("src/css/index.css");
   const branding = await readRepositoryFile("src/css/components/branding.css");
   const streaming = await readRepositoryFile("src/css/integrations/streaming-services.css");
 
   assert.match(index, /@import "\.\/components\/branding\.css";/u);
   assert.match(index, /@import "\.\/integrations\/streaming-services\.css";/u);
-  assert.match(branding, /content:\s*"\s*ElganFlix"/u);
-  assert.match(branding, /\.skinHeader[\s\S]*\.pageTitle/u);
+  assert.match(branding, /\.skinHeader/u);
+  assert.match(branding, /\.headerUserButton/u);
+  assert.doesNotMatch(branding, /\.pageTitle(?:WithDefaultLogo|WithLogo)?\s*::(?:before|after)/u);
+  assert.doesNotMatch(branding, /content:\s*"[^\"]+"/u);
   assert.doesNotMatch(branding, /:not\(\.osdHeader\)|\.osdHeader/u);
   assert.match(streaming, /#homelabStreamingHub/u);
   assert.match(streaming, /\.stream-card/u);
