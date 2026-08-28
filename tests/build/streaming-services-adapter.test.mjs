@@ -41,3 +41,14 @@ test("Harbor supplies complete responsive layout for its custom Streaming Servic
   assert.match(css, /text-decoration:\s*none/u);
   assert.match(css, /@media\s*\(max-width:/u);
 });
+
+test("README keeps Core CSS-only while documenting the optional JavaScript Injector adapter", async () => {
+  const readme = await readRepositoryFile("README.md");
+
+  assert.match(readme, /Core remains CSS-only/iu);
+  assert.match(readme, /Streaming Services/iu);
+  assert.match(readme, /JavaScript Injector/iu);
+  assert.match(readme, /integrations\/streaming-services\.js/u);
+  assert.match(readme, /Continue Watching/iu);
+  assert.match(readme, /optional/iu);
+});
