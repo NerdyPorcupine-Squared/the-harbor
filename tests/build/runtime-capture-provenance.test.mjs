@@ -28,3 +28,10 @@ test('stylesheet provenance stores sanitized paths instead of raw URLs or query 
   assert.match(source, /new URL\(/u);
   assert.doesNotMatch(source, /sourceHref\s*:/u);
 });
+
+test('stylesheet provenance descends through CSS imports and attributes rules to the imported sheet', () => {
+  assert.match(source, /rule\.styleSheet/u);
+  assert.match(source, /walkStyleSheet/u);
+  assert.match(source, /classifyStylesheetSource\(sheet\)/u);
+  assert.match(source, /sanitizeStylesheetPath\(sheet\.href\)/u);
+});
