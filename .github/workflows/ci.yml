@@ -36,8 +36,18 @@ jobs:
       - name: Test Chromium
         run: npm run test:visual
 
-      - name: Sync generated candidate
-        if: github.event_name == 'push' && github.actor != 'github-actions[bot]'
+      - name: Reject generated CSS drift on release branches
+        if: startsWith(github.ref_name, 'release/')
+        shell: pwsh
+        run: |
+          git diff --exit-code -- theme.css
+          if ($LASTEXITCODE -ne 0) {
+            Write-Error "Release branches must commit generated theme.css before candidate validation. Run npm run build:css locally, commit theme.css, and push again."
+            exit 1
+          }
+
+      - name: Sync generated candidate on development branches
+        if: github.event_name == 'push' && github.actor != 'github-actions[bot]' && !startsWith(github.ref_name, 'release/')
         shell: pwsh
         run: |
           git config user.name "github-actions[bot]"
