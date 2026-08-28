@@ -29,9 +29,9 @@ test("home row headings read as headings instead of raised parchment plaques", a
   const block = css.match(/\.homeSection \.sectionTitle\s*\{([^}]*)\}/su)?.[1] ?? "";
 
   assert.match(block, /border:\s*0/u);
-  assert.match(block, /padding:\s*0/u);
   assert.match(block, /background:\s*none/u);
   assert.match(block, /box-shadow:\s*none/u);
+  assert.doesNotMatch(block, /(?:padding|margin|width|height)\s*:/u);
 });
 
 test("keeps Media Bar selectors scoped while leaving plugin geometry untouched", async () => {
