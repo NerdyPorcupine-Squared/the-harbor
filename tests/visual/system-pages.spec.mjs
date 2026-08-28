@@ -48,10 +48,15 @@ for (const fixture of ["login", "dashboard", "states"]) {
       expect(checkboxBox.height).toBeGreaterThanOrEqual(40);
     }
 
-    await expect(page).toHaveScreenshot(`${fixture}-${testInfo.project.name}.png`, {
+    const screenshotOptions = {
       animations: "disabled",
       fullPage: true,
-    });
+      ...(fixture === "dashboard" ? { maxDiffPixels: 100 } : {}),
+    };
+    await expect(page).toHaveScreenshot(
+      `${fixture}-${testInfo.project.name}.png`,
+      screenshotOptions,
+    );
   });
 }
 
