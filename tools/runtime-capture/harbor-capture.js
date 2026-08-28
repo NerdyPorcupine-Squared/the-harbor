@@ -189,24 +189,49 @@
     };
   }
 
-  function walkCssRules(rules, visit) {
-    for (const rule of [...(rules ?? [])]) {
-      if (rule.selectorText && rule.style) visit(rule);
+  function stylesheetMetadata(sheet, sourceIndex) {
+    return {
+      sourceKind: classifyStylesheetSource(sheet),
+      sourceIndex,
+      sourcePath: sanitizeStylesheetPath(sheet.href)
+    };
+  }
+
+  function walkRuleList(rules, sheet, sourceIndex, visit, seenSheets) {
+    const list = [...(rules ?? [])];
+    for (let ruleIndex = 0; ruleIndex < list.length; ruleIndex += 1) {
+      const rule = list[ruleIndex];
+      if (rule.selectorText && rule.style) {
+        visit(rule, stylesheetMetadata(sheet, sourceIndex));
+      }
+
+      if (rule.styleSheet) {
+        walkStyleSheet(rule.styleSheet, `${sourceIndex}.import${ruleIndex}`, visit, seenSheets);
+        continue;
+      }
+
       if (rule.cssRules) {
-        try { walkCssRules(rule.cssRules, visit); } catch { }
+        try {
+          walkRuleList(rule.cssRules, sheet, sourceIndex, visit, seenSheets);
+        } catch { }
       }
     }
+  }
+
+  function walkStyleSheet(sheet, sourceIndex, visit, seenSheets = new Set()) {
+    if (!sheet || seenSheets.has(sheet)) return;
+    seenSheets.add(sheet);
+    let rules;
+    try { rules = sheet.cssRules; } catch { return; }
+    walkRuleList(rules, sheet, sourceIndex, visit, seenSheets);
   }
 
   function matchedRules(element) {
     const matches = [];
     const sheets = [...(globalThis.document?.styleSheets ?? [])];
+    const seenSheets = new Set();
     for (const [sourceIndex, sheet] of sheets.entries()) {
-      let rules;
-      try { rules = sheet.cssRules; } catch { continue; }
-      const sourceKind = classifyStylesheetSource(sheet);
-      const sourcePath = sanitizeStylesheetPath(sheet.href);
-      walkCssRules(rules, (rule) => {
+      walkStyleSheet(sheet, sourceIndex, (rule, source) => {
         if (matches.length >= MAX_RULES) return;
         try {
           if (!element.matches(rule.selectorText)) return;
@@ -222,27 +247,34 @@
           selector: rule.selectorText,
           declarations,
           important: [...rule.style].filter((property) => rule.style.getPropertyPriority(property) === 'important'),
-          sourceKind,
-          sourceIndex,
-          sourcePath
+          ...source
         });
-      });
+      }, seenSheets);
       if (matches.length >= MAX_RULES) break;
     }
     return matches;
   }
 
   function stylesheetSources() {
-    return [...(globalThis.document?.styleSheets ?? [])].map((sheet, sourceIndex) => {
+    const sources = [];
+    const seenSheets = new Set();
+    const record = (sheet, sourceIndex) => {
+      if (!sheet || seenSheets.has(sheet)) return;
+      seenSheets.add(sheet);
+      let rules;
       let accessible = true;
-      try { void sheet.cssRules; } catch { accessible = false; }
-      return {
-        sourceKind: classifyStylesheetSource(sheet),
-        sourceIndex,
-        sourcePath: sanitizeStylesheetPath(sheet.href),
-        accessible
-      };
-    });
+      try { rules = sheet.cssRules; } catch { accessible = false; }
+      sources.push({ ...stylesheetMetadata(sheet, sourceIndex), accessible });
+      if (!accessible) return;
+      const list = [...(rules ?? [])];
+      for (let ruleIndex = 0; ruleIndex < list.length; ruleIndex += 1) {
+        if (list[ruleIndex].styleSheet) {
+          record(list[ruleIndex].styleSheet, `${sourceIndex}.import${ruleIndex}`);
+        }
+      }
+    };
+    [...(globalThis.document?.styleSheets ?? [])].forEach((sheet, sourceIndex) => record(sheet, sourceIndex));
+    return sources;
   }
 
   function collectAncestors(element, limit = 8) {
