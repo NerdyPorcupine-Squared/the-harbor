@@ -3,8 +3,6 @@
 }
 
 .skinHeader .headerTabs .emby-tab-button {
-  min-width: 2.5rem;
-  min-height: 2.5rem;
   border-block-end: 0.125rem solid transparent;
   background-color: transparent;
   color: var(--harbor-parchment-200);
