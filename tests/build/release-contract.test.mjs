@@ -14,11 +14,11 @@ async function readRepositoryFile(path) {
   }
 }
 
-test("documents install, update, optional integration, removal, rollback, and support", async () => {
+test("documents immutable RC install, update, optional integration, removal, rollback, and support", async () => {
   const readme = await readRepositoryFile("README.md");
 
   for (const heading of [
-    "Install",
+    "Install during release-candidate testing",
     "Update",
     "Media Bar Enhanced",
     "Remove",
@@ -27,12 +27,14 @@ test("documents install, update, optional integration, removal, rollback, and su
   ]) {
     assert.match(readme, new RegExp(`## ${heading}`, "u"));
   }
-  assert.match(
+  assert.doesNotMatch(
     readme,
     /cdn\.jsdelivr\.net\/gh\/NerdyPorcupine-Squared\/the-harbor@main\/theme\.css/u,
   );
-  assert.match(readme, /COMMIT_SHA/u);
-  assert.match(readme, /release candidate/iu);
+  assert.match(readme, /the-harbor@COMMIT_SHA\/theme\.css/u);
+  assert.match(readme, /@v1\.0\.0\/theme\.css/u);
+  assert.match(readme, /release-candidate preparation/iu);
+  assert.match(readme, /Do not use a moving `@main` or branch URL/iu);
   assert.doesNotMatch(readme, /real-server validated/iu);
 });
 
@@ -64,7 +66,7 @@ test("compatibility docs separate automated and real-server evidence", async () 
   assert.doesNotMatch(matrix, /\bPass(?:ed)?\b/iu);
 });
 
-test("CI runs clean Windows build, publication, and Chromium gates", async () => {
+test("CI runs clean Windows build, publication, Chromium, and release-drift gates", async () => {
   const workflow = await readRepositoryFile(".github/workflows/ci.yml");
 
   assert.match(workflow, /windows-latest/u);
@@ -73,9 +75,11 @@ test("CI runs clean Windows build, publication, and Chromium gates", async () =>
   assert.match(workflow, /npm run verify:core/u);
   assert.match(workflow, /npm run check:publication/u);
   assert.match(workflow, /npm run test:visual/u);
+  assert.match(workflow, /Reject generated CSS drift on release branches/u);
+  assert.match(workflow, /startsWith\(github\.ref_name, 'release\/'\)/u);
 });
 
-test("publication manifest is sorted, unique, and exact", async () => {
+test("publication manifest is sorted, unique, exact, and excludes private planning artifacts", async () => {
   const manifestText = await readRepositoryFile("publication-manifest.json");
   const manifest = JSON.parse(manifestText || "{}");
 
@@ -90,6 +94,7 @@ test("publication manifest is sorted, unique, and exact", async () => {
     "theme.css",
     "assets/logos/harbor-mark.svg",
     "docs/compatibility.md",
+    "docs/release/core-v1-rc-process.md",
     "docs/testing/core-manual-matrix.md",
   ]) {
     assert.ok(manifest.files.includes(path), `${path} must be published`);
