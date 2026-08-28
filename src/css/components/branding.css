@@ -2,29 +2,25 @@
   --harbor-brand-signal: #e50914;
 }
 
+/* Preserve Jellyfin header geometry while visually replacing stock branding. */
 .skinHeader .headerLogo img,
 .skinHeader .headerLogo-withBackground img,
 .skinHeader .logoImage,
 .skinHeader .headerLogo svg {
-  display: none !important;
+  opacity: 0 !important;
 }
 
 .skinHeader .headerLogo::after,
 .skinHeader .headerLogo-withBackground::after {
-  display: none !important;
+  content: none !important;
+  opacity: 0 !important;
 }
 
 .skinHeader .pageTitle,
 .skinHeader .pageTitleWithDefaultLogo,
 .skinHeader .pageTitleWithLogo {
-  display: inline-flex !important;
-  visibility: visible !important;
-  align-items: center !important;
-  justify-content: flex-start !important;
-  min-width: max-content !important;
-  min-height: 2.375rem !important;
-  overflow: visible !important;
-  background: none !important;
+  background-image: none !important;
+  color: transparent !important;
   font-size: 0 !important;
   line-height: 1 !important;
   animation: none !important;
@@ -36,33 +32,33 @@
 .skinHeader .pageTitle > *,
 .skinHeader .pageTitleWithDefaultLogo > *,
 .skinHeader .pageTitleWithLogo > * {
-  display: none !important;
+  color: transparent !important;
+  font-size: 0 !important;
+  opacity: 0 !important;
 }
 
 .skinHeader .pageTitle::before,
 .skinHeader .pageTitleWithDefaultLogo::before,
 .skinHeader .pageTitleWithLogo::before {
-  content: "" !important;
-  display: inline-block !important;
-  width: 0 !important;
-  height: 0 !important;
-  border-block: 0.4375rem solid transparent !important;
-  border-inline-start: 0.75rem solid var(--harbor-brand-signal) !important;
-  margin-inline-end: 0.5625rem !important;
-  filter: drop-shadow(0 0 0.42rem rgb(229 9 20 / 34%)) !important;
+  content: "▶" !important;
+  color: var(--harbor-brand-signal) !important;
+  font-family: Arial, sans-serif;
+  font-size: 0.86rem !important;
+  font-weight: 700 !important;
+  line-height: 1 !important;
+  text-shadow: 0 0 0.42rem rgb(229 9 20 / 34%);
 }
 
 .skinHeader .pageTitle::after,
 .skinHeader .pageTitleWithDefaultLogo::after,
 .skinHeader .pageTitleWithLogo::after {
-  content: "ElganFlix" !important;
-  display: inline-block !important;
+  content: "  ElganFlix" !important;
   color: var(--harbor-parchment-100) !important;
   font-family: var(--harbor-font-display);
   font-size: 1.125rem !important;
   font-weight: 700 !important;
   letter-spacing: 0.06em !important;
-  white-space: nowrap !important;
+  white-space: pre !important;
   text-shadow: 0 0.125rem 0.5rem rgb(0 0 0 / 58%) !important;
 }
 
