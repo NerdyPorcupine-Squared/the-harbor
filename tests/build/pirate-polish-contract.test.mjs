@@ -56,6 +56,18 @@ test("details read as a captain dossier without taking artwork geometry", async 
   );
 });
 
+test("primary detail headings do not inherit the global parchment plaque surface", async () => {
+  const details = await readRepositoryFile("src/css/pages/details.css");
+  const block = details.match(
+    /#itemDetailPage \.detailPagePrimaryContent \.sectionTitle\s*\{([^}]*)\}/su,
+  )?.[1] ?? "";
+
+  assert.match(block, /background-color:\s*transparent/u);
+  assert.match(block, /box-shadow:\s*none/u);
+  assert.match(block, /color:\s*var\(--harbor-brass-300\)/u);
+  assert.doesNotMatch(block, /(?:padding|margin|width|height|position)\s*:/u);
+});
+
 test("home hero blending stays cosmetic and plugin geometry stays external", async () => {
   const mapSurface = await readRepositoryFile("src/css/base/map-surface.css");
   const mediaBar = await readRepositoryFile("src/css/integrations/media-bar-enhanced.css");
