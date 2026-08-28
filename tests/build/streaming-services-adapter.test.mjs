@@ -30,3 +30,14 @@ test("optional Streaming Services adapter owns only its custom home section", as
   assert.doesNotMatch(source, /innerHTML\s*=/u);
   assert.doesNotMatch(source, /ElganFlix|homelab-red/iu);
 });
+
+test("Harbor supplies complete responsive layout for its custom Streaming Services section", async () => {
+  const css = await readRepositoryFile("src/css/integrations/streaming-services.css");
+
+  assert.match(css, /#homelabStreamingHub\s+\.stream-row\s*\{[^}]*display:\s*grid/su);
+  assert.match(css, /grid-template-columns:\s*repeat\(auto-fit,\s*minmax\(/u);
+  assert.match(css, /#homelabStreamingHub\s+\.stream-card\s*\{[^}]*display:\s*flex/su);
+  assert.match(css, /#homelabStreamingHub\s+\.stream-card\s*\{[^}]*min-height:/su);
+  assert.match(css, /text-decoration:\s*none/u);
+  assert.match(css, /@media\s*\(max-width:/u);
+});
