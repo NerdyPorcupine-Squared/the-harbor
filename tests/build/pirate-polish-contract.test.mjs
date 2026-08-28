@@ -21,8 +21,8 @@ test("Core imports dedicated branding and Streaming Services presentation", asyn
   assert.match(index, /@import "\.\/components\/branding\.css";/u);
   assert.match(index, /@import "\.\/integrations\/streaming-services\.css";/u);
   assert.match(branding, /content:\s*"ElganFlix"/u);
-  assert.match(branding, /:not\(\.osdHeader\).*\.pageTitle/su);
-  assert.match(branding, /\.osdHeader[\s\S]*content:\s*none\s*!important/u);
+  assert.match(branding, /\.skinHeader[\s\S]*\.pageTitle/u);
+  assert.doesNotMatch(branding, /:not\(\.osdHeader\)|\.osdHeader/u);
   assert.match(streaming, /#homelabStreamingHub/u);
   assert.match(streaming, /\.stream-card/u);
   assert.match(streaming, /\.service-logo/u);
