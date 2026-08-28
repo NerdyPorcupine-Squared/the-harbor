@@ -55,16 +55,38 @@ That exact SHA is the release candidate. Use it in Jellyfin:
 @import url("https://cdn.jsdelivr.net/gh/NerdyPorcupine-Squared/the-harbor@<FROZEN_SHA>/theme.css");
 ```
 
-A frozen RC is immutable for certification purposes. Do not commit a production, test-fixture, generated-CSS, or release-document change and continue calling the result the same RC. If the tested content tree changes, create the next RC.
+A frozen RC is immutable for certification purposes. Do not commit a production, test-fixture, generated-CSS, or release-document change to the frozen candidate and continue calling the result the same RC. If the tested content tree changes, create the next RC.
+
+Do not record the frozen SHA inside the frozen candidate. A commit cannot contain its own final SHA without creating a new commit. Record candidate identity and test outcomes in the external validation ledger described below.
+
+## Validation ledger
+
+Create one GitHub issue for each frozen candidate, for example `Core v1 RC1 validation ledger`. The issue is the authoritative mutable record for candidate SHA, client configuration, manual matrix outcomes, sanitized defects, review findings, and final disposition.
+
+The validation ledger must record:
+
+- the full frozen commit SHA;
+- Jellyfin version under test;
+- Media Bar Enhanced version when used;
+- whether the optional Streaming Services adapter is enabled;
+- desktop and mobile matrix row results;
+- Jellyfin Web and Jellyfin Media Player playback outcomes;
+- links to regression commits created from any failed row;
+- independent review result;
+- final status: `PASS`, `FAIL`, or `SUPERSEDED`.
+
+Do not put server addresses, account information, private media names, tokens, screenshots, raw logs, plugin inventories, or machine paths in the issue.
 
 ## MANUAL-VALIDATION
 
-Use:
+Use these repository files as immutable templates and reference material:
 
 - `docs/testing/runtime-recovery-v3-owner-checklist.md`
 - `docs/testing/media-bar-v3-validation-profile.md`
 - `docs/testing/core-manual-matrix.md`
 - `docs/testing/runtime-recovery-v3-results.md`
+
+Record the actual candidate-specific outcomes in the GitHub issue validation ledger, not by editing the frozen candidate branch.
 
 Every acceptance result must belong to the same frozen SHA.
 
@@ -73,13 +95,15 @@ Historical evidence remains historical. Playback that passed on candidate `4d87e
 If a row fails:
 
 1. collect only the sanitized runtime structure required to reproduce it;
-2. add a failing fixture or browser contract;
+2. add a failing fixture or browser contract on the release-preparation line;
 3. prove that test fails before editing production CSS or integration code;
 4. implement the narrowest fix;
 5. run the focused regression test;
 6. run `npm run verify:release`;
 7. freeze a new RC SHA;
-8. rerun the failed row and any regression-sensitive rows.
+8. create a new validation ledger for that SHA;
+9. mark the failed candidate ledger `SUPERSEDED`;
+10. rerun the failed row and any regression-sensitive rows.
 
 Never add temporary Custom CSS patches while gathering release evidence.
 
@@ -97,20 +121,33 @@ After one frozen SHA passes the required manual matrix, perform an independent r
 - optional integration side effects;
 - publication/privacy safety.
 
-A release-blocking review finding returns the process to the regression workflow and requires a new RC.
+Record the review outcome in the same validation ledger. A release-blocking review finding returns the process to the regression workflow and requires a new RC.
 
 ## PROMOTE
 
-Only the exact candidate that passed AUTOMATED-GATE, MANUAL-VALIDATION, and REVIEW may be promoted.
+The validated runtime payload must remain identical to the frozen candidate. Release metadata may need a documentation-only promotion commit after validation so the changelog and stable install wording can accurately describe `v1.0.0` without mutating the candidate during testing.
+
+Before tagging, verify that a documentation-only promotion commit did not change runtime payload files:
+
+```bash
+git diff --exit-code <FROZEN_SHA>..HEAD -- theme.css src/css assets integrations
+npm run verify:release
+```
+
+Both commands must exit successfully. The first command proves that the CSS source, generated stylesheet, assets, and optional integration payload are byte-identical to the manually validated candidate.
 
 Promotion sequence:
 
-1. merge the validated content into `main` without production changes;
-2. rerun `npm run verify:release` on the merge result;
-3. tag `v1.0.0` only after that gate passes;
-4. update the recommended stable install URL to the version-pinned `@v1.0.0/theme.css` path;
-5. update compatibility claims with only the Jellyfin and Media Bar versions actually validated;
-6. clean up superseded recovery and RC branches after release.
+1. record `PASS` in the frozen candidate's validation ledger;
+2. fast-forward or merge the validated candidate content into `main` without runtime payload changes;
+3. if needed, create one documentation-only promotion commit for `README.md`, `CHANGELOG.md`, compatibility text, and release evidence references;
+4. run `git diff --exit-code <FROZEN_SHA>..HEAD -- theme.css src/css assets integrations`;
+5. run `npm run verify:release` on the promotion head;
+6. tag `v1.0.0` only after both gates pass;
+7. make the recommended stable install URL version-pinned to `@v1.0.0/theme.css`;
+8. clean up superseded recovery and RC branches after release.
+
+A documentation-only promotion commit may change release metadata, but it must never change the validated runtime payload.
 
 ## Optional Streaming Services adapter
 
