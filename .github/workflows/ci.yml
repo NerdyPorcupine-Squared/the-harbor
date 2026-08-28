@@ -5,7 +5,7 @@ on:
   pull_request:
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   core:
@@ -35,21 +35,6 @@ jobs:
 
       - name: Test Chromium
         run: npm run test:visual
-
-      - name: Commit generated candidate
-        if: github.event_name == 'push' && github.ref == 'refs/heads/polish/pirate-surface-pass'
-        shell: pwsh
-        run: |
-          git diff --quiet -- theme.css
-          if ($LASTEXITCODE -eq 0) {
-            Write-Host "theme.css already matches generated output"
-            exit 0
-          }
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add theme.css
-          git commit -m "build: sync generated pirate polish css"
-          git push origin HEAD:polish/pirate-surface-pass
 
       - name: Upload generated candidate
         if: always()
