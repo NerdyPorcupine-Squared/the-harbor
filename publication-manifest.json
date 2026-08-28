@@ -83,6 +83,7 @@
     "tests/build/harbor-brand-contract.test.mjs",
     "tests/build/home-contract.test.mjs",
     "tests/build/media-bar-v3-profile.test.mjs",
+    "tests/build/navigation-runtime-contract.test.mjs",
     "tests/build/papyrus-contract.test.mjs",
     "tests/build/pirate-polish-contract.test.mjs",
     "tests/build/real-jellyfin-layout-contract.test.mjs",
