@@ -10,6 +10,7 @@ Release candidate work:
 - Added full-color media cards framed with dark timber, aged brass, and compact parchment labels.
 - Kept header and drawer navigation structurally dark while details and Media Bar Enhanced remain cinematic.
 - Kept playback dark and isolated from parchment and cartography decoration.
+- Added a Jellyfin 10.11.11 real-runtime player contract from sanitized browser captures and excluded `data-type="video-osd"` pages from Harbor's browsing map surface.
 - Approved refreshed Windows Chromium visual baselines after reviewing the completed treasure-map layout on desktop and mobile fixtures.
 - Added the deterministic single-file Core CSS build and repository-local assets.
 - Added shared navigation, cards, controls, forms, menus, dialogs, and papyrus design primitives.
