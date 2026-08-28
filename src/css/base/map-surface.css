@@ -1,6 +1,6 @@
 :where(
   .homeSectionsContainer,
-  .libraryPage:not(.itemDetailPage),
+  .libraryPage:not(.itemDetailPage):not([data-type="video-osd"]),
   .searchPage,
   .statePage
 ) {
@@ -40,7 +40,7 @@ body:has(#slides-container) .homeSectionsContainer {
 @media (width <= 599px) {
   :where(
     .homeSectionsContainer,
-    .libraryPage:not(.itemDetailPage),
+    .libraryPage:not(.itemDetailPage):not([data-type="video-osd"]),
     .searchPage,
     .statePage
   ) {
