@@ -77,7 +77,7 @@ test("release process keeps candidate evidence external and promotion payload un
   assert.match(processDoc, /documentation-only promotion commit/iu);
 });
 
-test("CI runs clean Windows build, publication, Chromium, and release-drift gates", async () => {
+test("CI runs clean Windows build, publication, Chromium, release-drift, and stale-run cancellation gates", async () => {
   const workflow = await readRepositoryFile(".github/workflows/ci.yml");
 
   assert.match(workflow, /windows-latest/u);
@@ -88,6 +88,8 @@ test("CI runs clean Windows build, publication, Chromium, and release-drift gate
   assert.match(workflow, /npm run test:visual/u);
   assert.match(workflow, /Reject generated CSS drift on release branches/u);
   assert.match(workflow, /startsWith\(github\.ref_name, 'release\/'\)/u);
+  assert.match(workflow, /concurrency:/u);
+  assert.match(workflow, /cancel-in-progress:\s*true/u);
 });
 
 test("publication manifest is sorted, unique, exact, and excludes private planning artifacts", async () => {
