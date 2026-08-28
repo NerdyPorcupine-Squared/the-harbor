@@ -194,9 +194,7 @@ body:has(#slides-container) .homeSectionsContainer {
   border-block-end: 1px solid rgb(184 148 75 / 34%);
 }
 
-.emby-tab-button {
-  min-width: 2.5rem;
-  min-height: 2.5rem;
+.skinHeader .headerTabs .emby-tab-button {
   border-block-end: 0.125rem solid transparent;
   background-color: transparent;
   color: var(--harbor-parchment-200);
@@ -207,17 +205,17 @@ body:has(#slides-container) .homeSectionsContainer {
     box-shadow var(--harbor-motion-duration-fast) var(--harbor-motion-easing-standard);
 }
 
-.emby-tab-button:hover {
+.skinHeader .headerTabs .emby-tab-button:hover {
   background-color: rgb(234 217 174 / 8%);
   color: var(--harbor-parchment-100);
 }
 
-.emby-tab-button:active {
+.skinHeader .headerTabs .emby-tab-button:active {
   background-color: rgb(184 148 75 / 14%);
 }
 
-.emby-tab-button.emby-tab-button-active,
-.emby-tab-button[aria-selected="true"] {
+.skinHeader .headerTabs .emby-tab-button.emby-tab-button-active,
+.skinHeader .headerTabs .emby-tab-button[aria-selected="true"] {
   border-block-end-color: var(--harbor-brass-500) !important;
   background-color: rgb(12 29 41 / 88%) !important;
   color: var(--harbor-focus) !important;
@@ -758,7 +756,10 @@ body:has(#slides-container) .homeSectionsContainer {
 }
 
 .homeSection .sectionTitle {
+  border: 0;
+  background: none;
   color: var(--harbor-map-ink);
+  box-shadow: none;
 }
 .libraryToolbar {
   border: var(--harbor-papyrus-border);
@@ -889,11 +890,13 @@ body:has(#slides-container) .homeSectionsContainer {
 
 #itemDetailPage .detailPagePrimaryContent .sectionTitle {
   border-block-end: 1px solid rgb(184 148 75 / 30%);
+  background-color: transparent;
   background-image: linear-gradient(90deg, var(--harbor-brass-500), transparent 42%);
   background-repeat: no-repeat;
   background-position: left bottom;
   background-size: 9rem 0.125rem;
   color: var(--harbor-brass-300);
+  box-shadow: none;
   font-family: var(--harbor-font-display);
   letter-spacing: 0.045em;
   text-shadow: 0 0.125rem 0.4rem rgb(0 0 0 / 48%);
@@ -1217,7 +1220,10 @@ body:has(#slides-container) .homeSectionsContainer {
   background-color: transparent;
 }
 
-#slides-container .backdrop-overlay,
+#slides-container .backdrop-overlay {
+  pointer-events: none;
+}
+
 #slides-container .gradient-overlay {
   background-image:
     radial-gradient(circle at 72% 22%, transparent 0 28%, rgb(7 19 28 / 12%) 68%, rgb(7 19 28 / 54%)),
@@ -1244,26 +1250,19 @@ body:has(#slides-container) .homeSectionsContainer {
 }
 
 #slides-container :where(.play-button, .trailer-button, .detail-button, .favorite-button) {
-  min-width: 2.5rem;
-  min-height: 2.5rem;
-  border: 1px solid rgb(211 184 115 / 58%);
+  border-color: rgb(211 184 115 / 58%);
   background-color: rgb(234 217 174 / 94%);
   color: var(--harbor-ink-900);
-  box-shadow: 0 0.4rem 1rem rgb(0 0 0 / 28%);
-}
-
-#slides-container :where(.play-button, .trailer-button) {
-  border-radius: var(--harbor-radius-sm);
-}
-
-#slides-container :where(.detail-button, .favorite-button) {
-  border-radius: 50%;
+  box-shadow:
+    inset 0 0 0 1px rgb(211 184 115 / 58%),
+    0 0.4rem 1rem rgb(0 0 0 / 28%);
 }
 
 #slides-container :where(.play-button, .trailer-button, .detail-button, .favorite-button):hover {
   border-color: var(--harbor-brass-300);
   background-color: var(--harbor-parchment-100);
   box-shadow:
+    inset 0 0 0 1px var(--harbor-brass-300),
     0 0.4rem 1rem rgb(0 0 0 / 32%),
     0 0 0 1px rgb(184 148 75 / 22%);
 }
@@ -1285,22 +1284,17 @@ body:has(#slides-container) .homeSectionsContainer {
 #slides-container .mute,
 #slides-container .mute-button,
 #slides-container .dot {
-  min-width: 2.5rem;
-  min-height: 2.5rem;
   color: var(--harbor-parchment-100);
 }
 
 #slides-container .arrow,
 #slides-container .pause-button,
 #slides-container .mute-button {
-  border: 1px solid rgb(211 184 115 / 42%);
+  border-color: rgb(211 184 115 / 42%);
   background-color: rgb(7 19 28 / 62%);
-  box-shadow: 0 0.3rem 0.8rem rgb(0 0 0 / 26%);
-}
-
-#slides-container .pause-button,
-#slides-container .mute-button {
-  border-radius: 50%;
+  box-shadow:
+    inset 0 0 0 1px rgb(211 184 115 / 42%),
+    0 0.3rem 0.8rem rgb(0 0 0 / 26%);
 }
 
 #slides-container .dot.active {
@@ -1337,8 +1331,22 @@ body:has(#slides-container) .homeSectionsContainer {
   text-shadow: none !important;
 }
 
+#homelabStreamingHub .stream-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(10rem, 14rem));
+  justify-content: start;
+  gap: 0.8rem;
+}
+
 #homelabStreamingHub .stream-card {
-  border-color: rgb(184 148 75 / 54%) !important;
+  display: flex;
+  min-height: 4rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.65rem;
+  padding: 0.65rem 0.75rem;
+  border: 1px solid rgb(184 148 75 / 54%) !important;
+  border-radius: 0.35rem;
   background-color: var(--harbor-navy-900) !important;
   background-image:
     linear-gradient(155deg, rgb(12 29 41 / 94%), rgb(7 19 28 / 98%)),
@@ -1346,14 +1354,15 @@ body:has(#slides-container) .homeSectionsContainer {
   color: var(--harbor-parchment-100) !important;
   box-shadow:
     inset 0 0 0 1px rgb(234 217 174 / 6%),
-    0 0.55rem 1.25rem rgb(42 33 24 / 22%) !important;
+    0 0.45rem 1rem rgb(42 33 24 / 20%) !important;
+  text-decoration: none;
 }
 
 #homelabStreamingHub .stream-card:hover {
   border-color: var(--harbor-brass-300) !important;
   box-shadow:
     inset 0 0 0 1px rgb(234 217 174 / 10%),
-    0 0.75rem 1.6rem rgb(42 33 24 / 28%),
+    0 0.65rem 1.35rem rgb(42 33 24 / 26%),
     0 0 0 1px rgb(184 148 75 / 18%) !important;
 }
 
@@ -1365,13 +1374,22 @@ body:has(#slides-container) .homeSectionsContainer {
 
 #homelabStreamingHub .service-logo {
   opacity: 1 !important;
+  font-family: var(--harbor-font-display);
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.025em;
   filter: drop-shadow(0 0.2rem 0.4rem rgb(0 0 0 / 42%));
 }
 
 #homelabStreamingHub .open-label {
-  border-color: rgb(184 148 75 / 34%) !important;
+  flex: 0 0 auto;
+  padding: 0.25rem 0.45rem;
+  border: 1px solid rgb(184 148 75 / 34%) !important;
+  border-radius: 999px;
   background-color: rgb(234 217 174 / 10%) !important;
   color: var(--harbor-parchment-200) !important;
+  font-size: 0.75rem;
+  letter-spacing: 0.035em;
   text-shadow: none !important;
 }
 
@@ -1380,6 +1398,16 @@ body:has(#slides-container) .homeSectionsContainer {
   border-color: rgb(211 184 115 / 54%) !important;
   background-color: rgb(184 148 75 / 18%) !important;
   color: var(--harbor-parchment-100) !important;
+}
+
+@media (max-width: 34rem) {
+  #homelabStreamingHub .stream-row {
+    grid-template-columns: 1fr;
+  }
+
+  #homelabStreamingHub .stream-card {
+    min-height: 4rem;
+  }
 }
 
 @media (forced-colors: active) {
