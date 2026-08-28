@@ -159,9 +159,11 @@ body {
 }
 
 body:has(#slides-container) .homeSectionsContainer {
-  border-radius: var(--harbor-radius-lg) var(--harbor-radius-lg) 0 0;
+  border-radius: 0.2rem 0.2rem 0 0;
   box-shadow:
-    0 -1.5rem 2.75rem rgb(7 19 28 / 46%),
+    0 -4.5rem 5.5rem -3.75rem rgb(234 217 174 / 64%),
+    0 -2rem 3.2rem -2.25rem rgb(7 19 28 / 88%),
+    inset 0 0.125rem 0 rgb(242 229 194 / 28%),
     var(--harbor-papyrus-edge);
 }
 
@@ -201,7 +203,8 @@ body:has(#slides-container) .homeSectionsContainer {
   transition:
     border-color var(--harbor-motion-duration-fast) var(--harbor-motion-easing-standard),
     color var(--harbor-motion-duration-fast) var(--harbor-motion-easing-standard),
-    background-color var(--harbor-motion-duration-fast) var(--harbor-motion-easing-standard);
+    background-color var(--harbor-motion-duration-fast) var(--harbor-motion-easing-standard),
+    box-shadow var(--harbor-motion-duration-fast) var(--harbor-motion-easing-standard);
 }
 
 .emby-tab-button:hover {
@@ -213,9 +216,15 @@ body:has(#slides-container) .homeSectionsContainer {
   background-color: rgb(184 148 75 / 14%);
 }
 
-:where(.emby-tab-button-active, .emby-tab-button[aria-selected="true"]) {
-  border-block-end-color: var(--harbor-brass-500);
-  color: var(--harbor-focus);
+.emby-tab-button.emby-tab-button-active,
+.emby-tab-button[aria-selected="true"] {
+  border-block-end-color: var(--harbor-brass-500) !important;
+  background-color: rgb(12 29 41 / 88%) !important;
+  color: var(--harbor-focus) !important;
+  box-shadow:
+    inset 0 -0.125rem 0 var(--harbor-brass-500),
+    0 0 0 1px rgb(184 148 75 / 22%) !important;
+  text-shadow: 0 0 0.6rem rgb(242 213 138 / 18%);
 }
 
 .mainDrawer {
@@ -243,10 +252,133 @@ body:has(#slides-container) .homeSectionsContainer {
   background-color: rgb(184 148 75 / 16%);
 }
 
-:where(.navMenuOption-selected, .navMenuOption[aria-current="page"]) {
-  border-inline-start-color: var(--harbor-brass-500);
-  background-color: rgb(184 148 75 / 12%);
-  color: var(--harbor-focus);
+.navMenuOption.navMenuOption-selected,
+.navMenuOption[aria-current="page"] {
+  border-inline-start-color: var(--harbor-brass-500) !important;
+  background-color: rgb(184 148 75 / 12%) !important;
+  color: var(--harbor-focus) !important;
+  box-shadow: inset 0.125rem 0 0 var(--harbor-brass-500);
+}
+:root {
+  --harbor-brand-signal: #e50914;
+}
+
+.headerLogo img,
+.headerLogo-withBackground img,
+.logoImage,
+.headerLogo svg {
+  display: none !important;
+}
+
+.headerLogo::after,
+.headerLogo-withBackground::after {
+  display: none !important;
+}
+
+:not(.osdHeader) .pageTitle,
+:not(.osdHeader) .pageTitleWithDefaultLogo,
+:not(.osdHeader) .pageTitleWithLogo {
+  display: inline-flex !important;
+  visibility: visible !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  min-width: max-content !important;
+  min-height: 2.375rem !important;
+  overflow: visible !important;
+  background: none !important;
+  font-size: 0 !important;
+  line-height: 1 !important;
+  animation: none !important;
+  filter: none !important;
+  text-shadow: none !important;
+  box-shadow: none !important;
+}
+
+:not(.osdHeader) .pageTitle > *,
+:not(.osdHeader) .pageTitleWithDefaultLogo > *,
+:not(.osdHeader) .pageTitleWithLogo > * {
+  display: none !important;
+}
+
+:not(.osdHeader) .pageTitle::before,
+:not(.osdHeader) .pageTitleWithDefaultLogo::before,
+:not(.osdHeader) .pageTitleWithLogo::before {
+  content: "" !important;
+  display: inline-block !important;
+  width: 0 !important;
+  height: 0 !important;
+  border-block: 0.4375rem solid transparent !important;
+  border-inline-start: 0.75rem solid var(--harbor-brand-signal) !important;
+  margin-inline-end: 0.5625rem !important;
+  filter: drop-shadow(0 0 0.42rem rgb(229 9 20 / 34%)) !important;
+}
+
+:not(.osdHeader) .pageTitle::after,
+:not(.osdHeader) .pageTitleWithDefaultLogo::after,
+:not(.osdHeader) .pageTitleWithLogo::after {
+  content: "ElganFlix" !important;
+  display: inline-block !important;
+  color: var(--harbor-parchment-100) !important;
+  font-family: var(--harbor-font-display);
+  font-size: 1.125rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.06em !important;
+  white-space: nowrap !important;
+  text-shadow: 0 0.125rem 0.5rem rgb(0 0 0 / 58%) !important;
+}
+
+.osdHeader .pageTitle,
+.osdHeader .pageTitleWithDefaultLogo,
+.osdHeader .pageTitleWithLogo {
+  display: flex !important;
+  visibility: visible !important;
+  min-width: unset !important;
+  min-height: unset !important;
+  background: unset !important;
+  font-size: unset !important;
+  animation: none !important;
+  filter: none !important;
+}
+
+.osdHeader .pageTitle > *,
+.osdHeader .pageTitleWithDefaultLogo > *,
+.osdHeader .pageTitleWithLogo > * {
+  display: unset !important;
+}
+
+.osdHeader .pageTitle::before,
+.osdHeader .pageTitle::after,
+.osdHeader .pageTitleWithDefaultLogo::before,
+.osdHeader .pageTitleWithDefaultLogo::after,
+.osdHeader .pageTitleWithLogo::before,
+.osdHeader .pageTitleWithLogo::after {
+  content: none !important;
+  display: none !important;
+}
+
+.skinHeader {
+  backdrop-filter: blur(0.625rem);
+  -webkit-backdrop-filter: blur(0.625rem);
+  border-block-end-color: rgb(184 148 75 / 28%);
+}
+
+.headerUserButton {
+  border: 1px solid rgb(184 148 75 / 44%) !important;
+  border-radius: 50% !important;
+  box-shadow: 0 0 0 transparent;
+  transition:
+    border-color var(--harbor-motion-duration-fast) var(--harbor-motion-easing-standard),
+    box-shadow var(--harbor-motion-duration-fast) var(--harbor-motion-easing-standard);
+}
+
+.headerUserButton:hover {
+  border-color: var(--harbor-brass-300) !important;
+  box-shadow: 0 0 0.875rem rgb(184 148 75 / 24%);
+}
+
+.headerUserButton:focus-visible {
+  outline: 0.125rem solid var(--harbor-focus);
+  outline-offset: 0.125rem;
 }
 .card {
   color: var(--harbor-map-ink);
@@ -782,10 +914,18 @@ body:has(#slides-container) .homeSectionsContainer {
 
 #itemDetailPage .detailRibbon {
   background:
-    linear-gradient(180deg, rgb(7 19 28 / 58%), rgb(7 19 28 / 96%)),
+    linear-gradient(180deg, rgb(7 19 28 / 52%), rgb(7 19 28 / 96%)),
+    radial-gradient(circle at 82% 34%, rgb(184 148 75 / 12%), transparent 24%),
+    url("./assets/cartography/flourish.svg"),
     var(--harbor-navy-950);
+  background-repeat: no-repeat, no-repeat, no-repeat, no-repeat;
+  background-position: center, center, 96% 72%, center;
+  background-size: cover, cover, 11rem auto, cover;
+  border-block: 1px solid rgb(184 148 75 / 28%);
   color: var(--harbor-parchment-100);
-  box-shadow: 0 0.6rem 1.4rem rgb(0 0 0 / 28%);
+  box-shadow:
+    0 0.6rem 1.4rem rgb(0 0 0 / 28%),
+    inset 0 -1px 0 rgb(211 184 115 / 18%);
 }
 
 #itemDetailPage .detailRibbon :where(
@@ -799,26 +939,115 @@ body:has(#slides-container) .homeSectionsContainer {
   color: inherit;
 }
 
+#itemDetailPage .itemName {
+  color: var(--harbor-parchment-100);
+  font-family: var(--harbor-font-display);
+  font-weight: 700;
+  letter-spacing: 0.035em;
+  text-shadow:
+    0 0.125rem 0.5rem rgb(0 0 0 / 68%),
+    0 0 1.2rem rgb(184 148 75 / 12%);
+}
+
+#itemDetailPage .parentName {
+  color: var(--harbor-brass-300);
+  letter-spacing: 0.04em;
+}
+
+#itemDetailPage .mediaInfoItem {
+  border-radius: 999px;
+  background-color: rgb(184 148 75 / 12%);
+  color: var(--harbor-parchment-100);
+  box-shadow: 0 0 0 0.12rem rgb(184 148 75 / 26%);
+  font-weight: 650;
+  letter-spacing: 0.025em;
+}
+
 #itemDetailPage .detailImageContainer .card {
   color: var(--harbor-parchment-100);
 }
 
 #itemDetailPage .detailPagePrimaryContent {
-  background:
-    linear-gradient(180deg, rgb(7 19 28 / 98%), rgb(12 29 41 / 94%)),
-    var(--harbor-navy-950);
+  background-color: var(--harbor-navy-950);
+  background-image:
+    radial-gradient(circle at 78% 18%, rgb(184 148 75 / 8%), transparent 25%),
+    url("./assets/cartography/route.svg"),
+    linear-gradient(180deg, rgb(7 19 28 / 98%), rgb(12 29 41 / 95%));
+  background-repeat: no-repeat, no-repeat, no-repeat;
+  background-position: center, 94% 15%, center;
+  background-size: cover, 20rem auto, cover;
   color: var(--harbor-parchment-100);
+  box-shadow:
+    inset 0 1px 0 rgb(211 184 115 / 12%),
+    inset 0 -1px 0 rgb(0 0 0 / 48%);
 }
 
-#itemDetailPage .overview,
-#itemDetailPage .itemDetailsGroup {
+#itemDetailPage .detailPagePrimaryContent .sectionTitle {
+  border-block-end: 1px solid rgb(184 148 75 / 30%);
+  background-image: linear-gradient(90deg, var(--harbor-brass-500), transparent 42%);
+  background-repeat: no-repeat;
+  background-position: left bottom;
+  background-size: 9rem 0.125rem;
+  color: var(--harbor-brass-300);
+  font-family: var(--harbor-font-display);
+  letter-spacing: 0.045em;
+  text-shadow: 0 0.125rem 0.4rem rgb(0 0 0 / 48%);
+}
+
+#itemDetailPage .overview {
+  border-inline-start: 0.18rem solid rgb(184 148 75 / 64%);
+  border-radius: var(--harbor-radius-sm);
+  background:
+    linear-gradient(90deg, rgb(184 148 75 / 8%), rgb(12 29 41 / 18%) 48%, transparent),
+    url("./assets/cartography/flourish.svg");
+  background-repeat: no-repeat, no-repeat;
+  background-position: center, 98% 94%;
+  background-size: cover, 9rem auto;
+  color: var(--harbor-parchment-100);
+  box-shadow:
+    inset 0 0 0 1px rgb(234 217 174 / 7%),
+    0 0.6rem 1.5rem rgb(0 0 0 / 16%);
   line-height: 1.65;
   overflow-wrap: anywhere;
 }
 
+#itemDetailPage .itemDetailsGroup {
+  border-block-start: 1px solid rgb(184 148 75 / 20%);
+  background-color: rgb(7 19 28 / 30%);
+  color: var(--harbor-parchment-200);
+  box-shadow: inset 0 1px 0 rgb(234 217 174 / 4%);
+  line-height: 1.65;
+  overflow-wrap: anywhere;
+}
+
+#itemDetailPage .mainDetailButtons :where(.button-submit, .button-flat) {
+  border-color: rgb(184 148 75 / 42%);
+  box-shadow: 0 0.35rem 0.9rem rgb(0 0 0 / 22%);
+}
+
+#itemDetailPage .mainDetailButtons .button-submit {
+  background-color: var(--harbor-parchment-100);
+  color: var(--harbor-ink-900);
+}
+
+#itemDetailPage .mainDetailButtons .button-flat {
+  background-color: rgb(7 19 28 / 54%);
+  color: var(--harbor-parchment-100);
+}
+
 #itemDetailPage .detailPageSecondaryContainer {
   background-color: var(--harbor-map-paper);
+  background-image:
+    url("./assets/cartography/chart-grid.svg"),
+    url("./assets/cartography/route.svg"),
+    var(--harbor-papyrus-image);
+  background-repeat: repeat, no-repeat, var(--harbor-papyrus-repeat);
+  background-position: 0 0, 94% 5%, 0 0;
+  background-size: 18rem 18rem, 23rem auto, var(--harbor-papyrus-size);
   color: var(--harbor-map-ink);
+  box-shadow:
+    inset 0 1.4rem 2.5rem -2rem rgb(7 19 28 / 52%),
+    var(--harbor-papyrus-edge);
 }
 
 #itemDetailPage .detailPageContent {
@@ -831,6 +1060,16 @@ body:has(#slides-container) .homeSectionsContainer {
   .cardText
 ) {
   color: var(--harbor-map-ink);
+}
+
+#itemDetailPage .detailPageSecondaryContainer .sectionTitle {
+  border-block-end: 1px solid rgb(120 82 43 / 28%);
+  background-image: linear-gradient(90deg, rgb(120 82 43 / 58%), transparent 44%);
+  background-repeat: no-repeat;
+  background-position: left bottom;
+  background-size: 8rem 0.125rem;
+  font-family: var(--harbor-font-display);
+  letter-spacing: 0.035em;
 }
 .loginPage {
   display: grid;
@@ -1060,6 +1299,9 @@ body:has(#slides-container) .homeSectionsContainer {
 }#slides-container {
   background-color: var(--harbor-navy-950);
   color: var(--harbor-parchment-100);
+  box-shadow:
+    inset 0 -7rem 6.5rem -4.5rem rgb(7 19 28 / 92%),
+    inset 0 1px 0 rgb(234 217 174 / 8%);
 }
 
 #slides-container .backdrop {
@@ -1073,9 +1315,15 @@ body:has(#slides-container) .homeSectionsContainer {
 #slides-container .backdrop-overlay,
 #slides-container .gradient-overlay {
   background-image:
-    linear-gradient(90deg, rgb(7 19 28 / 86%) 0 18%, rgb(7 19 28 / 34%) 58%, transparent),
-    linear-gradient(0deg, var(--harbor-navy-950), transparent 44%);
+    radial-gradient(circle at 72% 22%, transparent 0 28%, rgb(7 19 28 / 12%) 68%, rgb(7 19 28 / 54%)),
+    linear-gradient(90deg, rgb(7 19 28 / 88%) 0 17%, rgb(7 19 28 / 38%) 56%, transparent 78%),
+    linear-gradient(0deg, rgb(7 19 28 / 96%) 0, rgb(7 19 28 / 58%) 19%, transparent 48%);
   pointer-events: none;
+}
+
+#slides-container :where(.genre, .plot-container) {
+  color: var(--harbor-parchment-200);
+  text-shadow: 0 0.125rem 0.5rem rgb(0 0 0 / 72%);
 }
 
 #slides-container .logo-title-fallback,
@@ -1085,14 +1333,18 @@ body:has(#slides-container) .homeSectionsContainer {
   font-weight: 700;
   line-height: 1.05;
   overflow-wrap: anywhere;
+  text-shadow:
+    0 0.15rem 0.65rem rgb(0 0 0 / 74%),
+    0 0 1.4rem rgb(184 148 75 / 10%);
 }
 
 #slides-container :where(.play-button, .trailer-button, .detail-button, .favorite-button) {
   min-width: 2.5rem;
   min-height: 2.5rem;
-  border: 1px solid rgb(234 217 174 / 44%);
-  background-color: rgb(234 217 174 / 92%);
+  border: 1px solid rgb(211 184 115 / 58%);
+  background-color: rgb(234 217 174 / 94%);
   color: var(--harbor-ink-900);
+  box-shadow: 0 0.4rem 1rem rgb(0 0 0 / 28%);
 }
 
 #slides-container :where(.play-button, .trailer-button) {
@@ -1103,6 +1355,14 @@ body:has(#slides-container) .homeSectionsContainer {
   border-radius: 50%;
 }
 
+#slides-container :where(.play-button, .trailer-button, .detail-button, .favorite-button):hover {
+  border-color: var(--harbor-brass-300);
+  background-color: var(--harbor-parchment-100);
+  box-shadow:
+    0 0.4rem 1rem rgb(0 0 0 / 32%),
+    0 0 0 1px rgb(184 148 75 / 22%);
+}
+
 #slides-container :where(.play-button, .trailer-button, .detail-button, .favorite-button):focus-visible {
   outline: 0.125rem solid var(--harbor-focus);
   outline-offset: 0.125rem;
@@ -1111,7 +1371,7 @@ body:has(#slides-container) .homeSectionsContainer {
 
 #slides-container .loading {
   border-color: rgb(234 217 174 / 24%);
-  border-block-start-color: var(--harbor-focus);
+  border-block-start-color: var(--harbor-brass-300);
 }
 
 #slides-container .arrow,
@@ -1125,9 +1385,12 @@ body:has(#slides-container) .homeSectionsContainer {
   color: var(--harbor-parchment-100);
 }
 
-#slides-container .arrow {
-  border: 1px solid rgb(234 217 174 / 52%);
+#slides-container .arrow,
+#slides-container .pause-button,
+#slides-container .mute-button {
+  border: 1px solid rgb(211 184 115 / 42%);
   background-color: rgb(7 19 28 / 62%);
+  box-shadow: 0 0.3rem 0.8rem rgb(0 0 0 / 26%);
 }
 
 #slides-container .pause-button,
@@ -1136,7 +1399,8 @@ body:has(#slides-container) .homeSectionsContainer {
 }
 
 #slides-container .dot.active {
-  color: var(--harbor-focus);
+  color: var(--harbor-brass-300);
+  text-shadow: 0 0 0.5rem rgb(211 184 115 / 28%);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1155,6 +1419,70 @@ body:has(#slides-container) .homeSectionsContainer {
   #slides-container .mute-button,
   #slides-container .dot {
     border-color: ButtonText;
+  }
+}
+#homelabStreamingHub {
+  color: var(--harbor-map-ink);
+}
+
+#homelabStreamingHub :where(.stream-title, .stream-header) {
+  color: var(--harbor-map-ink) !important;
+  font-family: var(--harbor-font-display);
+  letter-spacing: 0.035em;
+  text-shadow: none !important;
+}
+
+#homelabStreamingHub .stream-card {
+  border-color: rgb(184 148 75 / 54%) !important;
+  background-color: var(--harbor-navy-900) !important;
+  background-image:
+    linear-gradient(155deg, rgb(12 29 41 / 94%), rgb(7 19 28 / 98%)),
+    url("./assets/parchment/fibers.svg") !important;
+  color: var(--harbor-parchment-100) !important;
+  box-shadow:
+    inset 0 0 0 1px rgb(234 217 174 / 6%),
+    0 0.55rem 1.25rem rgb(42 33 24 / 22%) !important;
+}
+
+#homelabStreamingHub .stream-card:hover {
+  border-color: var(--harbor-brass-300) !important;
+  box-shadow:
+    inset 0 0 0 1px rgb(234 217 174 / 10%),
+    0 0.75rem 1.6rem rgb(42 33 24 / 28%),
+    0 0 0 1px rgb(184 148 75 / 18%) !important;
+}
+
+#homelabStreamingHub .stream-card:focus-visible {
+  outline: 0.15rem solid var(--harbor-focus) !important;
+  outline-offset: 0.16rem !important;
+  border-color: var(--harbor-brass-300) !important;
+}
+
+#homelabStreamingHub .service-logo {
+  opacity: 1 !important;
+  filter: drop-shadow(0 0.2rem 0.4rem rgb(0 0 0 / 42%));
+}
+
+#homelabStreamingHub .open-label {
+  border-color: rgb(184 148 75 / 34%) !important;
+  background-color: rgb(234 217 174 / 10%) !important;
+  color: var(--harbor-parchment-200) !important;
+  text-shadow: none !important;
+}
+
+#homelabStreamingHub .stream-card:hover .open-label,
+#homelabStreamingHub .stream-card:focus-visible .open-label {
+  border-color: rgb(211 184 115 / 54%) !important;
+  background-color: rgb(184 148 75 / 18%) !important;
+  color: var(--harbor-parchment-100) !important;
+}
+
+@media (forced-colors: active) {
+  #homelabStreamingHub .stream-card,
+  #homelabStreamingHub .open-label {
+    border-color: ButtonText !important;
+    background: Canvas !important;
+    color: CanvasText !important;
   }
 }
 @media (width <= 599px) {
