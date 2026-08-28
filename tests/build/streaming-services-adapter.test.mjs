@@ -42,6 +42,17 @@ test("Harbor supplies complete responsive layout for its custom Streaming Servic
   assert.match(css, /@media\s*\(max-width:/u);
 });
 
+test("Streaming Services cards stay compact instead of stretching into billboards", async () => {
+  const css = await readRepositoryFile("src/css/integrations/streaming-services.css");
+  const rowBlock = css.match(/#homelabStreamingHub\s+\.stream-row\s*\{([^}]*)\}/su)?.[1] ?? "";
+  const cardBlock = css.match(/#homelabStreamingHub\s+\.stream-card\s*\{([^}]*)\}/su)?.[1] ?? "";
+
+  assert.doesNotMatch(rowBlock, /\b1fr\b/u);
+  assert.match(rowBlock, /grid-template-columns:\s*repeat\(auto-fit,\s*minmax\([^,]+,\s*14rem\)\)/u);
+  assert.match(rowBlock, /justify-content:\s*start/u);
+  assert.match(cardBlock, /min-height:\s*4rem/u);
+});
+
 test("README keeps Core CSS-only while documenting the optional JavaScript Injector adapter", async () => {
   const readme = await readRepositoryFile("README.md");
 
