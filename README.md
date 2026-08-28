@@ -2,7 +2,7 @@
 
 The Harbor is an original treasure-map theme for Jellyfin 10.11.x web clients. Core remains CSS-only: browsing surfaces use aged parchment and restrained cartography, navigation stays dark timber and navy, and full-color media cards sit inside thin brass-and-timber frames. Details pages and the optional Media Bar Enhanced hero remain cinematic, while playback stays dark and unobstructed. An optional JavaScript Injector adapter is available only for the custom Streaming Services home section.
 
-This project remains a release candidate. Automated fixture and Windows Chromium gates and owner-operated Jellyfin validation are required before a stable release.
+This project is in Core v1 release-candidate preparation. Automated gates and owner-operated Jellyfin validation are required before a stable `v1.0.0` release. `main` is not the authoritative stable install target until that promotion occurs.
 
 ## Visual model
 
@@ -12,21 +12,17 @@ This project remains a release candidate. Automated fixture and Windows Chromium
 - Details and Media Bar Enhanced use dark cinematic artwork regions that transition back into map browsing content.
 - The player remains dark and receives no treasure-map decoration over video.
 
-## Install
+## Install during release-candidate testing
 
-In Jellyfin Dashboard, open General, then Custom CSS, and add:
-
-```css
-@import url("https://cdn.jsdelivr.net/gh/NerdyPorcupine-Squared/the-harbor@main/theme.css");
-```
-
-Save, then perform a hard refresh in each web client.
-
-For release-candidate testing, use the immutable commit supplied with the candidate instead of `main`:
+There is no stable v1 install URL yet. Use only the immutable commit SHA supplied for the candidate being tested:
 
 ```css
 @import url("https://cdn.jsdelivr.net/gh/NerdyPorcupine-Squared/the-harbor@COMMIT_SHA/theme.css");
 ```
+
+Do not use a moving `@main` or branch URL as release-validation evidence. Save the Custom CSS change, then perform a hard refresh in each web client.
+
+After Core v1 is approved and tagged, the recommended stable install will be version-pinned to `@v1.0.0/theme.css`.
 
 ## Optional Streaming Services adapter
 
@@ -38,7 +34,9 @@ The adapter is optional. Without it, Harbor Core remains fully usable and Jellyf
 
 ## Update
 
-The stable `main` import receives updates only when a tested candidate is promoted. Hard-refresh the client after an update. For a controlled update, replace the old commit SHA with the newly published candidate SHA. If you use the optional Streaming Services adapter, replace its JavaScript with the copy from that same commit.
+During RC testing, replace the old immutable commit SHA only when a new candidate is explicitly frozen. If you use the optional Streaming Services adapter, replace its JavaScript with the copy from that same commit.
+
+After `v1.0.0` is released, stable installs should remain version-pinned and move to a newer release tag deliberately rather than following a moving branch.
 
 ## Media Bar Enhanced
 
@@ -50,7 +48,7 @@ Delete the Harbor `@import` line from Jellyfin Custom CSS, save, and hard-refres
 
 ## Rollback
 
-Replace the current import with a previously tested immutable commit SHA. A commit-pinned URL is preferable to browser-cache workarounds because it identifies the exact stylesheet being tested. If you use the optional adapter, roll its JavaScript back to the same commit.
+Replace the current import with a previously tested immutable commit SHA or, after stable release, a previously tested version tag. A pinned URL is preferable to browser-cache workarounds because it identifies the exact stylesheet being tested. If you use the optional adapter, roll its JavaScript back to the same commit.
 
 ## Troubleshooting
 
@@ -67,14 +65,14 @@ Replace the current import with a previously tested immutable commit SHA. A comm
 Use Node.js 20 or later:
 
 ```text
-npm install
+npm ci
 npx playwright install chromium
-npm run verify:core
-npm run test:visual
-npm run check:publication
+npm run verify:release
 ```
 
 Edit modular files under `src/css/` and run `npm run build:css`. Never hand-edit the generated root `theme.css`.
+
+The release operating procedure is documented in `docs/release/core-v1-rc-process.md`.
 
 ## License
 
