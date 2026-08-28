@@ -66,6 +66,16 @@ test("compatibility docs separate automated and real-server evidence", async () 
   assert.doesNotMatch(matrix, /\bPass(?:ed)?\b/iu);
 });
 
+test("release process keeps candidate evidence external and promotion payload unchanged", async () => {
+  const processDoc = await readRepositoryFile("docs/release/core-v1-rc-process.md");
+
+  assert.match(processDoc, /validation ledger/iu);
+  assert.match(processDoc, /GitHub issue/iu);
+  assert.match(processDoc, /do not record the frozen SHA inside the frozen candidate/iu);
+  assert.match(processDoc, /git diff --exit-code <FROZEN_SHA>\.\.HEAD -- theme\.css src\/css assets integrations/iu);
+  assert.match(processDoc, /documentation-only promotion commit/iu);
+});
+
 test("CI runs clean Windows build, publication, Chromium, and release-drift gates", async () => {
   const workflow = await readRepositoryFile(".github/workflows/ci.yml");
 
