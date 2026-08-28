@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Jellyfin 10.11.11 runtime player probe</title>
+  <style>
+    * { box-sizing: content-box; }
+    html, body { margin: 0; width: 100%; height: 100%; background: #000; }
+    body { overflow: hidden; }
+    .videoPlayerContainer { position: fixed; inset: 0; display: flex; align-items: center; background: #000; }
+    .htmlvideoplayer { display: block; width: 100%; height: 100%; object-fit: contain; }
+    .mainAnimatedPage { position: absolute; inset: 0; }
+    .page { padding-bottom: 5em; }
+    .libraryPage { padding-top: 7.5em; }
+    .videoOsdBottom { position: fixed; right: 0; bottom: 0; left: 0; color: #fff; }
+  </style>
+  <link rel="stylesheet" href="../../../../theme.css">
+</head>
+<body class="libraryDocument hide-scroll mouseIdle">
+  <div class="videoPlayerContainer" dir="ltr">
+    <video class="htmlvideoplayer" preload="metadata" autoplay playsinline aria-label="Runtime video surface"></video>
+  </div>
+  <div id="videoOsdPage" data-role="page" class="page libraryPage mainAnimatedPage" data-backbutton="true" data-type="video-osd" data-properties="fullscreen">
+    <div class="syncPlayContainer"></div>
+    <div class="upNextContainer hide"></div>
+    <div class="videoOsdBottom videoOsdBottom-maincontrols">
+      <div class="osdControls">
+        <button class="btnPause paper-icon-button-light" type="button" aria-label="Pause">Pause</button>
+        <button class="btnSubtitles paper-icon-button-light" type="button" aria-label="Subtitles">CC</button>
+        <button class="btnFullscreen paper-icon-button-light" type="button" aria-label="Fullscreen">Full</button>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
