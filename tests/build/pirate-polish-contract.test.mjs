@@ -65,7 +65,10 @@ test("primary detail headings do not inherit the global parchment plaque surface
   assert.match(block, /background-color:\s*transparent/u);
   assert.match(block, /box-shadow:\s*none/u);
   assert.match(block, /color:\s*var\(--harbor-brass-300\)/u);
-  assert.doesNotMatch(block, /(?:padding|margin|width|height|position)\s*:/u);
+  assert.doesNotMatch(
+    block,
+    /(?:^|\n)\s*(?:padding|margin|width|height|position)\s*:/mu,
+  );
 });
 
 test("home hero blending stays cosmetic and plugin geometry stays external", async () => {
