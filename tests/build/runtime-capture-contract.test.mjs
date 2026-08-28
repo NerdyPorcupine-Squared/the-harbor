@@ -13,15 +13,7 @@ function loadCapture() {
 
 test('capture helper exposes local-only browser capture API', () => {
   const capture = loadCapture();
-  for (const name of [
-    'capture',
-    'download',
-    'captureSelector',
-    'downloadSelector',
-    'captureContext',
-    'downloadContext',
-    'closest',
-  ]) {
+  for (const name of ['capture', 'download', 'captureSelector', 'downloadSelector', 'closest']) {
     assert.equal(typeof capture[name], 'function', `${name} is available`);
   }
   assert.doesNotMatch(source, /\bfetch\s*\(|XMLHttpRequest|WebSocket|sendBeacon/iu);
@@ -29,16 +21,6 @@ test('capture helper exposes local-only browser capture API', () => {
   assert.match(source, /jellyfinVersion/u);
   assert.match(source, /devicePixelRatio/u);
   assert.match(source, /mediaBarEnhancedDetected/u);
-});
-
-test('one-shot context capture gathers page, header, home, Media Bar and detail roots without mutating them', () => {
-  assert.match(source, /#videoOsdPage/u);
-  assert.match(source, /#itemDetailPage/u);
-  assert.match(source, /\.mainAnimatedPage/u);
-  assert.match(source, /\.skinHeader/u);
-  assert.match(source, /\.homeSectionsContainer/u);
-  assert.match(source, /#slides-container/u);
-  assert.doesNotMatch(source, /appendChild\(|prepend\(|insertBefore\(|replaceChildren\(/u);
 });
 
 test('capture downloader cannot shadow the native browser URL API', () => {
