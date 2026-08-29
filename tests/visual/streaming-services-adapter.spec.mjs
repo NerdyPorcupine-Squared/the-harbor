@@ -28,22 +28,27 @@ async function expectRequestedOrder(page) {
   await expect(page.locator("#homelabStreamingHub")).toHaveCount(1);
 }
 
-test("Streaming Services adapter preserves requested Home hierarchy through rerenders", async ({ page }) => {
-  await page.goto(fixtureUrl);
-
+async function prepareNativeHomeSections(page) {
   await page.evaluate(() => {
     const container = document.querySelector(".homeSectionsContainer");
     const resumeSection = container.firstElementChild;
     resumeSection.id = "resume-native";
     resumeSection.classList.add("verticalSection");
-    resumeSection.querySelector(".sectionTitle").textContent = "Continue Watching";
+    const resumeHeading = resumeSection.querySelector(".sectionTitle");
+    resumeHeading.textContent = "Continue Watching";
+    const resumeTitleContainer = document.createElement("div");
+    resumeTitleContainer.className = "sectionTitleContainer sectionTitleContainer-cards";
+    resumeHeading.replaceWith(resumeTitleContainer);
+    resumeTitleContainer.append(resumeHeading);
     resumeSection.querySelector(".itemsContainer").dataset.monitor = "videoplayback";
 
     const myMediaSection = document.createElement("section");
     myMediaSection.id = "my-media-native";
     myMediaSection.className = "homeSection verticalSection";
     myMediaSection.innerHTML = `
-      <h2 class="sectionTitle">My Media</h2>
+      <div class="sectionTitleContainer sectionTitleContainer-cards">
+        <h2 class="sectionTitle">My Media</h2>
+      </div>
       <div class="itemsContainer">
         <a class="card" href="#movies">Movies</a>
         <a class="card" href="#shows">TV Shows</a>
@@ -53,12 +58,21 @@ test("Streaming Services adapter preserves requested Home hierarchy through rere
     const latestSection = document.createElement("section");
     latestSection.id = "latest-native";
     latestSection.className = "homeSection verticalSection";
-    latestSection.innerHTML = '<h2 class="sectionTitle">Latest</h2><div class="itemsContainer"></div>';
+    latestSection.innerHTML = `
+      <div class="sectionTitleContainer sectionTitleContainer-cards">
+        <h2 class="sectionTitle padded-left">Latest</h2>
+      </div>
+      <div class="itemsContainer"></div>
+    `;
 
     container.prepend(myMediaSection);
     container.append(latestSection);
   });
+}
 
+test("Streaming Services adapter preserves requested Home hierarchy through rerenders", async ({ page }) => {
+  await page.goto(fixtureUrl);
+  await prepareNativeHomeSections(page);
   await page.addScriptTag({ content: adapterSource });
 
   await expectRequestedOrder(page);
@@ -87,4 +101,36 @@ test("Streaming Services adapter preserves requested Home hierarchy through rere
 
   await expect.poll(async () => page.locator("#homelabStreamingHub").count()).toBe(1);
   await expectRequestedOrder(page);
+});
+
+test("Streaming Services cards and native Home headings carry the requested visual weight", async ({ page }, testInfo) => {
+  await page.goto(fixtureUrl);
+  await prepareNativeHomeSections(page);
+  await page.addScriptTag({ content: adapterSource });
+  await expectRequestedOrder(page);
+
+  const streamCard = page.locator("#homelabStreamingHub .stream-card").first();
+  const cardBox = await streamCard.boundingBox();
+  expect(cardBox).not.toBeNull();
+  expect(cardBox.height).toBeGreaterThanOrEqual(testInfo.project.name === "mobile" ? 72 : 84);
+  if (testInfo.project.name === "desktop") {
+    expect(cardBox.width).toBeGreaterThanOrEqual(280);
+  }
+
+  const logoFontSize = await streamCard.locator(".service-logo").evaluate((element) =>
+    Number.parseFloat(getComputedStyle(element).fontSize),
+  );
+  expect(logoFontSize).toBeGreaterThanOrEqual(17);
+
+  for (const sectionId of ["my-media-native", "resume-native"]) {
+    const title = page.locator(`#${sectionId} .sectionTitle`);
+    const titleBox = await title.boundingBox();
+    expect(titleBox).not.toBeNull();
+    expect(titleBox.x).toBeGreaterThanOrEqual(16);
+
+    const radius = await title.evaluate((element) =>
+      Number.parseFloat(getComputedStyle(element).borderTopLeftRadius),
+    );
+    expect(radius).toBeGreaterThanOrEqual(100);
+  }
 });
