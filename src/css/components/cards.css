@@ -5,21 +5,24 @@
 .cardScalable {
   border-radius: var(--harbor-radius-md);
   box-shadow:
-    0 0 0 1px rgb(184 148 75 / 44%),
-    0 0.35rem 1rem rgb(42 33 24 / 28%);
+    0 0 0 1px rgb(42 33 24 / 82%),
+    0 0 0 2px rgb(184 148 75 / 68%),
+    0 0.45rem 1.1rem rgb(42 33 24 / 32%);
   transition: box-shadow var(--harbor-motion-duration-fast) var(--harbor-motion-easing-standard);
 }
 
 :where(.card:focus-within, .card.selected) .cardScalable {
   box-shadow:
-    0 0 0 2px rgb(184 148 75 / 78%),
-    0 0.6rem 1.25rem rgb(0 0 0 / 34%);
+    0 0 0 1px rgb(42 33 24 / 92%),
+    0 0 0 3px rgb(184 148 75 / 88%),
+    0 0.7rem 1.35rem rgb(0 0 0 / 38%);
 }
 
 .card:hover .cardScalable {
   box-shadow:
-    0 0 0 1px rgb(184 148 75 / 72%),
-    0 0.6rem 1.25rem rgb(42 33 24 / 36%);
+    0 0 0 1px rgb(42 33 24 / 88%),
+    0 0 0 2px rgb(184 148 75 / 84%),
+    0 0.65rem 1.3rem rgb(42 33 24 / 38%);
 }
 
 .cardImageContainer {
