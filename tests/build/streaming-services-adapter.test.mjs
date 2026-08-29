@@ -71,13 +71,14 @@ test("Streaming Services cards have substantial Home-page presence without becom
   assert.match(logoBlock, /font-size:\s*1\.1rem/u);
 });
 
-test("README keeps Core CSS-only while documenting the optional JavaScript Injector adapter", async () => {
+test("README makes one combined Home injector the release-candidate validation path", async () => {
   const readme = await readRepositoryFile("README.md");
 
   assert.match(readme, /Core remains CSS-only/iu);
-  assert.match(readme, /Streaming Services/iu);
-  assert.match(readme, /JavaScript Injector/iu);
-  assert.match(readme, /integrations\/streaming-services\.js/u);
-  assert.match(readme, /Continue Watching/iu);
-  assert.match(readme, /optional/iu);
+  assert.match(readme, /Recommended Home Enhancements injector/iu);
+  assert.match(readme, /integrations\/home-enhancements\.js/u);
+  assert.match(readme, /one JavaScript Injector entry/iu);
+  assert.match(readme, /Do not run the combined injector alongside either standalone adapter/iu);
+  assert.match(readme, /data-harbor-streaming-services/u);
+  assert.match(readme, /data-harbor-global-nav/u);
 });
