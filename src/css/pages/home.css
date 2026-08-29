@@ -2,7 +2,11 @@
   color: var(--harbor-map-ink);
 }
 
-.sectionTitleContainer-cards > .sectionTitle:not(.padded-left) {
+.homeSectionsContainer > .verticalSection > .sectionTitle.sectionTitle-cards,
+.homeSectionsContainer
+  > .verticalSection
+  > .sectionTitleContainer-cards
+  .sectionTitle.sectionTitle-cards {
   margin-inline-start: var(--harbor-space-4);
   border-radius: 999px;
 }
