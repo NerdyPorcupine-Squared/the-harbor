@@ -51,7 +51,7 @@ test("optional Harbor global navigation adapter is narrow, idempotent, and fail-
   assert.match(source, /Movies/u);
   assert.match(source, /TV Shows/u);
   assert.match(source, /Favorites/u);
-  assert.match(source, /Home/u);
+  assert.match(source, new RegExp("Home", "u"));
   assert.match(source, /href/u);
   assert.doesNotMatch(source, /topParentId\s*[:=]\s*["'][a-z0-9-]+/iu);
   assert.doesNotMatch(source, /fetch\s*\(|XMLHttpRequest|WebSocket|sendBeacon/iu);
