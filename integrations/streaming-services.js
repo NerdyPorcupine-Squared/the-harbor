@@ -77,6 +77,11 @@
     if (!container) return;
 
     let hub = container.querySelector(`#${HUB_ID}`);
+    if (hub && hub.dataset.harborStreamingServices !== "true") {
+      const managedHub = createHub();
+      hub.replaceWith(managedHub);
+      hub = managedHub;
+    }
     if (!hub) hub = createHub();
 
     if (container.firstElementChild !== hub) {
