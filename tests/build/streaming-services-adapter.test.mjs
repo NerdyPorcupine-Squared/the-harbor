@@ -3,6 +3,8 @@ import { readFile } from "node:fs/promises";
 import test from "node:test";
 
 const repositoryUrl = new URL("../../", import.meta.url);
+const homeEnhancementsHeader =
+  "/*! The Harbor Home Enhancements | streaming-services.js + home-navigation.js */";
 
 async function readRepositoryFile(path) {
   try {
@@ -30,6 +32,15 @@ test("optional Streaming Services adapter owns only its custom home section", as
   assert.doesNotMatch(source, /fetch\s*\(|XMLHttpRequest|WebSocket|sendBeacon/iu);
   assert.doesNotMatch(source, /innerHTML\s*=/u);
   assert.doesNotMatch(source, /ElganFlix|homelab-red/iu);
+});
+
+test("combined Home enhancements injector is an exact deterministic composition", async () => {
+  const streaming = await readRepositoryFile("integrations/streaming-services.js");
+  const navigation = await readRepositoryFile("integrations/home-navigation.js");
+  const combined = await readRepositoryFile("integrations/home-enhancements.js");
+  const expected = `${homeEnhancementsHeader}\n${streaming.trim()}\n\n${navigation.trim()}\n`;
+
+  assert.equal(combined, expected);
 });
 
 test("Harbor supplies complete responsive layout for its custom Streaming Services section", async () => {
