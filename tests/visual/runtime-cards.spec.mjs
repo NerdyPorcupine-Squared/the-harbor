@@ -14,6 +14,7 @@ test.beforeEach(async ({ page }) => {
 for (const shape of ["portrait", "backdrop"]) {
   test(`real ${shape} card keeps Jellyfin-owned artwork geometry`, async ({ page }) => {
     const probe = page.locator(`[data-probe="${shape}"]`);
+    const card = probe.locator(".card");
     const scalable = probe.locator(".cardScalable");
     const padder = probe.locator(".cardPadder");
     const image = probe.locator(".cardImageContainer");
@@ -48,5 +49,19 @@ for (const shape of ["portrait", "backdrop"]) {
     expect(computed.backgroundSize).toBe("cover");
     expect(computed.backgroundPosition).toBe("50% 50%");
     expect(computed.aspectRatio).toBe("auto");
+
+    const restingShadow = await scalable.evaluate(
+      (element) => getComputedStyle(element).boxShadow,
+    );
+    expect(restingShadow).toContain("184, 148, 75");
+    expect(restingShadow.match(/\brgba?\(/gu)?.length ?? 0).toBeGreaterThanOrEqual(3);
+    expect(restingShadow).toContain("0px 0px 0px 2px");
+
+    await card.hover();
+    const hoverShadow = await scalable.evaluate(
+      (element) => getComputedStyle(element).boxShadow,
+    );
+    expect(hoverShadow).toContain("184, 148, 75");
+    expect(hoverShadow.match(/\brgba?\(/gu)?.length ?? 0).toBeGreaterThanOrEqual(3);
   });
 }
