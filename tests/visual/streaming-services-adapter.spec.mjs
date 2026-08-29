@@ -151,12 +151,22 @@ test("Streaming Services cards and live native Home headings carry the requested
   );
   expect(logoFontSize).toBeGreaterThanOrEqual(17);
 
-  for (const sectionId of ["my-media-native", "resume-native", "next-up-native", "latest-native"]) {
-    const title = page.locator(`#${sectionId} .sectionTitle`);
-    const titleBox = await title.boundingBox();
-    expect(titleBox).not.toBeNull();
-    expect(titleBox.x).toBeGreaterThanOrEqual(16);
+  for (const sectionId of ["my-media-native", "resume-native"]) {
+    const title = page.locator(`#${sectionId} > .sectionTitle`);
+    const presentation = await title.evaluate((element) => {
+      const style = getComputedStyle(element);
+      return {
+        radius: Number.parseFloat(style.borderTopLeftRadius),
+        clipPath: style.clipPath,
+      };
+    });
+    expect(presentation.radius).toBeGreaterThanOrEqual(100);
+    expect(presentation.clipPath).toContain("inset(");
+    expect(presentation.clipPath).not.toBe("none");
+  }
 
+  for (const sectionId of ["next-up-native", "latest-native"]) {
+    const title = page.locator(`#${sectionId} .sectionTitleTextButton .sectionTitle`);
     const radius = await title.evaluate((element) =>
       Number.parseFloat(getComputedStyle(element).borderTopLeftRadius),
     );
