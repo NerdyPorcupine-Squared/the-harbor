@@ -2,11 +2,14 @@
   color: var(--harbor-map-ink);
 }
 
-.homeSectionsContainer > .verticalSection > .sectionTitle.sectionTitle-cards,
+.homeSectionsContainer > .verticalSection > .sectionTitle.sectionTitle-cards {
+  border-radius: 999px;
+  clip-path: inset(0 0 0 var(--harbor-space-3) round 999px);
+}
+
 .homeSectionsContainer
   > .verticalSection
   > .sectionTitleContainer-cards
   .sectionTitle.sectionTitle-cards {
-  margin-inline-start: var(--harbor-space-4);
   border-radius: 999px;
 }
