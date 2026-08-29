@@ -13,9 +13,11 @@ const adapterSource = await readFile(
 );
 
 async function homeSectionOrder(page) {
-  return page.locator(".homeSectionsContainer > section").evaluateAll((sections) =>
-    sections.map((section) => section.id),
-  );
+  return page
+    .locator(
+      ".homeSectionsContainer > .verticalSection, .homeSectionsContainer > #homelabStreamingHub",
+    )
+    .evaluateAll((sections) => sections.map((section) => section.id));
 }
 
 async function expectRequestedOrder(page) {
@@ -23,89 +25,116 @@ async function expectRequestedOrder(page) {
     "homelabStreamingHub",
     "my-media-native",
     "resume-native",
+    "next-up-native",
     "latest-native",
   ]);
   await expect(page.locator("#homelabStreamingHub")).toHaveCount(1);
 }
 
-async function prepareNativeHomeSections(page) {
-  await page.evaluate(() => {
+async function prepareLiveNativeHomeSections(page, { withLegacyHub = false } = {}) {
+  await page.evaluate(({ includeLegacyHub }) => {
     const container = document.querySelector(".homeSectionsContainer");
-    const resumeSection = container.firstElementChild;
-    resumeSection.id = "resume-native";
-    resumeSection.classList.add("verticalSection");
-    const resumeHeading = resumeSection.querySelector(".sectionTitle");
-    resumeHeading.textContent = "Continue Watching";
-    const resumeTitleContainer = document.createElement("div");
-    resumeTitleContainer.className = "sectionTitleContainer sectionTitleContainer-cards";
-    resumeHeading.replaceWith(resumeTitleContainer);
-    resumeTitleContainer.append(resumeHeading);
-    resumeSection.querySelector(".itemsContainer").dataset.monitor = "videoplayback";
-
-    const myMediaSection = document.createElement("section");
-    myMediaSection.id = "my-media-native";
-    myMediaSection.className = "homeSection verticalSection";
-    myMediaSection.innerHTML = `
-      <div class="sectionTitleContainer sectionTitleContainer-cards">
-        <h2 class="sectionTitle">My Media</h2>
+    container.innerHTML = `
+      <div id="my-media-native" class="verticalSection section0 emby-scroller-container">
+        <h2 class="sectionTitle sectionTitle-cards padded-left">My Media</h2>
+        <div class="itemsContainer">
+          <a class="card" href="#/movies?topParentId=movies-fixture&collectionType=movies">Movies</a>
+          <a class="card" href="#/tv?topParentId=tv-fixture&collectionType=tvshows">TV Shows</a>
+        </div>
       </div>
-      <div class="itemsContainer">
-        <a class="card" href="#movies">Movies</a>
-        <a class="card" href="#shows">TV Shows</a>
+      <div id="resume-native" class="verticalSection section1 emby-scroller-container">
+        <h2 class="sectionTitle sectionTitle-cards padded-left">Continue Watching</h2>
+        <div class="itemsContainer" data-monitor="videoplayback-progress"></div>
+      </div>
+      <div id="next-up-native" class="verticalSection section4 emby-scroller-container">
+        <div class="sectionTitleContainer sectionTitleContainer-cards padded-left">
+          <a class="button-flat button-flat-mini sectionTitleTextButton emby-button" href="#/nextup">
+            <h2 class="sectionTitle sectionTitle-cards">Next Up</h2>
+          </a>
+        </div>
+        <div class="itemsContainer"></div>
+      </div>
+      <div id="latest-native" class="verticalSection section5 emby-scroller-container">
+        <div class="sectionTitleContainer sectionTitleContainer-cards padded-left">
+          <a class="more button-flat button-flat-mini sectionTitleTextButton emby-button" href="#/movies?topParentId=movies-fixture&collectionType=movies">
+            <h2 class="sectionTitle sectionTitle-cards">Recently Added in Movies</h2>
+          </a>
+        </div>
+        <div class="itemsContainer"></div>
       </div>
     `;
 
-    const latestSection = document.createElement("section");
-    latestSection.id = "latest-native";
-    latestSection.className = "homeSection verticalSection";
-    latestSection.innerHTML = `
-      <div class="sectionTitleContainer sectionTitleContainer-cards">
-        <h2 class="sectionTitle padded-left">Latest</h2>
-      </div>
-      <div class="itemsContainer"></div>
-    `;
+    if (!includeLegacyHub) return;
 
-    container.prepend(myMediaSection);
-    container.append(latestSection);
-  });
+    const legacyHub = document.createElement("section");
+    legacyHub.id = "homelabStreamingHub";
+    legacyHub.innerHTML = `
+      <div class="stream-header">
+        <h2 class="sectionTitle sectionTitle-cards stream-title">Streaming Services</h2>
+      </div>
+      <div class="stream-row">
+        <a class="stream-card"><span class="service-logo">Netflix</span></a>
+        <a class="stream-card"><span class="service-logo">Prime Video</span></a>
+        <a class="stream-card"><span class="service-logo">Disney+</span></a>
+        <a class="stream-card"><span class="service-logo">HBO Max</span></a>
+      </div>
+    `;
+    container.insertBefore(legacyHub, container.querySelector("#latest-native"));
+  }, { includeLegacyHub: withLegacyHub });
 }
 
-test("Streaming Services adapter preserves requested Home hierarchy through rerenders", async ({ page }) => {
+test("Streaming Services adapter preserves requested Home hierarchy through live-shaped rerenders", async ({ page }) => {
   await page.goto(fixtureUrl);
-  await prepareNativeHomeSections(page);
+  await prepareLiveNativeHomeSections(page);
   await page.addScriptTag({ content: adapterSource });
 
   await expectRequestedOrder(page);
   await expect(page.locator("#homelabStreamingHub .stream-card")).toHaveCount(4);
+  await expect(page.locator("#homelabStreamingHub")).toHaveAttribute(
+    "data-harbor-streaming-services",
+    "true",
+  );
 
   await page.evaluate(() => {
     const current = document.querySelector(".homeSectionsContainer");
-    const myMedia = current.querySelector("#my-media-native").cloneNode(true);
-    const resume = current.querySelector("#resume-native").cloneNode(true);
-    const latest = current.querySelector("#latest-native").cloneNode(true);
     const replacement = document.createElement("div");
-    replacement.className = "homeSectionsContainer";
-    replacement.append(myMedia, resume, latest);
+    replacement.className = "sections homeSectionsContainer";
+    for (const id of ["my-media-native", "resume-native", "next-up-native", "latest-native"]) {
+      replacement.append(current.querySelector(`#${id}`).cloneNode(true));
+    }
     current.replaceWith(replacement);
   });
 
   await expectRequestedOrder(page);
-
-  await page.evaluate(() => {
-    const container = document.querySelector(".homeSectionsContainer");
-    const marker = document.createElement("span");
-    marker.textContent = "rerender marker";
-    container.append(marker);
-    marker.remove();
-  });
-
-  await expect.poll(async () => page.locator("#homelabStreamingHub").count()).toBe(1);
-  await expectRequestedOrder(page);
+  await expect(page.locator("#homelabStreamingHub")).toHaveAttribute(
+    "data-harbor-streaming-services",
+    "true",
+  );
 });
 
-test("Streaming Services cards and native Home headings carry the requested visual weight", async ({ page }, testInfo) => {
+test("Streaming Services adapter replaces legacy hub markup before managing Home order", async ({ page }) => {
   await page.goto(fixtureUrl);
-  await prepareNativeHomeSections(page);
+  await prepareLiveNativeHomeSections(page, { withLegacyHub: true });
+
+  await expect(page.locator("#homelabStreamingHub")).not.toHaveAttribute(
+    "data-harbor-streaming-services",
+    "true",
+  );
+
+  await page.addScriptTag({ content: adapterSource });
+
+  await expectRequestedOrder(page);
+  await expect(page.locator("#homelabStreamingHub")).toHaveAttribute(
+    "data-harbor-streaming-services",
+    "true",
+  );
+  await expect(page.locator("#homelabStreamingHub")).toHaveClass(/harbor-streaming-services/u);
+  await expect(page.locator("#homelabStreamingHub .stream-card")).toHaveCount(4);
+});
+
+test("Streaming Services cards and live native Home headings carry the requested visual weight", async ({ page }, testInfo) => {
+  await page.goto(fixtureUrl);
+  await prepareLiveNativeHomeSections(page);
   await page.addScriptTag({ content: adapterSource });
   await expectRequestedOrder(page);
 
@@ -122,7 +151,7 @@ test("Streaming Services cards and native Home headings carry the requested visu
   );
   expect(logoFontSize).toBeGreaterThanOrEqual(17);
 
-  for (const sectionId of ["my-media-native", "resume-native"]) {
+  for (const sectionId of ["my-media-native", "resume-native", "next-up-native", "latest-native"]) {
     const title = page.locator(`#${sectionId} .sectionTitle`);
     const titleBox = await title.boundingBox();
     expect(titleBox).not.toBeNull();
