@@ -32,24 +32,28 @@ test("live Jellyfin Home card headings become detached parchment bubbles", async
     /\.homeSection \.sectionTitle\s*\{[^}]*(?:border:\s*0|background:\s*none|box-shadow:\s*none)/su,
   );
 
-  const detachedBlock =
+  const directBlock =
     css.match(
-      /\.homeSectionsContainer\s*>\s*\.verticalSection\s*>\s*\.sectionTitle\.sectionTitle-cards\s*,\s*\.homeSectionsContainer\s*>\s*\.verticalSection\s*>\s*\.sectionTitleContainer-cards\s+\.sectionTitle\.sectionTitle-cards\s*\{([^}]*)\}/su,
+      /\.homeSectionsContainer\s*>\s*\.verticalSection\s*>\s*\.sectionTitle\.sectionTitle-cards\s*\{([^}]*)\}/su,
+    )?.[1] ?? "";
+  const nestedBlock =
+    css.match(
+      /\.homeSectionsContainer\s*>\s*\.verticalSection\s*>\s*\.sectionTitleContainer-cards\s+\.sectionTitle\.sectionTitle-cards\s*\{([^}]*)\}/su,
     )?.[1] ?? "";
 
+  assert.match(directBlock, /border-radius:\s*999px/u);
   assert.match(
-    css,
-    /\.homeSectionsContainer\s*>\s*\.verticalSection\s*>\s*\.sectionTitle\.sectionTitle-cards/u,
-    "direct My Media / Continue Watching titles must be targeted",
+    directBlock,
+    /clip-path:\s*inset\(0\s+0\s+0\s+var\(--harbor-space-3\)\s+round\s+999px\)/u,
   );
-  assert.match(
-    css,
-    /\.sectionTitleContainer-cards\s+\.sectionTitle\.sectionTitle-cards/u,
-    "nested Next Up / Recently Added titles must be targeted",
-  );
-  assert.match(detachedBlock, /margin-inline-start:\s*var\(--harbor-space-4\)/u);
-  assert.match(detachedBlock, /border-radius:\s*999px/u);
-  assert.doesNotMatch(detachedBlock, /(?:position|width|height|transform)\s*:/u);
+  assert.match(nestedBlock, /border-radius:\s*999px/u);
+
+  for (const block of [directBlock, nestedBlock]) {
+    assert.doesNotMatch(
+      block,
+      /(?:position|width|height|transform|margin|padding)(?:-[\w-]+)?\s*:/u,
+    );
+  }
 });
 
 test("keeps Media Bar selectors scoped while leaving plugin geometry untouched", async () => {
