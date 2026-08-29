@@ -56,6 +56,22 @@
     return hub;
   }
 
+  function findMyMediaSection(container) {
+    return (
+      [...container.querySelectorAll(":scope > .verticalSection")].find((section) => {
+        if (section.id === HUB_ID) return false;
+
+        const heading = section.querySelector(".sectionTitle");
+        if (heading?.textContent?.trim().toLowerCase() === "my media") return true;
+
+        const links = [...section.querySelectorAll("a[href]")];
+        const hasMovieCue = links.some((link) => /movie/iu.test(link.textContent ?? ""));
+        const hasTvCue = links.some((link) => /tv|show|series/iu.test(link.textContent ?? ""));
+        return hasMovieCue && hasTvCue;
+      }) ?? null
+    );
+  }
+
   function ensureHomeOrder() {
     const container = document.querySelector(HOME_SELECTOR);
     if (!container) return;
@@ -67,10 +83,21 @@
       container.prepend(hub);
     }
 
+    const myMediaSection = findMyMediaSection(container);
+    if (myMediaSection && hub.nextElementSibling !== myMediaSection) {
+      container.insertBefore(myMediaSection, hub.nextElementSibling);
+    }
+
     const resumeItems = container.querySelector(RESUME_SELECTOR);
     const resumeSection = resumeItems?.closest(".verticalSection");
-    if (resumeSection && resumeSection !== hub && hub.nextElementSibling !== resumeSection) {
-      container.insertBefore(resumeSection, hub.nextElementSibling);
+    const resumeAnchor = myMediaSection ?? hub;
+    if (
+      resumeSection &&
+      resumeSection !== hub &&
+      resumeSection !== myMediaSection &&
+      resumeAnchor.nextElementSibling !== resumeSection
+    ) {
+      container.insertBefore(resumeSection, resumeAnchor.nextElementSibling);
     }
   }
 
