@@ -115,6 +115,30 @@ test("details preserve Jellyfin geometry, actions, and readable content", async 
   expect(primaryBackground).not.toBe("rgba(0, 0, 0, 0)");
   expect(secondaryColor).toBe("rgb(58, 45, 33)");
 
+  for (const selector of [".nameContainer", ".itemMiscInfo", ".mainDetailButtons"]) {
+    const textAlign = await page.locator(`#itemDetailPage ${selector}`).evaluate(
+      (element) => getComputedStyle(element).textAlign,
+    );
+    expect(textAlign).toBe("center");
+  }
+
+  const overviewTextAlign = await page.locator("#itemDetailPage .overview").evaluate(
+    (element) => getComputedStyle(element).textAlign,
+  );
+  expect(overviewTextAlign).toBe("left");
+
+  for (const selector of [".nextUpSection .cardText", "#childrenCollapsible .cardText"]) {
+    const labelBackground = await page.locator(selector).first().evaluate(
+      (element) => getComputedStyle(element).backgroundColor,
+    );
+    expect(labelBackground).toBe("rgba(0, 0, 0, 0)");
+  }
+
+  const castHeadingOpacity = await page.locator("#castCollapsible .sectionTitle").evaluate(
+    (element) => Number.parseFloat(getComputedStyle(element).opacity),
+  );
+  expect(castHeadingOpacity).toBeLessThanOrEqual(0.78);
+
   const visiblePoster =
     testInfo.project.name === "mobile"
       ? ".detailImageContainer.hide-desktop .card"
