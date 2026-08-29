@@ -24,14 +24,19 @@ test("imports the optional home and Media Bar layers into Core", async () => {
   assert.ok(mediaBarIndex > homeIndex, "Media Bar presentation follows home.css");
 });
 
-test("home row headings read as headings instead of raised parchment plaques", async () => {
+test("unpadded Home card headings become detached parchment bubbles", async () => {
   const css = await readRepositoryFile("src/css/pages/home.css");
-  const block = css.match(/\.homeSection \.sectionTitle\s*\{([^}]*)\}/su)?.[1] ?? "";
 
-  assert.match(block, /border:\s*0/u);
-  assert.match(block, /background:\s*none/u);
-  assert.match(block, /box-shadow:\s*none/u);
-  assert.doesNotMatch(block, /(?:padding|margin|width|height)\s*:/u);
+  assert.doesNotMatch(
+    css,
+    /\.homeSection \.sectionTitle\s*\{[^}]*(?:border:\s*0|background:\s*none|box-shadow:\s*none)/su,
+  );
+
+  const detachedBlock =
+    css.match(/\.sectionTitleContainer-cards\s*>\s*\.sectionTitle:not\(\.padded-left\)\s*\{([^}]*)\}/su)?.[1] ?? "";
+  assert.match(detachedBlock, /margin-inline-start:\s*var\(--harbor-space-4\)/u);
+  assert.match(detachedBlock, /border-radius:\s*999px/u);
+  assert.doesNotMatch(detachedBlock, /(?:position|width|height|transform)\s*:/u);
 });
 
 test("keeps Media Bar selectors scoped while leaving plugin geometry untouched", async () => {
