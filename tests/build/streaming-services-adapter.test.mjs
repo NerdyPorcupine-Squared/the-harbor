@@ -21,6 +21,7 @@ test("optional Streaming Services adapter owns only its custom home section", as
   assert.match(source, /MutationObserver/u);
   assert.match(source, /data-monitor/u);
   assert.match(source, /videoplayback/u);
+  assert.match(source, /My Media|my media/u);
 
   for (const service of ["Netflix", "Prime Video", "Disney+", "HBO Max"]) {
     assert.match(source, new RegExp(service.replace(/[+]/gu, "\\+"), "u"));
@@ -42,15 +43,21 @@ test("Harbor supplies complete responsive layout for its custom Streaming Servic
   assert.match(css, /@media\s*\(max-width:/u);
 });
 
-test("Streaming Services cards stay compact instead of stretching into billboards", async () => {
+test("Streaming Services cards have substantial Home-page presence without becoming full-width billboards", async () => {
   const css = await readRepositoryFile("src/css/integrations/streaming-services.css");
   const rowBlock = css.match(/#homelabStreamingHub\s+\.stream-row\s*\{([^}]*)\}/su)?.[1] ?? "";
   const cardBlock = css.match(/#homelabStreamingHub\s+\.stream-card\s*\{([^}]*)\}/su)?.[1] ?? "";
+  const logoBlock = css.match(/#homelabStreamingHub\s+\.service-logo\s*\{([^}]*)\}/su)?.[1] ?? "";
 
   assert.doesNotMatch(rowBlock, /\b1fr\b/u);
-  assert.match(rowBlock, /grid-template-columns:\s*repeat\(auto-fit,\s*minmax\([^,]+,\s*14rem\)\)/u);
+  assert.match(
+    rowBlock,
+    /grid-template-columns:\s*repeat\(auto-fit,\s*minmax\(14rem,\s*20rem\)\)/u,
+  );
   assert.match(rowBlock, /justify-content:\s*start/u);
-  assert.match(cardBlock, /min-height:\s*4rem/u);
+  assert.match(cardBlock, /min-height:\s*5\.5rem/u);
+  assert.match(cardBlock, /padding:\s*1rem\s+1\.15rem/u);
+  assert.match(logoBlock, /font-size:\s*1\.1rem/u);
 });
 
 test("README keeps Core CSS-only while documenting the optional JavaScript Injector adapter", async () => {
