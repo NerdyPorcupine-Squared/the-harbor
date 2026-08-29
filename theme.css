@@ -843,6 +843,14 @@ body:has(#slides-container) .homeSectionsContainer {
   color: inherit;
 }
 
+#itemDetailPage .detailRibbon :where(
+  .nameContainer,
+  .itemMiscInfo,
+  .mainDetailButtons
+) {
+  text-align: center;
+}
+
 #itemDetailPage .itemName {
   color: var(--harbor-parchment-100);
   font-family: var(--harbor-font-display);
@@ -915,6 +923,7 @@ body:has(#slides-container) .homeSectionsContainer {
     0 0.6rem 1.5rem rgb(0 0 0 / 16%);
   line-height: 1.65;
   overflow-wrap: anywhere;
+  text-align: left;
 }
 
 #itemDetailPage .itemDetailsGroup {
@@ -924,6 +933,7 @@ body:has(#slides-container) .homeSectionsContainer {
   box-shadow: inset 0 1px 0 rgb(234 217 174 / 4%);
   line-height: 1.65;
   overflow-wrap: anywhere;
+  text-align: left;
 }
 
 #itemDetailPage .mainDetailButtons :where(.button-submit, .button-flat) {
@@ -939,6 +949,19 @@ body:has(#slides-container) .homeSectionsContainer {
 #itemDetailPage .mainDetailButtons .button-flat {
   background-color: rgb(7 19 28 / 54%);
   color: var(--harbor-parchment-100);
+}
+
+#itemDetailPage .nextUpSection :where(.cardText, .cardText-secondary) {
+  background-color: transparent;
+  box-shadow: none;
+}
+
+#itemDetailPage .nextUpSection .cardText {
+  color: var(--harbor-parchment-100);
+}
+
+#itemDetailPage .nextUpSection .cardText-secondary {
+  color: var(--harbor-parchment-200);
 }
 
 #itemDetailPage .detailPageSecondaryContainer {
@@ -976,6 +999,32 @@ body:has(#slides-container) .homeSectionsContainer {
   background-size: 8rem 0.125rem;
   font-family: var(--harbor-font-display);
   letter-spacing: 0.035em;
+}
+
+#itemDetailPage #childrenCollapsible :where(.cardText, .cardText-secondary) {
+  background-color: transparent;
+  box-shadow: none;
+}
+
+#itemDetailPage #childrenCollapsible .cardText {
+  color: var(--harbor-map-ink);
+}
+
+#itemDetailPage #childrenCollapsible .cardText-secondary {
+  color: rgb(58 45 33 / 72%);
+}
+
+#itemDetailPage #castCollapsible .sectionTitle {
+  border-block-end-color: rgb(120 82 43 / 18%);
+  background-image: none;
+  box-shadow: none;
+  opacity: 0.76;
+}
+
+#itemDetailPage #castCollapsible .cardScalable {
+  box-shadow:
+    0 0 0 1px rgb(120 82 43 / 28%),
+    0 0.25rem 0.7rem rgb(42 33 24 / 14%);
 }
 .loginPage {
   display: grid;
