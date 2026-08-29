@@ -24,7 +24,7 @@ test("imports the optional home and Media Bar layers into Core", async () => {
   assert.ok(mediaBarIndex > homeIndex, "Media Bar presentation follows home.css");
 });
 
-test("unpadded Home card headings become detached parchment bubbles", async () => {
+test("live Jellyfin Home card headings become detached parchment bubbles", async () => {
   const css = await readRepositoryFile("src/css/pages/home.css");
 
   assert.doesNotMatch(
@@ -33,7 +33,20 @@ test("unpadded Home card headings become detached parchment bubbles", async () =
   );
 
   const detachedBlock =
-    css.match(/\.sectionTitleContainer-cards\s*>\s*\.sectionTitle:not\(\.padded-left\)\s*\{([^}]*)\}/su)?.[1] ?? "";
+    css.match(
+      /\.homeSectionsContainer\s*>\s*\.verticalSection\s*>\s*\.sectionTitle\.sectionTitle-cards\s*,\s*\.homeSectionsContainer\s*>\s*\.verticalSection\s*>\s*\.sectionTitleContainer-cards\s+\.sectionTitle\.sectionTitle-cards\s*\{([^}]*)\}/su,
+    )?.[1] ?? "";
+
+  assert.match(
+    css,
+    /\.homeSectionsContainer\s*>\s*\.verticalSection\s*>\s*\.sectionTitle\.sectionTitle-cards/u,
+    "direct My Media / Continue Watching titles must be targeted",
+  );
+  assert.match(
+    css,
+    /\.sectionTitleContainer-cards\s+\.sectionTitle\.sectionTitle-cards/u,
+    "nested Next Up / Recently Added titles must be targeted",
+  );
   assert.match(detachedBlock, /margin-inline-start:\s*var\(--harbor-space-4\)/u);
   assert.match(detachedBlock, /border-radius:\s*999px/u);
   assert.doesNotMatch(detachedBlock, /(?:position|width|height|transform)\s*:/u);
