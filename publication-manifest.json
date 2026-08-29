@@ -28,6 +28,7 @@
     "docs/testing/runtime-capture.md",
     "docs/testing/runtime-recovery-v3-owner-checklist.md",
     "docs/testing/runtime-recovery-v3-results.md",
+    "integrations/home-navigation.js",
     "integrations/streaming-services.js",
     "package-lock.json",
     "package.json",
