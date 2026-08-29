@@ -20,12 +20,24 @@ async function optionalNavigationSource() {
   }
 }
 
+async function optionalHomeEnhancementsSource() {
+  try {
+    return await readFile(
+      new URL("../../integrations/home-enhancements.js", import.meta.url),
+      "utf8",
+    );
+  } catch (error) {
+    if (error?.code === "ENOENT") return "";
+    throw error;
+  }
+}
+
 async function prepareGlobalNavigationFixture(page, { withLibraryLinks = true } = {}) {
   await page.locator(".skinHeader").evaluate((header, options) => {
     header.innerHTML = `
       <nav class="headerTabs" aria-label="Global navigation">
-        <a class="emby-tab-button emby-tab-button-active" href="#/home.html" aria-current="page">Home</a>
-        <a class="emby-tab-button" href="#/favorites.html">Favorites</a>
+        <a class="emby-tab-button emby-tab-button-active" href="#/home" aria-current="page">Home</a>
+        <a class="emby-tab-button" href="#/favorites">Favorites</a>
       </nav>
     `;
 
@@ -36,8 +48,8 @@ async function prepareGlobalNavigationFixture(page, { withLibraryLinks = true } 
     nativeLinks.id = "harbor-native-library-links";
     nativeLinks.hidden = true;
     nativeLinks.innerHTML = `
-      <a href="#/movies.html?topParentId=movies-fixture">Movies</a>
-      <a href="#/tv.html?topParentId=tv-fixture">TV Shows</a>
+      <a class="lnkMediaFolder navMenuOption emby-button" href="#/movies?topParentId=movies-fixture&collectionType=movies">Movies</a>
+      <a class="lnkMediaFolder navMenuOption emby-button" href="#/tv?topParentId=tv-fixture&collectionType=tvshows">TV Shows</a>
     `;
     document.body.append(nativeLinks);
   }, { withLibraryLinks });
@@ -93,7 +105,7 @@ test("home stays compact and usable without Media Bar", async ({ page }, testInf
   }
 });
 
-test("Harbor Home navigation reuses native library routes and stays idempotent", async ({ page }) => {
+test("Harbor Home navigation reuses live-shaped native library routes and stays idempotent", async ({ page }) => {
   await prepareGlobalNavigationFixture(page);
   const source = await optionalNavigationSource();
   await page.addScriptTag({ content: source });
@@ -108,11 +120,11 @@ test("Harbor Home navigation reuses native library routes and stays idempotent",
   const tabs = page.locator(".skinHeader .headerTabs .emby-tab-button");
   await expect(tabs.nth(1)).toHaveAttribute(
     "href",
-    "#/movies.html?topParentId=movies-fixture",
+    "#/movies?topParentId=movies-fixture&collectionType=movies",
   );
   await expect(tabs.nth(2)).toHaveAttribute(
     "href",
-    "#/tv.html?topParentId=tv-fixture",
+    "#/tv?topParentId=tv-fixture&collectionType=tvshows",
   );
   await expect(page.locator('[data-harbor-global-nav="movies"]')).toHaveCount(1);
   await expect(page.locator('[data-harbor-global-nav="tv"]')).toHaveCount(1);
@@ -120,8 +132,8 @@ test("Harbor Home navigation reuses native library routes and stays idempotent",
   await page.locator(".skinHeader").evaluate((header) => {
     header.innerHTML = `
       <nav class="headerTabs" aria-label="Global navigation">
-        <a class="emby-tab-button emby-tab-button-active" href="#/home.html" aria-current="page">Home</a>
-        <a class="emby-tab-button" href="#/favorites.html">Favorites</a>
+        <a class="emby-tab-button emby-tab-button-active" href="#/home" aria-current="page">Home</a>
+        <a class="emby-tab-button" href="#/favorites">Favorites</a>
       </nav>
     `;
   });
@@ -143,4 +155,27 @@ test("Harbor Home navigation fails closed when native Movies or TV routes are un
 
   await expect.poll(() => globalTabLabels(page)).toEqual(["Home", "Favorites"]);
   await expect(page.locator("[data-harbor-global-nav]")).toHaveCount(0);
+});
+
+test("combined Home enhancements injector activates ordering and global navigation together", async ({ page }) => {
+  await prepareGlobalNavigationFixture(page);
+  const source = await optionalHomeEnhancementsSource();
+  await page.addScriptTag({ content: source });
+
+  await expect.poll(() => globalTabLabels(page)).toEqual([
+    "Home",
+    "Movies",
+    "TV Shows",
+    "Favorites",
+  ]);
+  await expect(page.locator("[data-harbor-global-nav]")).toHaveCount(2);
+
+  const hub = page.locator("#homelabStreamingHub");
+  await expect(hub).toHaveCount(1);
+  await expect(hub).toHaveAttribute("data-harbor-streaming-services", "true");
+  await expect.poll(async () =>
+    page.locator(".homeSectionsContainer").evaluate(
+      (container) => container.firstElementChild?.id ?? null,
+    )
+  ).toBe("homelabStreamingHub");
 });
