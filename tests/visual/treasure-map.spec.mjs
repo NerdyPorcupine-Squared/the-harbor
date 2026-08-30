@@ -108,8 +108,8 @@ test("details transition from captain dossier into parchment browsing content", 
 
   expect(backdrop.backgroundImage).not.toContain("cartography");
   expect(primary.backgroundImage).toContain("route.svg");
-  expect(overview.backgroundImage).toContain("flourish.svg");
-  expect(overview.boxShadow).not.toBe("none");
+  expect(overview.backgroundImage).toBe("none");
+  expect(overview.boxShadow).toBe("none");
   expect(metadata.backgroundColor).toContain("184, 148, 75");
   expect(secondary.backgroundColor).toBe("rgb(234, 217, 174)");
   expect(secondary.backgroundImage).toContain("chart-grid.svg");
