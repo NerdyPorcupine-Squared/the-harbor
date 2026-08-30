@@ -1,6 +1,10 @@
 (() => {
   "use strict";
 
+  const ADAPTER_VERSION = "core-v1-rc3";
+  const ADAPTER_ATTRIBUTE = "data-harbor-streaming-services-adapter";
+  const HOME_ENHANCEMENTS_ATTRIBUTE = "data-harbor-home-enhancements";
+  const STATE_KEY = "__harborStreamingServicesState";
   const HUB_ID = "homelabStreamingHub";
   const HOME_SELECTOR = ".homeSectionsContainer";
 
@@ -10,6 +14,19 @@
     ["Disney+", "https://www.disneyplus.com/"],
     ["HBO Max", "https://www.hbomax.com/"],
   ];
+
+  function reconcileHomeEnhancementsMarker() {
+    const root = document.documentElement;
+    const streamingVersion = root.getAttribute(ADAPTER_ATTRIBUTE);
+    const navigationVersion = root.getAttribute("data-harbor-home-navigation-adapter");
+
+    if (streamingVersion === ADAPTER_VERSION && navigationVersion === ADAPTER_VERSION) {
+      root.setAttribute(HOME_ENHANCEMENTS_ATTRIBUTE, ADAPTER_VERSION);
+      return;
+    }
+
+    root.removeAttribute(HOME_ENHANCEMENTS_ATTRIBUTE);
+  }
 
   function makeElement(tagName, className, text) {
     const element = document.createElement(tagName);
@@ -103,8 +120,29 @@
     });
   }
 
+  const root = document.documentElement;
+  const previousState = window[STATE_KEY];
+
+  if (previousState?.version === ADAPTER_VERSION) {
+    root.setAttribute(ADAPTER_ATTRIBUTE, ADAPTER_VERSION);
+    ensureHomeOrder();
+    reconcileHomeEnhancementsMarker();
+    return;
+  }
+
+  if (previousState?.observer && typeof previousState.observer.disconnect === "function") {
+    previousState.observer.disconnect();
+  }
+
   ensureHomeOrder();
 
   const observer = new MutationObserver(scheduleHomeOrder);
-  observer.observe(document.body, { childList: true, subtree: true });
+  observer.observe(document.body ?? document.documentElement, { childList: true, subtree: true });
+
+  window[STATE_KEY] = {
+    version: ADAPTER_VERSION,
+    observer,
+  };
+  root.setAttribute(ADAPTER_ATTRIBUTE, ADAPTER_VERSION);
+  reconcileHomeEnhancementsMarker();
 })();
