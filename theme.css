@@ -755,7 +755,36 @@ body:has(#slides-container) .homeSectionsContainer {
   margin-inline-start: 0;
   margin-block-end: var(--harbor-space-3);
 }.homeSectionsContainer {
+  background-color: var(--harbor-map-paper);
+  background-image:
+    url("./assets/cartography/route.svg"),
+    url("./assets/cartography/chart-grid.svg"),
+    var(--harbor-papyrus-image);
+  background-repeat:
+    no-repeat,
+    repeat,
+    var(--harbor-papyrus-repeat);
+  background-position:
+    calc(100% + 12rem) 18rem,
+    0 0,
+    0 0;
+  background-size:
+    min(44rem, 70vw) auto,
+    24rem 24rem,
+    var(--harbor-papyrus-size);
   color: var(--harbor-map-ink);
+}
+
+.homeSectionsContainer .cardBox {
+  border-radius: var(--harbor-radius-md);
+  background-color: var(--harbor-map-paper);
+  box-shadow:
+    0 0 0 1px rgb(120 82 43 / 18%),
+    0 0.35rem 0.85rem rgb(42 33 24 / 16%);
+}
+
+.homeSectionsContainer :where(.cardText, .cardText-secondary) {
+  background-color: transparent;
 }
 
 .homeSectionsContainer > .verticalSection > .sectionTitle.sectionTitle-cards {
@@ -790,6 +819,23 @@ body:has(#slides-container) .homeSectionsContainer {
   > .sectionTitleContainer-cards
   .sectionTitle.sectionTitle-cards {
   border-radius: 999px;
+}
+
+@media (width <= 599px) {
+  .homeSectionsContainer {
+    background-image:
+      url("./assets/cartography/chart-grid.svg"),
+      var(--harbor-papyrus-image);
+    background-repeat:
+      repeat,
+      var(--harbor-papyrus-repeat);
+    background-position:
+      0 0,
+      0 0;
+    background-size:
+      18rem 18rem,
+      var(--harbor-papyrus-size);
+  }
 }
 .libraryToolbar {
   border: var(--harbor-papyrus-border);
@@ -1556,8 +1602,8 @@ body:has(#slides-container) .homeSectionsContainer {
 }
 
 @media (forced-colors: active) {
+  .homeSectionsContainer,
   :where(
-    .homeSectionsContainer,
     .libraryPage:not(.itemDetailPage),
     .searchPage,
     .detailPageContent,
