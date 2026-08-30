@@ -3,7 +3,6 @@
 
   const HUB_ID = "homelabStreamingHub";
   const HOME_SELECTOR = ".homeSectionsContainer";
-  const RESUME_SELECTOR = '.itemsContainer[data-monitor*="videoplayback"]';
 
   const SERVICES = [
     ["Netflix", "https://www.netflix.com/"],
@@ -91,18 +90,6 @@
     const myMediaSection = findMyMediaSection(container);
     if (myMediaSection && hub.nextElementSibling !== myMediaSection) {
       container.insertBefore(myMediaSection, hub.nextElementSibling);
-    }
-
-    const resumeItems = container.querySelector(RESUME_SELECTOR);
-    const resumeSection = resumeItems?.closest(".verticalSection");
-    const resumeAnchor = myMediaSection ?? hub;
-    if (
-      resumeSection &&
-      resumeSection !== hub &&
-      resumeSection !== myMediaSection &&
-      resumeAnchor.nextElementSibling !== resumeSection
-    ) {
-      container.insertBefore(resumeSection, resumeAnchor.nextElementSibling);
     }
   }
 
