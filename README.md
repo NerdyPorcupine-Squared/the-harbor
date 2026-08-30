@@ -30,15 +30,21 @@ When you want both the custom Streaming Services section and the four-link `Home
 
 Before enabling that entry, disable or remove every older Streaming Services or Media Top Navigation injector and disable separate Harbor `streaming-services.js` or `home-navigation.js` entries. Do not run the combined injector alongside either standalone adapter. Multiple scripts trying to own the same Home section can continuously reorder the same DOM.
 
-`home-enhancements.js` is a deterministic composition of the two tested standalone adapters. It creates and owns the Harbor Streaming Services hub, adopts stale `#homelabStreamingHub` markup left by an older implementation when the maintained injector starts, keeps Streaming Services first, keeps My Media next when it can be identified safely, keeps Continue Watching after My Media when present, and restores Movies and TV Shows in the global header by reusing native Jellyfin library routes already present in the DOM.
+`home-enhancements.js` is a deterministic composition of the two tested standalone adapters. It creates and owns the Harbor Streaming Services hub, adopts stale `#homelabStreamingHub` markup left by an older implementation when the maintained injector starts, keeps Streaming Services first, keeps My Media next when it can be identified safely, preserves the remaining native Home section order, and restores Movies and TV Shows in the global header by reusing native Jellyfin library routes already present in the DOM.
 
-For release-candidate owner validation, the combined injector is the required Home-enhancement path because it removes ambiguity about which Harbor Home behaviors are active.
+For release-candidate owner validation, the combined injector is the required Home-enhancement path because it removes ambiguity about which Harbor Home behaviors are active. After saving the injector and hard-refreshing Jellyfin, make this the first Home runtime check in the browser console:
+
+```js
+document.documentElement.getAttribute("data-harbor-home-enhancements")
+```
+
+The RC3 adapter must return `"core-v1-rc3"`. If the attribute is absent, stop there: the combined Harbor injector did not execute in that client. Fix injector delivery or activation before debugging Home order, Streaming Services, navigation, or CSS. Once the sentinel is present, a managed Streaming Services hub carries `data-harbor-streaming-services="true"`, and Harbor-created Movies and TV Shows controls carry `data-harbor-global-nav`.
 
 ## Standalone Streaming Services adapter
 
 If you want Streaming Services without the global navigation enhancement, create one JavaScript Injector entry and paste `integrations/streaming-services.js` from the same Harbor commit used by your CSS import. Disable or remove any older Streaming Services injector first.
 
-The adapter creates four external links for Netflix, Prime Video, Disney+, and HBO Max. It keeps the custom Streaming Services section first on Home, places native My Media directly after it when that section can be identified safely, and then places Continue Watching after My Media when Jellyfin exposes its native video resume section. Other native Home sections keep their relative order. The adapter does not call Jellyfin APIs, fetch server data, alter playback, or replace native media cards.
+The adapter creates four external links for Netflix, Prime Video, Disney+, and HBO Max. It keeps the custom Streaming Services section first on Home, places native My Media directly after it when that section can be identified safely, and preserves the remaining native Home section order. The adapter does not call Jellyfin APIs, fetch server data, alter playback, or replace native media cards.
 
 The adapter is optional. Without it, Harbor Core remains fully usable and Jellyfin owns the Home section structure normally.
 
@@ -76,8 +82,9 @@ Replace the current import with a previously tested immutable commit SHA or, aft
 - Test with browser extensions disabled if controls appear altered.
 - For the complete Harbor Home experience, confirm exactly one active injector contains `integrations/home-enhancements.js` from the same commit as the CSS.
 - Disable or remove legacy Streaming Services, legacy Media Top Navigation, and separate Harbor Home adapter entries while the combined injector is active.
+- Run `document.documentElement.getAttribute("data-harbor-home-enhancements")` first. RC3 must return `"core-v1-rc3"`. If it does not, the combined injector did not execute and Home behavior should not be evaluated yet.
 - A maintained Streaming Services hub has `data-harbor-streaming-services="true"`; an unowned `#homelabStreamingHub` indicates stale or competing markup.
-- Harbor-injected Movies and TV Shows header controls carry `data-harbor-global-nav` attributes. If none are present while the combined injector is active, confirm Jellyfin still exposes native Movies and TV Shows links in the current runtime DOM.
+- Harbor-injected Movies and TV Shows header controls carry `data-harbor-global-nav` attributes. If none are present after the RC3 sentinel is confirmed, verify that Jellyfin still exposes native Movies and TV Shows links in the current runtime DOM.
 - If the home hero is absent, confirm Media Bar Enhanced is installed and producing `#slides-container`; Core remains usable without it.
 - Report only sanitized structural symptoms and client dimensions. Do not publish server addresses, tokens, library identifiers, account details, or raw authenticated URLs.
 
