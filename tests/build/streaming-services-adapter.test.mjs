@@ -97,6 +97,10 @@ test("README makes one combined Home injector the release-candidate validation p
   assert.match(readme, /integrations\/home-enhancements\.js/u);
   assert.match(readme, /one JavaScript Injector entry/iu);
   assert.match(readme, /Do not run the combined injector alongside either standalone adapter/iu);
+  assert.match(readme, /data-harbor-home-enhancements/iu);
+  assert.match(readme, /core-v1-rc3/u);
+  assert.match(readme, /preserv(?:e|es) the remaining native Home section order/iu);
+  assert.doesNotMatch(readme, /Continue Watching after My Media/iu);
   assert.match(readme, /data-harbor-streaming-services/u);
   assert.match(readme, /data-harbor-global-nav/u);
 });
