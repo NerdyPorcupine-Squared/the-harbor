@@ -848,6 +848,44 @@ body:has(#slides-container) .homeSectionsContainer {
   box-shadow: var(--harbor-papyrus-edge), var(--harbor-shadow-parchment);
 }
 
+.libraryPage .alphaPickerButton {
+  background-color: transparent;
+  color: var(--harbor-map-ink);
+  box-shadow: none;
+  text-shadow: none;
+  transition:
+    background-color var(--harbor-motion-duration-fast) var(--harbor-motion-easing-standard),
+    color var(--harbor-motion-duration-fast) var(--harbor-motion-easing-standard),
+    box-shadow var(--harbor-motion-duration-fast) var(--harbor-motion-easing-standard);
+}
+
+.libraryPage .alphaPickerButton:hover,
+.libraryPage .alphaPickerButton:focus-visible {
+  background-color: rgb(184 148 75 / 14%);
+  color: var(--harbor-map-ink);
+  box-shadow: inset 0 0 0 1px rgb(120 82 43 / 30%);
+}
+
+.libraryPage .alphaPickerButton-selected,
+.libraryPage .alphaPickerButton-selected:hover,
+.libraryPage .alphaPickerButton-selected:focus-visible {
+  background-color: var(--harbor-navy-900);
+  color: var(--harbor-focus);
+  box-shadow:
+    inset 0 0 0 1px rgb(184 148 75 / 76%),
+    0 0 0 1px rgb(42 33 24 / 16%);
+}
+
+.libraryPage .cardBox {
+  border-radius: var(--harbor-radius-md);
+  background-color: rgb(234 217 174 / 88%);
+  box-shadow: 0 0.2rem 0.6rem rgb(42 33 24 / 14%);
+}
+
+.libraryPage .cardBox :where(.cardText, .cardText-secondary) {
+  background-color: transparent;
+}
+
 .libraryGrid .card[aria-disabled="true"] {
   filter: saturate(0.25);
   opacity: 0.52;
