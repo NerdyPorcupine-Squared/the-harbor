@@ -170,15 +170,30 @@ test("Streaming Services cards and live native Home headings carry the requested
   const streamCard = page.locator("#homelabStreamingHub .stream-card").first();
   const cardBox = await streamCard.boundingBox();
   expect(cardBox).not.toBeNull();
-  expect(cardBox.height).toBeGreaterThanOrEqual(testInfo.project.name === "mobile" ? 72 : 84);
+  expect(cardBox.height).toBeGreaterThanOrEqual(testInfo.project.name === "mobile" ? 72 : 136);
   if (testInfo.project.name === "desktop") {
-    expect(cardBox.width).toBeGreaterThanOrEqual(280);
+    expect(cardBox.width).toBeGreaterThanOrEqual(390);
   }
 
   const logoFontSize = await streamCard.locator(".service-logo").evaluate((element) =>
     Number.parseFloat(getComputedStyle(element).fontSize),
   );
-  expect(logoFontSize).toBeGreaterThanOrEqual(17);
+  expect(logoFontSize).toBeGreaterThanOrEqual(20);
+
+  if (testInfo.project.name === "desktop") {
+    await page.setViewportSize({ width: 1920, height: 1080 });
+    const boxes = await page.locator("#homelabStreamingHub .stream-card").evaluateAll((elements) =>
+      elements.map((element) => {
+        const box = element.getBoundingClientRect();
+        return { width: box.width, top: box.top };
+      }),
+    );
+    expect(boxes).toHaveLength(4);
+    expect(Math.max(...boxes.map(({ top }) => top)) - Math.min(...boxes.map(({ top }) => top))).toBeLessThanOrEqual(2);
+    for (const box of boxes) {
+      expect(box.width).toBeGreaterThanOrEqual(400);
+    }
+  }
 
   for (const sectionId of ["my-media-native", "resume-native"]) {
     const title = page.locator(`#${sectionId} > .sectionTitle`);
