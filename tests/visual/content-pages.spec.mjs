@@ -122,10 +122,56 @@ test("details preserve Jellyfin geometry, actions, and readable content", async 
     expect(textAlign).toBe("center");
   }
 
-  const overviewTextAlign = await page.locator("#itemDetailPage .overview").evaluate(
-    (element) => getComputedStyle(element).textAlign,
+  const overviewPresentation = await page.locator("#itemDetailPage .overview").evaluate(
+    (element) => {
+      const style = getComputedStyle(element);
+      return {
+        textAlign: style.textAlign,
+        backgroundColor: style.backgroundColor,
+        backgroundImage: style.backgroundImage,
+        boxShadow: style.boxShadow,
+      };
+    },
   );
-  expect(overviewTextAlign).toBe("left");
+  expect(overviewPresentation.textAlign).toBe("left");
+  expect(overviewPresentation.backgroundColor).toBe("rgba(0, 0, 0, 0)");
+  expect(overviewPresentation.backgroundImage).toBe("none");
+  expect(overviewPresentation.boxShadow).toBe("none");
+
+  const detailGroupPresentation = await page.locator("#itemDetailPage .itemDetailsGroup").evaluate(
+    (element) => {
+      const style = getComputedStyle(element);
+      return {
+        backgroundColor: style.backgroundColor,
+        boxShadow: style.boxShadow,
+      };
+    },
+  );
+  expect(detailGroupPresentation.backgroundColor).toBe("rgba(0, 0, 0, 0)");
+  expect(detailGroupPresentation.boxShadow).toBe("none");
+
+  for (const selector of [
+    ".detailPagePrimaryContent .sectionTitle",
+    ".detailPageSecondaryContainer .sectionTitle",
+  ]) {
+    const presentation = await page.locator(`#itemDetailPage ${selector}`).first().evaluate(
+      (element) => {
+        const style = getComputedStyle(element);
+        return {
+          borderTopColor: style.borderTopColor,
+          borderLeftColor: style.borderLeftColor,
+          borderRightColor: style.borderRightColor,
+          backgroundColor: style.backgroundColor,
+          boxShadow: style.boxShadow,
+        };
+      },
+    );
+    expect(presentation.borderTopColor).toBe("rgba(0, 0, 0, 0)");
+    expect(presentation.borderLeftColor).toBe("rgba(0, 0, 0, 0)");
+    expect(presentation.borderRightColor).toBe("rgba(0, 0, 0, 0)");
+    expect(presentation.backgroundColor).toBe("rgba(0, 0, 0, 0)");
+    expect(presentation.boxShadow).toBe("none");
+  }
 
   for (const selector of [".nextUpSection .cardText", "#childrenCollapsible .cardText"]) {
     const labelBackground = await page.locator(selector).first().evaluate(
@@ -137,7 +183,7 @@ test("details preserve Jellyfin geometry, actions, and readable content", async 
   const castHeadingOpacity = await page.locator("#castCollapsible .sectionTitle").evaluate(
     (element) => Number.parseFloat(getComputedStyle(element).opacity),
   );
-  expect(castHeadingOpacity).toBeLessThanOrEqual(0.78);
+  expect(castHeadingOpacity).toBeLessThanOrEqual(0.68);
 
   const visiblePoster =
     testInfo.project.name === "mobile"
