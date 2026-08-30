@@ -11,18 +11,18 @@
 
 #homelabStreamingHub .stream-row {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(14rem, 20rem));
+  grid-template-columns: repeat(auto-fit, minmax(19rem, 27rem));
   justify-content: start;
-  gap: 1rem;
+  gap: 1.15rem;
 }
 
 #homelabStreamingHub .stream-card {
   display: flex;
-  min-height: 5.5rem;
+  min-height: 6.5rem;
   align-items: center;
   justify-content: space-between;
-  gap: 0.9rem;
-  padding: 1rem 1.15rem;
+  gap: 1rem;
+  padding: 1.25rem 1.4rem;
   border: 1px solid rgb(184 148 75 / 54%) !important;
   border-radius: var(--harbor-radius-md);
   background-color: var(--harbor-navy-900) !important;
@@ -53,7 +53,7 @@
 #homelabStreamingHub .service-logo {
   opacity: 1 !important;
   font-family: var(--harbor-font-display);
-  font-size: 1.1rem;
+  font-size: 1.25rem;
   font-weight: 700;
   letter-spacing: 0.025em;
   filter: drop-shadow(0 0.2rem 0.4rem rgb(0 0 0 / 42%));
@@ -84,7 +84,7 @@
   }
 
   #homelabStreamingHub .stream-card {
-    min-height: 4.75rem;
+    min-height: 5.25rem;
   }
 }
 
