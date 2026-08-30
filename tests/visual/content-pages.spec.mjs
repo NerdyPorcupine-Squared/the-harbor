@@ -19,7 +19,9 @@ async function expectNoHorizontalOverflow(page) {
 async function expectMobileTargets(page, projectName) {
   if (projectName !== "mobile") return;
 
-  const controls = page.locator("button:visible, input:visible, select:visible");
+  const controls = page.locator(
+    "button:visible:not(.alphaPickerButton), input:visible, select:visible",
+  );
   for (let index = 0; index < (await controls.count()); index += 1) {
     const box = await controls.nth(index).boundingBox();
     expect(box).not.toBeNull();
@@ -67,6 +69,51 @@ test("library supports mixed media and interaction states", async ({ page }, tes
     (element) => Number.parseFloat(getComputedStyle(element).opacity),
   );
   expect(disabledOpacity).toBeLessThan(1);
+
+  const normalAlpha = page.locator('.alphaPickerButton[data-value="A"]');
+  const normalAlphaColor = await normalAlpha.evaluate(
+    (element) => getComputedStyle(element).color,
+  );
+  expect(normalAlphaColor).toBe("rgb(58, 45, 33)");
+
+  const selectedAlpha = page.locator(".alphaPickerButton-selected");
+  const selectedAlphaPresentation = await selectedAlpha.evaluate((element) => {
+    const style = getComputedStyle(element);
+    return {
+      backgroundColor: style.backgroundColor,
+      color: style.color,
+      boxShadow: style.boxShadow,
+    };
+  });
+  expect(selectedAlphaPresentation.backgroundColor).toBe("rgb(12, 29, 41)");
+  expect(selectedAlphaPresentation.color).toBe("rgb(242, 213, 138)");
+  expect(selectedAlphaPresentation.boxShadow).toContain("184, 148, 75");
+
+  await normalAlpha.focus();
+  await expect(normalAlpha).toBeFocused();
+  const alphaFocusShadow = await normalAlpha.evaluate(
+    (element) => getComputedStyle(element).boxShadow,
+  );
+  expect(alphaFocusShadow).not.toBe("none");
+
+  const cardSurface = await page.locator(".libraryPage .cardBox").first().evaluate(
+    (element) => {
+      const style = getComputedStyle(element);
+      return {
+        backgroundColor: style.backgroundColor,
+        boxShadow: style.boxShadow,
+      };
+    },
+  );
+  expect(cardSurface.backgroundColor).not.toBe("rgba(0, 0, 0, 0)");
+  expect(cardSurface.boxShadow).not.toBe("none");
+
+  for (const selector of [".cardText", ".cardText-secondary"]) {
+    const textBackground = await page.locator(`.libraryPage .cardBox ${selector}`).first().evaluate(
+      (element) => getComputedStyle(element).backgroundColor,
+    );
+    expect(textBackground).toBe("rgba(0, 0, 0, 0)");
+  }
 
   await expectCardArtFitsScalable(page, ".card:has(.cardPadder-portrait)");
   await expectCardArtFitsScalable(page, ".card:has(.cardPadder-backdrop)");
