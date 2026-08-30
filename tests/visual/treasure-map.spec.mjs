@@ -23,7 +23,7 @@ async function computed(page, selector) {
   });
 }
 
-test("home browsing is an aged map with restrained cartography and non-sizing framed media cards", async ({ page }, testInfo) => {
+test("home browsing is an aged map with restrained cartography and cohesive non-sizing framed media cards", async ({ page }, testInfo) => {
   await page.goto(fixtureUrl("home-without-media-bar"));
   const surface = await computed(page, ".homeSectionsContainer");
 
@@ -39,8 +39,12 @@ test("home browsing is an aged map with restrained cartography and non-sizing fr
   }
 
   const frame = await computed(page, ".cardScalable");
-  const label = await computed(page, ".cardText");
+  const cardSurface = await computed(page, ".homeSectionsContainer .cardBox");
+  const label = await computed(page, ".homeSectionsContainer .cardText");
   expect(frame.boxShadow).toContain("184, 148, 75");
+  expect(cardSurface.backgroundColor).toBe("rgb(234, 217, 174)");
+  expect(cardSurface.boxShadow).not.toBe("none");
+  expect(label.backgroundColor).toBe("rgba(0, 0, 0, 0)");
   expect(label.color).toBe("rgb(58, 45, 33)");
 });
 
