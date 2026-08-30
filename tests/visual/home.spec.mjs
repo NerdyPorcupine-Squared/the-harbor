@@ -179,3 +179,42 @@ test("combined Home enhancements injector activates ordering and global navigati
     )
   ).toBe("homelabStreamingHub");
 });
+
+test("combined Home enhancements exposes an execution sentinel and does not duplicate observers", async ({ page }) => {
+  await prepareGlobalNavigationFixture(page);
+  const source = await optionalHomeEnhancementsSource();
+
+  await page.evaluate(() => {
+    const NativeMutationObserver = window.MutationObserver;
+    window.__harborObserverConstructions = 0;
+    window.MutationObserver = class HarborCountingMutationObserver extends NativeMutationObserver {
+      constructor(callback) {
+        super(callback);
+        window.__harborObserverConstructions += 1;
+      }
+    };
+  });
+
+  await page.addScriptTag({ content: source });
+  await page.addScriptTag({ content: source });
+
+  await expect(page.locator("html")).toHaveAttribute(
+    "data-harbor-home-enhancements",
+    "core-v1-rc3",
+  );
+  await expect(page.locator("html")).toHaveAttribute(
+    "data-harbor-streaming-services-adapter",
+    "core-v1-rc3",
+  );
+  await expect(page.locator("html")).toHaveAttribute(
+    "data-harbor-home-navigation-adapter",
+    "core-v1-rc3",
+  );
+
+  await expect.poll(() =>
+    page.evaluate(() => window.__harborObserverConstructions)
+  ).toBe(2);
+
+  await expect(page.locator("#homelabStreamingHub")).toHaveCount(1);
+  await expect(page.locator("[data-harbor-global-nav]")).toHaveCount(2);
+});
