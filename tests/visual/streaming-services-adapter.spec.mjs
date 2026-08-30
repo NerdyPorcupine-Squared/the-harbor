@@ -112,6 +112,35 @@ test("Streaming Services adapter preserves requested Home hierarchy through live
   );
 });
 
+test("Streaming Services adapter preserves native relative order after My Media", async ({ page }) => {
+  await page.goto(fixtureUrl);
+  await prepareLiveNativeHomeSections(page);
+
+  await page.evaluate(() => {
+    const container = document.querySelector(".homeSectionsContainer");
+    const resume = container.querySelector("#resume-native");
+    const nextUp = container.querySelector("#next-up-native");
+    container.insertBefore(nextUp, resume);
+  });
+
+  await expect.poll(() => homeSectionOrder(page)).toEqual([
+    "my-media-native",
+    "next-up-native",
+    "resume-native",
+    "latest-native",
+  ]);
+
+  await page.addScriptTag({ content: adapterSource });
+
+  await expect.poll(() => homeSectionOrder(page)).toEqual([
+    "homelabStreamingHub",
+    "my-media-native",
+    "next-up-native",
+    "resume-native",
+    "latest-native",
+  ]);
+});
+
 test("Streaming Services adapter replaces legacy hub markup before managing Home order", async ({ page }) => {
   await page.goto(fixtureUrl);
   await prepareLiveNativeHomeSections(page, { withLegacyHub: true });
