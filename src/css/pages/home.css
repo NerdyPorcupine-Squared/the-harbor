@@ -10,6 +10,28 @@
 .homeSectionsContainer
   > .verticalSection
   > .sectionTitleContainer-cards
+  .sectionTitleTextButton {
+  border-color: transparent;
+  background-color: transparent;
+  box-shadow: none;
+}
+
+.homeSectionsContainer
+  > .verticalSection
+  > .sectionTitleContainer-cards
+  .sectionTitleTextButton:hover,
+.homeSectionsContainer
+  > .verticalSection
+  > .sectionTitleContainer-cards
+  .sectionTitleTextButton:active {
+  border-color: transparent;
+  background-color: transparent;
+  box-shadow: none;
+}
+
+.homeSectionsContainer
+  > .verticalSection
+  > .sectionTitleContainer-cards
   .sectionTitle.sectionTitle-cards {
   border-radius: 999px;
 }
