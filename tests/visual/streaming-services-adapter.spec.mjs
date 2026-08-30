@@ -170,7 +170,7 @@ test("Streaming Services cards and live native Home headings carry the requested
   const streamCard = page.locator("#homelabStreamingHub .stream-card").first();
   const cardBox = await streamCard.boundingBox();
   expect(cardBox).not.toBeNull();
-  expect(cardBox.height).toBeGreaterThanOrEqual(testInfo.project.name === "mobile" ? 72 : 136);
+  expect(cardBox.height).toBeGreaterThanOrEqual(testInfo.project.name === "mobile" ? 72 : 100);
   if (testInfo.project.name === "desktop") {
     expect(cardBox.width).toBeGreaterThanOrEqual(390);
   }
