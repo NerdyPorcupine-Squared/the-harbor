@@ -23,24 +23,24 @@ async function computed(page, selector) {
   });
 }
 
-test("home browsing is an aged map with non-sizing framed media cards", async ({ page }, testInfo) => {
+test("home browsing is an aged map with restrained cartography and non-sizing framed media cards", async ({ page }, testInfo) => {
   await page.goto(fixtureUrl("home-without-media-bar"));
   const surface = await computed(page, ".homeSectionsContainer");
 
   expect(surface.color).toBe("rgb(58, 45, 33)");
   expect(surface.backgroundImage).toContain("chart-grid.svg");
+  expect(surface.backgroundImage).not.toContain("coastline.svg");
+  expect(surface.backgroundImage).not.toContain("ship.svg");
+  expect(surface.backgroundImage).not.toContain("anchor.svg");
   if (testInfo.project.name === "mobile") {
-    expect(surface.backgroundImage).not.toContain("coastline.svg");
     expect(surface.backgroundImage).not.toContain("route.svg");
   } else {
-    expect(surface.backgroundImage).toContain("coastline.svg");
     expect(surface.backgroundImage).toContain("route.svg");
   }
 
   const frame = await computed(page, ".cardScalable");
   const label = await computed(page, ".cardText");
   expect(frame.boxShadow).toContain("184, 148, 75");
-  expect(label.backgroundColor).toBe("rgb(234, 217, 174)");
   expect(label.color).toBe("rgb(58, 45, 33)");
 });
 
@@ -126,9 +126,14 @@ test("Media Bar stays cinematic while plugin geometry remains authoritative", as
   expect(hero.backgroundImage).not.toContain("cartography");
   expect(hero.boxShadow).not.toBe("none");
   expect(row.backgroundImage).toContain("chart-grid.svg");
+  expect(row.backgroundImage).not.toContain("coastline.svg");
+  expect(row.backgroundImage).not.toContain("ship.svg");
+  expect(row.backgroundImage).not.toContain("anchor.svg");
   expect(row.boxShadow).not.toBe("none");
   if (testInfo.project.name === "desktop") {
-    expect(row.backgroundImage).toContain("coastline.svg");
+    expect(row.backgroundImage).toContain("route.svg");
+  } else {
+    expect(row.backgroundImage).not.toContain("route.svg");
   }
 
   const viewport = page.viewportSize();
