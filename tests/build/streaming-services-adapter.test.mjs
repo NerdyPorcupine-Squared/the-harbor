@@ -33,6 +33,25 @@ test("optional Streaming Services adapter owns only its custom home section", as
   assert.doesNotMatch(source, /ElganFlix|homelab-red/iu);
 });
 
+test("Home adapters expose versioned execution state and duplicate-injection guards", async () => {
+  const streaming = await readRepositoryFile("integrations/streaming-services.js");
+  const navigation = await readRepositoryFile("integrations/home-navigation.js");
+  const combined = await readRepositoryFile("integrations/home-enhancements.js");
+
+  assert.match(streaming, /core-v1-rc3/u);
+  assert.match(streaming, /data-harbor-streaming-services-adapter/u);
+  assert.match(streaming, /__harborStreamingServicesState/u);
+  assert.match(streaming, /disconnect\s*\(/u);
+
+  assert.match(navigation, /core-v1-rc3/u);
+  assert.match(navigation, /data-harbor-home-navigation-adapter/u);
+  assert.match(navigation, /__harborHomeNavigationState/u);
+  assert.match(navigation, /disconnect\s*\(/u);
+
+  assert.match(combined, /data-harbor-home-enhancements/u);
+  assert.match(combined, /core-v1-rc3/u);
+});
+
 test("combined Home enhancements injector is an exact deterministic composition", async () => {
   const streaming = await readRepositoryFile("integrations/streaming-services.js");
   const navigation = await readRepositoryFile("integrations/home-navigation.js");
