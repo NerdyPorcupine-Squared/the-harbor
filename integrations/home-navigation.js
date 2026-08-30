@@ -1,6 +1,10 @@
 (() => {
   "use strict";
 
+  const ADAPTER_VERSION = "core-v1-rc3";
+  const ADAPTER_ATTRIBUTE = "data-harbor-home-navigation-adapter";
+  const HOME_ENHANCEMENTS_ATTRIBUTE = "data-harbor-home-enhancements";
+  const STATE_KEY = "__harborHomeNavigationState";
   const HEADER_SELECTOR = ".skinHeader .headerTabs";
   const INJECTED_ATTRIBUTE = "data-harbor-global-nav";
   const LABELS = {
@@ -9,6 +13,19 @@
     tv: "TV Shows",
     favorites: "Favorites",
   };
+
+  function reconcileHomeEnhancementsMarker() {
+    const root = document.documentElement;
+    const streamingVersion = root.getAttribute("data-harbor-streaming-services-adapter");
+    const navigationVersion = root.getAttribute(ADAPTER_ATTRIBUTE);
+
+    if (streamingVersion === ADAPTER_VERSION && navigationVersion === ADAPTER_VERSION) {
+      root.setAttribute(HOME_ENHANCEMENTS_ATTRIBUTE, ADAPTER_VERSION);
+      return;
+    }
+
+    root.removeAttribute(HOME_ENHANCEMENTS_ATTRIBUTE);
+  }
 
   function normalize(text) {
     return text?.trim().replace(/\s+/gu, " ").toLowerCase() ?? "";
@@ -107,8 +124,29 @@
     });
   }
 
+  const root = document.documentElement;
+  const previousState = window[STATE_KEY];
+
+  if (previousState?.version === ADAPTER_VERSION) {
+    root.setAttribute(ADAPTER_ATTRIBUTE, ADAPTER_VERSION);
+    ensureGlobalNav();
+    reconcileHomeEnhancementsMarker();
+    return;
+  }
+
+  if (previousState?.observer && typeof previousState.observer.disconnect === "function") {
+    previousState.observer.disconnect();
+  }
+
   ensureGlobalNav();
 
   const observer = new MutationObserver(scheduleGlobalNav);
   observer.observe(document.documentElement, { childList: true, subtree: true });
+
+  window[STATE_KEY] = {
+    version: ADAPTER_VERSION,
+    observer,
+  };
+  root.setAttribute(ADAPTER_ATTRIBUTE, ADAPTER_VERSION);
+  reconcileHomeEnhancementsMarker();
 })();
