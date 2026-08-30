@@ -22,9 +22,6 @@
 .homeSectionsContainer .cardBox {
   border-radius: var(--harbor-radius-md);
   background-color: var(--harbor-map-paper);
-  background-image: var(--harbor-papyrus-image);
-  background-repeat: var(--harbor-papyrus-repeat);
-  background-size: var(--harbor-papyrus-size);
   box-shadow:
     0 0 0 1px rgb(120 82 43 / 18%),
     0 0.35rem 0.85rem rgb(42 33 24 / 16%);
