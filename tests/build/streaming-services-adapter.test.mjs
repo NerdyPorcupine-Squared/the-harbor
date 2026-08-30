@@ -21,9 +21,8 @@ test("optional Streaming Services adapter owns only its custom home section", as
   assert.match(source, /homelabStreamingHub/u);
   assert.match(source, /homeSectionsContainer/u);
   assert.match(source, /MutationObserver/u);
-  assert.match(source, /data-monitor/u);
-  assert.match(source, /videoplayback/u);
   assert.match(source, /My Media|my media/u);
+  assert.doesNotMatch(source, /data-monitor|videoplayback/iu);
 
   for (const service of ["Netflix", "Prime Video", "Disney+", "HBO Max"]) {
     assert.match(source, new RegExp(service.replace(/[+]/gu, "\\+"), "u"));
