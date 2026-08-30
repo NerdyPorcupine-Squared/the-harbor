@@ -29,7 +29,7 @@ test("imports library, search, and details page layers", async () => {
   }
 });
 
-test("library fixture covers real Jellyfin scalable cards and control states", async () => {
+test("library fixture covers real Jellyfin scalable cards, alpha picker, and control states", async () => {
   const fixture = await readRepositoryFile(
     "tests/fixtures/jellyfin/library.html",
   );
@@ -41,6 +41,10 @@ test("library fixture covers real Jellyfin scalable cards and control states", a
     "cardContent",
     "cardImageContainer",
     "itemProgressBar",
+    "alphaPicker",
+    "alphaPickerButton",
+    "alphaPickerButton-vertical",
+    "alphaPickerButton-selected",
     "selected",
     "disabled",
     "emby-select",
@@ -98,6 +102,7 @@ test("content browser coverage includes tablet, zoom, overflow, state, and real 
   assert.match(spec, /200% zoom/u);
   assert.match(spec, /scrollWidth/u);
   assert.match(spec, /data-search-state/u);
+  assert.match(spec, /alphaPickerButton/u);
   assert.match(spec, /itemDetailPage/u);
   assert.match(spec, /itemBackdrop/u);
   assert.match(spec, /detailPageSecondaryContainer/u);
