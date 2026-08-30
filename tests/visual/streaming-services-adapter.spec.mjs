@@ -199,12 +199,12 @@ test("Streaming Services cards and live native Home headings carry the requested
     const wrapperPresentation = await button.evaluate((element) => {
       const style = getComputedStyle(element);
       return {
-        borderWidth: Number.parseFloat(style.borderTopWidth),
+        borderColor: style.borderTopColor,
         backgroundColor: style.backgroundColor,
         boxShadow: style.boxShadow,
       };
     });
-    expect(wrapperPresentation.borderWidth).toBe(0);
+    expect(wrapperPresentation.borderColor).toBe("rgba(0, 0, 0, 0)");
     expect(wrapperPresentation.backgroundColor).toBe("rgba(0, 0, 0, 0)");
     expect(wrapperPresentation.boxShadow).toBe("none");
 
