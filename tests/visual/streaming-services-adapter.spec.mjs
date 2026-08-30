@@ -195,7 +195,20 @@ test("Streaming Services cards and live native Home headings carry the requested
   }
 
   for (const sectionId of ["next-up-native", "latest-native"]) {
-    const title = page.locator(`#${sectionId} .sectionTitleTextButton .sectionTitle`);
+    const button = page.locator(`#${sectionId} .sectionTitleTextButton`);
+    const wrapperPresentation = await button.evaluate((element) => {
+      const style = getComputedStyle(element);
+      return {
+        borderWidth: Number.parseFloat(style.borderTopWidth),
+        backgroundColor: style.backgroundColor,
+        boxShadow: style.boxShadow,
+      };
+    });
+    expect(wrapperPresentation.borderWidth).toBe(0);
+    expect(wrapperPresentation.backgroundColor).toBe("rgba(0, 0, 0, 0)");
+    expect(wrapperPresentation.boxShadow).toBe("none");
+
+    const title = button.locator(".sectionTitle");
     const radius = await title.evaluate((element) =>
       Number.parseFloat(getComputedStyle(element).borderTopLeftRadius),
     );
